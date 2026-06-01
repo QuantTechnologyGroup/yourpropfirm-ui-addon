@@ -1,0 +1,135 @@
+/* =====================================================
+	 * Typography Components
+	 * ===================================================== */
+
+.label {
+  @apply tw-block !tw-text-sm tw-font-medium !tw-text-gray-600 tw-mb-2 dark:!tw-text-white;
+}
+.heading-6 {
+  @apply tw-text-xl tw-font-medium tw-text-gray-600 dark:tw-text-white;
+}
+
+.heading-6-no-bold {
+  @apply tw-text-xl tw-font-normal tw-text-gray-600 dark:tw-text-white;
+}
+
+.heading-4 {
+  @apply tw-text-[32px] tw-font-medium tw-text-gray-600 dark:tw-text-white;
+}
+.heading-5 {
+  @apply tw-text-2xl tw-font-medium tw-text-gray-600 dark:tw-text-white;
+}
+.paragraph {
+  @apply tw-text-base tw-font-normal tw-text-gray-600 dark:tw-text-white;
+}
+
+.paragraph-bold {
+  @apply tw-text-base tw-font-medium tw-text-gray-600 dark:tw-text-white;
+}
+.caption-1 {
+  @apply tw-text-sm tw-text-gray-600 dark:tw-text-white;
+}
+.caption-2 {
+  @apply tw-text-xs tw-text-gray-600 dark:tw-text-white;
+}
+.gray {
+  @apply tw-text-gray-500 dark:tw-text-gray-600;
+}
+
+.radio-options {
+  @apply tw-flex tw-gap-2 tw-auto-rows-fr;
+}
+
+.container-radio-option {
+  @apply tw-cursor-pointer tw-h-full;
+}
+
+.box-radio-option {
+  @apply tw-sr-only;
+}
+
+.box-radio-label {
+  @apply btn-outline tw-w-full hover:tw-bg-yourpropfirm-primary hover:tw-border-yourpropfirm-primary hover:tw-text-yourpropfirm-button-text dark:hover:tw-bg-yourpropfirm-primary dark:hover:tw-text-yourpropfirm-button-text;
+}
+
+.box-radio-checked-label {
+  @apply tw-text-yourpropfirm-button-text tw-bg-yourpropfirm-primary hover:tw-opacity-90 tw-border-transparent;
+}
+
+/* =====================================================
+	 * Button Components
+	 * ===================================================== */
+
+.btn-primary {
+  @apply tw-px-3 tw-py-2 tw-rounded-md tw-font-medium tw-text-sm tw-transition-all tw-duration-200  !tw-bg-yourpropfirm-primary !tw-text-yourpropfirm-button-text tw-text-center hover:tw-opacity-90 disabled:tw-cursor-not-allowed disabled:tw-bg-gray-200 dark:disabled:tw-bg-gray-600;
+}
+
+.btn-outline {
+  @apply tw-border tw-border-solid tw-border-gray-600 tw-bg-transparent tw-text-gray-600
+		hover:tw-bg-gray-100
+		disabled:tw-opacity-50
+		dark:tw-border-white dark:hover:tw-bg-white/20 hover:tw-border-gray-600
+		tw-inline-flex tw-min-w-8 tw-items-center tw-justify-center tw-gap-2 tw-text-sm tw-font-medium
+		tw-whitespace-nowrap tw-capitalize tw-transition-colors tw-duration-300 tw-ease-in-out
+		disabled:tw-cursor-not-allowed
+		tw-shrink-0 tw-px-3 tw-py-2 tw-rounded-md
+		dark:tw-text-white
+		tw-text-center;
+}
+
+/* =====================================================
+	 * Badge Components
+	 * ===================================================== */
+
+.badge {
+  @apply tw-inline-flex tw-size-fit tw-h-max tw-items-center tw-justify-center tw-border tw-text-center tw-capitalize tw-border-transparent  caption-1 tw-rounded-2xl tw-px-2 tw-py-1;
+}
+
+.badge-warning {
+  @apply tw-bg-[#ffc1071A] !tw-text-yourpropfirm-warning dark:tw-text-yourpropfirm-warning badge;
+}
+.badge-success {
+  @apply tw-bg-[#1BC75A1A] !tw-text-yourpropfirm-success dark:tw-text-yourpropfirm-success badge;
+}
+.badge-error {
+  @apply tw-bg-[#FF52521A] !tw-text-yourpropfirm-error dark:tw-text-yourpropfirm-error badge;
+}
+
+/* =====================================================
+	 * Card components
+	 * ===================================================== */
+
+.card {
+  @apply tw-bg-yourpropfirm-card md:tw-p-6 tw-rounded-xl tw-py-6 tw-px-4 tw-shadow;
+}
+
+/* =====================================================
+	 * Custom Class Components
+	 * ===================================================== */
+
+button:focus {
+  @apply !tw-outline-none tw-ring-1 tw-ring-gray-600 dark:tw-ring-white;
+}
+a:focus {
+  @apply !tw-outline-none tw-ring-1 tw-ring-gray-600 dark:tw-ring-white dark:tw-text-white tw-text-gray-600;
+}
+
+.separator {
+  @apply tw-h-[1px] tw-bg-gray-500 dark:!tw-bg-black tw-w-full tw-border-none;
+}
+
+/* =====================================================
+	 * Input Class Components
+	 * ===================================================== */
+
+.input-field {
+  @apply tw-w-full tw-px-3 tw-py-2 !tw-text-gray-600 tw-bg-white tw-border tw-border-[#666] !tw-rounded-md focus:tw-outline-none focus:tw-ring focus:tw-ring-yourpropfirm-primary dark:tw-bg-transparent dark:!tw-text-white dark:tw-border-[#666];
+}
+
+/* =====================================================
+	 * Alert Class Components
+	 * ===================================================== */
+
+.alert-warning {
+  @apply tw-bg-[#F2AD091A] tw-flex tw-w-full tw-items-start tw-justify-center tw-gap-2 tw-rounded-lg tw-p-4;
+}

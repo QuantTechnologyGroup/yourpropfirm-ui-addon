@@ -1,0 +1,1840 @@
+/**
+ * Tailwind CSS Input untuk YourPropFirm Plugin
+ * File ini akan di-compile menjadi CSS final untuk halaman checkout
+ * Structured as Component-Based CSS dengan Light/Dark Mode Support
+ */
+
+/* Import Google Fonts - Inter */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@import "components.css";
+/* Root Variables untuk YourPropFirm Theme Colors */
+
+:root {
+  /* Primary Colors - Menggunakan Blue 600 sebagai primary */
+
+  /* Status Colors */
+  --yourpropfirm-success: #28a745;
+  --yourpropfirm-warning: #ffc107;
+  --yourpropfirm-error: #dc3545;
+  --border-standby: #666666;
+  --danger-color: #ff4d4d;
+  --danger-background: #ff4d4d1a;
+  --success-color: #16bc53;
+  --success-background: #16bc531a;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * =====================================================
+ * COMPONENT-BASED CHECKOUT STYLING
+ * =====================================================
+ */
+
+@layer components {
+  /* =====================================================
+	 * 1. CHECKOUT CONTAINER COMPONENT
+	 * ===================================================== */
+
+  /* Checkout Container - Light Mode */
+  .checkout-container {
+    @apply tw-max-w-7xl tw-mx-auto tw-px-4 tw-py-8 tw-transition-colors tw-duration-300 tw-relative tw-pt-10;
+  }
+
+  .iframe-mode .checkout-container {
+    @apply tw-max-w-7xl tw-mx-auto lg:tw-px-6 tw-px-3 tw-pb-0 tw-transition-colors tw-duration-300 tw-relative tw-pt-6;
+  }
+
+  /* =====================================================
+	 * 2. CHECKOUT GRID COMPONENT
+	 * ===================================================== */
+
+  /* Checkout Grid - Light Mode */
+  .checkout-grid {
+    @apply tw-grid tw-gap-4 xl:tw-gap-4 lg:tw-grid-cols-2 tw-grid-cols-1;
+
+    @media screen and (min-width: 1025px) {
+      grid-template-columns: 640px 480px;
+    }
+
+    @media screen and (max-width: 1024px) {
+      grid-template-columns: 540px 1fr;
+    }
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .iframe-mode .checkout-grid {
+    @apply tw-flex tw-gap-4 xl:tw-gap-4 lg:tw-flex-row tw-flex-col;
+  }
+
+  /* =====================================================
+	 * 3. CHECKOUT CARD COMPONENT
+	 * ===================================================== */
+
+  /* Checkout Card */
+  .checkout-card {
+    @apply card tw-grid tw-grid-cols-1 tw-gap-4;
+  }
+
+  #add_payment_method #payment,
+  .woocommerce-cart #payment,
+  .woocommerce-checkout #payment {
+    @apply  !tw-bg-none !tw-border-none !tw-rounded-none !tw-p-0 !tw-m-0;
+    background: transparent !important;
+  }
+
+  .checkout-form-left .checkout-card>* {
+    order: 0;
+  }
+
+  .checkout-form-left .checkout-card>*:first-child {
+    order: 1;
+  }
+
+  .checkout-card .container-product-selection-group .product-details {
+    @apply tw-pb-4;
+  }
+
+  /* =====================================================
+	 * 4. SECTION HEADING COMPONENT
+	 * ===================================================== */
+
+  /* Section Heading - Light Mode */
+  .section-heading {
+    @apply tw-pb-4 heading-6;
+  }
+
+  .section-subheading {
+    @apply caption-1 tw-mb-2;
+  }
+
+  /* =====================================================
+	 * 5. FORM COMPONENTS
+	 * ===================================================== */
+
+  /* Form Label - Light Mode */
+  .form-label {
+    @apply label;
+  }
+
+  /* Form Input - Light Mode */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  select,
+  textarea {
+    @apply tw-min-w-24 tw-flex-1 autofill:tw-rounded-lg hover:disabled:tw-cursor-not-allowed !tw-h-11 !tw-p-3 tw-rounded-md;
+    @apply tw-bg-transparent tw-outline-none placeholder:tw-text-gray-500;
+    @apply tw-border-gray-600 tw-border tw-border-solid;
+    @apply tw-text-gray-600 tw-text-base tw-leading-5;
+    @apply focus:!tw-ring-1 focus:tw-ring-gray-600 focus:tw-outline-none focus:tw-bg-transparent focus:tw-border-gray-600;
+    @apply dark:tw-border-white dark:focus:!tw-ring-white dark:tw-text-white dark:placeholder:tw-text-gray-600 dark:disabled:tw-text-white/30;
+  }
+
+  select {
+    @apply  !tw-pe-8 !tw-py-0 tw-w-full;
+  }
+
+  select option {
+    @apply tw-text-gray-600;
+  }
+
+  /* disable box shadow from input woo commerce */
+  input.input-text {
+    @apply  !tw-shadow-none;
+  }
+
+  input[type="checkbox"] {
+    @apply tw-size-4 tw-bg-white tw-border tw-border-gray-400 dark:tw-border-white focus:tw-shadow-none tw-bg-transparent tw-cursor-pointer tw-ring-0 tw-outline-none checked:tw-bg-transparent checked:hover:tw-bg-transparent focus:tw-ring-yourpropfirm-primary focus:tw-ring-[1px] dark:focus:tw-right-[1px] dark:focus:tw-ring-yourpropfirm-primary focus:checked:tw-bg-transparent dark:checked:!tw-border-yourpropfirm-primary dark:checked:!tw-border-2 checked:tw-border-2 checked:!tw-border-yourpropfirm-primary tw-rounded-sm tw-text-red-700 tw-relative;
+  }
+
+  input[type="checkbox"]:checked {
+    background-image: none;
+  }
+
+  input[type="checkbox"]:checked::after {
+    content: "✓";
+    @apply tw-absolute tw-top-1/2 tw-left-1/2 -tw-translate-x-1/2 -tw-translate-y-1/2 tw-text-yourpropfirm-primary tw-text-xs tw-font-bold;
+  }
+
+  input[type="radio"] {
+    @apply tw-size-4 tw-bg-white tw-border tw-border-gray-400 dark:tw-border-white focus:tw-shadow-none tw-bg-transparent tw-rounded-full tw-cursor-pointer tw-ring-0 tw-outline-none checked:tw-bg-yourpropfirm-primary checked:hover:tw-bg-yourpropfirm-primary focus:tw-ring-yourpropfirm-primary focus:tw-ring-[1px] dark:focus:tw-right-[1px] dark:focus:tw-ring-yourpropfirm-primary focus:checked:tw-bg-yourpropfirm-primary dark:checked:!tw-border-yourpropfirm-primary;
+    /* custom check icon */
+    @apply tw-appearance-none checked:tw-bg-none;
+  }
+
+  .yourpropfirm-lang-select {
+    @apply select-trigger tw-bg-transparent !tw-h-10;
+  }
+
+  .select-trigger {
+    @apply tw-flex tw-h-10 tw-w-full tw-items-center tw-justify-between tw-rounded-md tw-border tw-border-gray-600 tw-bg-yourpropfirm-background tw-px-3 tw-py-2 tw-text-sm tw-text-gray-600 tw-ring-offset-yourpropfirm-background focus:tw-ring-1 focus:tw-outline-none disabled:tw-cursor-not-allowed disabled:tw-opacity-50 dark:tw-border-white dark:tw-text-white dark:hover:tw-bg-white/20 hover:tw-bg-black/5 tw-appearance-none;
+  }
+
+  @media screen and (min-width: 768px) {
+    .yourpropfirm-checkout.woocommerce-override .form-row-first {
+      width: calc(50% - 0.5rem);
+      margin-inline-end: 1rem;
+      float: left !important;
+    }
+
+    .yourpropfirm-checkout.woocommerce-override .form-row-last {
+      width: calc(50% - 0.5rem);
+      float: right !important;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .yourpropfirm-checkout.woocommerce-override .form-row-first {
+      width: 100% !important;
+      float: none !important;
+    }
+
+    .yourpropfirm-checkout.woocommerce-override .form-row-last {
+      width: 100% !important;
+      float: none !important;
+    }
+  }
+
+  .addon-input {
+    @apply tw-place-self-start tw-mt-0.5;
+  }
+
+  /* =====================================================
+	 * 7. TABLE COMPONENTS
+	 * ===================================================== */
+
+  /* Order Table - Light Mode */
+  .order-table {
+    @apply tw-w-full tw-border-collapse;
+  }
+
+  .order-table th,
+  .order-table td {
+    @apply tw-px-4 tw-py-3 tw-text-left tw-border-b tw-border-gray-200 dark:tw-border-gray-700 dark:tw-text-gray-200;
+  }
+
+  .order-table th {
+    @apply tw-bg-gray-50 tw-font-semibold tw-text-gray-700 dark:tw-border-gray-700 dark:tw-bg-gray-800 dark:tw-text-gray-300;
+  }
+
+  /* =====================================================
+	 * 8. PAYMENT METHOD COMPONENTS
+	 * ===================================================== */
+
+  .payment-method-title {
+    @apply tw-text-sm tw-font-medium tw-text-gray-700 tw-mb-0;
+  }
+
+  /* Payment Method - Light Mode */
+  .payment-method {
+    @apply tw-border tw-border-gray-300 tw-rounded-lg tw-mb-3 tw-overflow-hidden;
+  }
+
+  .payment-method label {
+    @apply tw-flex tw-items-center tw-px-4 tw-py-3 tw-cursor-pointer tw-transition-colors tw-duration-200 tw-bg-white;
+    @apply hover:tw-bg-gray-50;
+  }
+
+  /* =====================================================
+	 * 9. NOTIFICATION COMPONENTS
+	 * ===================================================== */
+
+  .woocommerce-NoticeGroup {
+    @apply tw-order-last tw-pt-4;
+  }
+
+  /* Success Notice - Light Mode */
+  .notice-success {
+    @apply tw-bg-green-50 tw-border tw-border-green-200 tw-text-green-800 tw-px-4 tw-py-3 tw-rounded-lg tw-mb-4 dark:tw-bg-green-900 dark:tw-border-green-700 dark:tw-text-green-200;
+  }
+
+  /* Error Notice - Light Mode */
+  .notice-error {
+    @apply tw-bg-red-50 tw-border tw-border-red-200 tw-text-red-800 tw-px-4 tw-py-3 tw-rounded-lg tw-mb-4 dark:tw-bg-red-900 dark:tw-border-red-700 dark:tw-text-red-200;
+  }
+
+  /* Warning Notice - Light Mode */
+  .notice-warning {
+    @apply tw-bg-yellow-50 tw-border tw-border-yellow-200 tw-text-yellow-800 tw-px-4 tw-py-3 tw-rounded-lg tw-mb-4 dark:tw-bg-yellow-900 dark:tw-border-yellow-700 dark:tw-text-yellow-200;
+  }
+
+  /* =====================================================
+	 * 10. TRADING PLATFORM COMPONENTS
+	 * ===================================================== */
+
+  /* Trading Platform Section - Light Mode */
+  .trading-platform-section {
+    @apply tw-bg-gray-50 tw-border tw-border-gray-200 tw-rounded-lg tw-p-6 tw-my-6 dark:tw-bg-gray-800 dark:tw-border-gray-700;
+  }
+
+  .trading-platform-section h3 {
+    @apply tw-text-lg tw-font-semibold tw-text-gray-900 tw-mb-4 dark:tw-text-white;
+  }
+
+  /* Trading Platform Options - Light Mode */
+
+  .woocommerce-trading-platform .trading-platform-options {
+    @apply radio-options;
+  }
+
+  .woocommerce-trading-platform .trading-platform-options .platform-option {
+    @apply container-radio-option;
+  }
+
+  .woocommerce-trading-platform .trading-platform-options .platform-option input[type="radio"] {
+    @apply box-radio-option;
+  }
+
+  .woocommerce-trading-platform .trading-platform-options .platform-option .platform-option-content {
+    @apply box-radio-label;
+  }
+
+  .woocommerce-trading-platform .trading-platform-options .platform-option input[type="radio"]:checked+.platform-option-content {
+    @apply box-radio-checked-label;
+  }
+
+  /* =====================================================
+	 * 11. ADDONS COMPONENTS
+	 * ===================================================== */
+
+  /* Available Add-ons - Light Mode */
+
+  .available-addons {
+    @apply tw-grid tw-gap-2 md:tw-grid-cols-2;
+  }
+
+  .available-addons .addon-item,
+  .available-addons>div,
+  .available-addons .addon-option {
+    @apply tw-bg-black/[3%] dark:tw-bg-black/80;
+    @apply tw-flex tw-items-center tw-justify-between tw-p-4 tw-rounded-lg tw-border tw-border-transparent tw-transition-all tw-duration-200;
+  }
+
+  .available-addons .addon-option.radio-type {
+    @apply tw-flex-wrap tw-col-span-2 md:tw-col-span-1;
+  }
+
+  .available-addons .addon-option.radio-type .addon-desc {
+    @apply tw-flex-wrap tw-w-full;
+  }
+
+  .available-addons .addon-option.checkbox-type {
+    grid-column: span 2;
+  }
+
+  .available-addons>div:has(input[type="checkbox"]:checked),
+  .available-addons .addon-option:has(input[type="checkbox"]:checked),
+  .available-addons>div:has(input[type="radio"]:checked),
+  .available-addons .addon-option:has(input[type="radio"]:checked) {
+    @apply tw-border-yourpropfirm-primary dark:tw-border-yourpropfirm-primary;
+  }
+
+  .available-addons .addon-content {
+    @apply tw-flex tw-items-center tw-justify-between tw-gap-6 [&>label]:tw-flex [&>label]:tw-items-center tw-w-full;
+  }
+
+  .available-addons .addon-pricing {
+    @apply tw-text-end tw-shrink-0;
+  }
+
+  .available-addons .addon-price {
+    @apply caption-1 tw-font-medium tw-self-start;
+  }
+
+  .available-addons .addon-price-desc {
+    @apply caption-2 tw-font-normal tw-mt-1 gray;
+  }
+
+  .available-addons .addon-price-desc .amount {
+    @apply dark:tw-text-white;
+  }
+
+  /* =====================================================
+	 * 11b. BUNDLE PACKAGES COMPONENTS
+	 * ===================================================== */
+
+  .woocommerce-bundle-packages {
+    @apply tw-mt-4;
+  }
+
+  .woocommerce-bundle-packages .section-subheading {
+    @apply tw-mb-2;
+  }
+
+  .bundle-packages {
+    @apply tw-grid tw-gap-2 md:tw-grid-cols-2;
+  }
+
+  .bundle-packages .bundle-option {
+    @apply tw-flex tw-flex-col tw-gap-2 tw-p-4 tw-rounded-lg;
+    @apply tw-border tw-border-transparent tw-transition-all tw-duration-200;
+    @apply tw-bg-black/[3%] dark:tw-bg-black/80;
+  }
+
+  .bundle-packages .bundle-option.is-active,
+  .bundle-packages .bundle-option:has(input[type="radio"]:checked) {
+    @apply tw-border-yourpropfirm-primary dark:tw-border-yourpropfirm-primary;
+  }
+
+  .bundle-packages .bundle-content {
+    @apply tw-flex tw-items-center;
+  }
+
+  .bundle-packages .bundle-content label {
+    @apply tw-flex tw-items-center tw-cursor-pointer tw-w-full;
+  }
+
+  .bundle-packages .bundle-addon-preview {
+    @apply tw-ps-6 tw-pt-1;
+  }
+
+  .bundle-packages .bundle-addon-list {
+    @apply tw-flex tw-flex-col tw-gap-1 tw-list-none tw-m-0 tw-p-0;
+  }
+
+  .bundle-packages .bundle-addon-item {
+    @apply tw-flex tw-items-center tw-gap-1.5 caption-2 tw-font-normal gray;
+  }
+
+  .bundle-addon-check-icon {
+    @apply tw-size-3 tw-shrink-0;
+    color: var(--yourpropfirm-primary);
+  }
+
+  /* Addon options locked inside an active bundle — non-interactive, visually checked */
+  .available-addons .addon-option.bundle-forced {
+    @apply tw-pointer-events-none;
+  }
+
+  /* =====================================================
+	 * 12. LOGO COMPONENTS
+	 * ===================================================== */
+
+  /* Checkout Logo - Light Mode */
+  .checkout-logo {
+    @apply tw-mb-10 tw-flex tw-justify-center max-md:tw-my-8 max-sm:tw-justify-start;
+  }
+
+  .checkout-logo img {
+    @apply tw-mx-auto max-sm:tw-mx-0 tw-max-w-48;
+  }
+
+  .checkout-logo h1 {
+    @apply tw-text-2xl tw-font-bold tw-text-gray-900 dark:tw-text-white;
+  }
+
+  /* =====================================================
+	 * 13. REPURCHASE DETAILS COMPONENTS
+	 * ===================================================== */
+
+  /* Repurchase Details - Light Mode */
+
+  .woocommerce-repurchase-details .repurchase-grid {
+    @apply tw-flex tw-flex-col md:tw-flex-row tw-gap-3;
+  }
+
+  .woocommerce-repurchase-details .repurchase-card {
+    @apply tw-p-4 tw-rounded-lg tw-bg-black/5 dark:tw-bg-black/80 tw-flex-1 tw-flex tw-flex-col tw-gap-1;
+  }
+
+  .woocommerce-repurchase-details .repurchase-card-label {
+    @apply  !tw-font-normal !tw-text-sm gray;
+  }
+
+  .woocommerce-repurchase-details .repurchase-card-value {
+    @apply heading-6;
+  }
+
+  .woocommerce-repurchase-details .product-short-description {
+    @apply tw-mt-3;
+  }
+
+  .woocommerce-repurchase-details .product-short-description .repurchase-card-value {
+    @apply tw-text-sm tw-font-normal;
+  }
+
+  .woocommerce-repurchase-details .product-short-description .repurchase-card-value strong {
+    @apply tw-font-bold;
+  }
+
+  .woocommerce-repurchase-details .product-short-description .repurchase-card-value hr {
+    @apply separator;
+  }
+
+  .woocommerce-repurchase-details .product-short-description .repurchase-card-value {
+    @apply tw-space-y-4;
+  }
+
+  /* =====================================================
+	 * 14. CHECKOUT FORM COMPONENTS
+	 * ===================================================== */
+
+  /* Checkout Form - Light Mode */
+  form.woocommerce-checkout {
+    @apply tw-max-w-none tw-space-y-8 tw-flex tw-flex-col;
+  }
+
+  form.woocommerce-checkout> :not([hidden])~ :not([hidden]) {
+    @apply tw-mt-0;
+  }
+
+  .checkout-form-left {
+    @apply tw-space-y-6;
+  }
+
+  .checkout-form-right {
+    @apply tw-space-y-6;
+  }
+  .iframe-mode .checkout-form-right {
+    @apply tw-space-y-6  tw-flex-[0_0_480px];
+  }
+
+  /* Checkout Form - Dark Mode */
+  /* Inherit dari light mode */
+
+  /* =====================================================
+	 * 15. BODY STYLING COMPONENTS
+	 * ===================================================== */
+
+  /* Body - Light Mode */
+  body.checkout-body {
+    @apply tw-bg-gray-50 tw-min-h-screen tw-transition-colors tw-duration-300 tw-bg-yourpropfirm-background !tw-overflow-auto !tw-m-0 !tw-p-0;
+  }
+
+  /* =====================================================
+	 * 16. DARK MODE TOGGLE COMPONENTS
+	 * ===================================================== */
+
+  /* Dark Mode Toggle - Light Mode */
+  .dark-mode-toggle-container {
+    @apply tw-absolute tw-end-0 tw-top-1/2 -tw-translate-y-1/2 tw-flex tw-gap-2 tw-z-50;
+  }
+
+  .dark-mode-toggle-container>select {
+    @apply  !tw-h-10 !tw-outline-0;
+  }
+
+  .dark-mode-toggle {
+    @apply btn-outline !tw-size-10 !tw-p-3;
+  }
+
+  /* Dark Mode Toggle Icons - Light Mode */
+  .theme-toggle-icon {
+    @apply tw-w-5 tw-h-5;
+  }
+
+  .sun-icon {
+    @apply tw-hidden dark:tw-block tw-size-5;
+  }
+
+  .moon-icon {
+    @apply tw-block dark:tw-hidden tw-size-5;
+  }
+
+  /* =====================================================
+	 * 17. BILLING AND ACCOUNT FIELDS COMPONENTS
+	 * ===================================================== */
+
+  .woocommerce-billing-fields__field-wrapper,
+  .woocommerce-checkout-review-order {
+    @apply  !tw-bg-none tw-border-none tw-rounded-none !tw-p-0 !tw-m-0;
+  }
+
+  .billing-detail-container {
+    @apply max-lg:tw-order-last max-lg:tw-pt-6;
+  }
+
+  .woocommerce .form-row .input-text,
+  .woocommerce .form-row select {
+    @apply input-field;
+  }
+
+  html .woocommerce .form-row select {
+    background-image: none !important;
+    background-position: initial !important;
+    background-repeat: unset !important;
+    background-size: initial !important;
+    padding-right: 0.75rem !important;
+  }
+
+  .woocommerce-billing-fields::after {
+    @apply tw-block tw-clear-both tw-w-full;
+    content: " ";
+  }
+
+  /* Billing Fields - Light Mode */
+  .woocommerce-billing-fields__field-wrapper {
+    @apply tw-space-y-4;
+  }
+
+  .woocommerce-account-fields {
+    @apply tw-hidden tw-mt-6 tw-pt-6 tw-border-t tw-border-gray-200 dark:tw-border-gray-700;
+  }
+
+  .woocommerce-form__label-for-checkbox.checkbox {
+    @apply tw-flex tw-items-center tw-gap-3;
+  }
+
+  .woocommerce-form__input-checkbox {
+    @apply tw-w-4 tw-h-4 tw-bg-gray-100 tw-border-gray-300 tw-rounded dark:tw-bg-gray-700 dark:tw-border-gray-600;
+    @apply focus:tw-ring-2;
+    color: var(--yourpropfirm-primary) !important;
+    --ring-color: var(--yourpropfirm-primary);
+  }
+
+  .woocommerce-form__label-for-checkbox span {
+    @apply tw-text-sm tw-text-gray-700 dark:tw-text-gray-300;
+  }
+
+  .create-account {
+    @apply tw-space-y-4;
+  }
+
+  /* =====================================================
+	 * 18. ORDER SUMMARY COMPONENTS
+	 * ===================================================== */
+
+  /* Order Summary - Light Mode */
+  .order-summary {
+    @apply tw-top-8;
+  }
+
+  /* Order Review Section - Light Mode */
+
+  .order-review-container {
+    @apply tw-space-y-2;
+  }
+
+  .order-review-container .order-row {
+    @apply tw-flex tw-justify-between tw-items-center;
+  }
+
+  .order-review-container .order-row.grand-total {
+    @apply tw-pt-2;
+  }
+
+  .order-review-container .order-label {
+    @apply tw-text-base gray !tw-font-normal tw-min-w-[180px];
+  }
+
+  .order-review-container .order-row.grand-total .order-label {
+    @apply heading-6 !tw-font-normal;
+  }
+
+  .order-review-container .order-row.grand-total .order-total-amount {
+    @apply heading-6-no-bold;
+  }
+
+  .order-review-container .order-row.grand-total .order-value {
+    @apply heading-6-no-bold;
+  }
+
+  .order-review-container .order-value {
+    @apply paragraph tw-text-right ;
+  }
+
+  .place-order-hidden {
+    @apply  !tw-hidden;
+  }
+
+  /* =====================================================
+	 * 19. COUPON COMPONENTS
+	 * ===================================================== */
+
+  /* Coupon Section - Light Mode */
+
+  .coupon-form-group {
+    @apply tw-space-y-3;
+  }
+
+  .coupon-label {
+    @apply form-label;
+  }
+
+  .coupon-form-group.error .form-label {
+    color: var(--wc-red);
+  }
+
+  .coupon-label-optional {
+    @apply tw-text-xs tw-text-[#42D1FF] tw-font-normal tw-ml-1 tw-rounded-full tw-inline-block tw-py-1 tw-px-2;
+    background: rgba(66, 209, 255, 0.1);
+  }
+
+  .coupon-input-group {
+    @apply tw-flex tw-gap-3;
+  }
+
+  .coupon-form-group .coupon-input {
+    @apply tw-flex-1 tw-px-3 tw-py-2.5 tw-border tw-rounded-md tw-bg-transparent;
+    @apply tw-bg-transparent !tw-border !tw-border-gray-600 !tw-text-yourpropfirm-secondary-text !tw-text-base;
+    @apply focus:tw-outline-none focus:tw-ring-2 focus:tw-border-transparent tw-transition-all tw-duration-200;
+    @apply dark:!tw-text-white;
+    --ring-color: var(--yourpropfirm-primary);
+  }
+
+  .coupon-form-group .coupon-message {
+    @apply tw-hidden;
+  }
+
+  .coupon-form-group.error .coupon-message {
+    @apply tw-block;
+  }
+
+  .coupon-form-group .coupon-message {
+    @apply tw-mt-1;
+  }
+
+  .coupon-form-group> :not([hidden])~ :not([hidden]) {
+    @apply tw-mt-0;
+  }
+
+  /* =====================================================
+	 * 20. PAYMENT SECTION COMPONENTS
+	 * ===================================================== */
+
+  /* Payment Section - Light Mode */
+  .payment-section {
+    @apply tw-mt-0;
+  }
+
+  .woocommerce-checkout-payment select {
+    @apply tw-border tw-rounded-md tw-bg-transparent !tw-border-gray-600;
+    @apply tw-bg-transparent !tw-text-base;
+  }
+
+  .woocommerce-billing-fields select {
+    @apply !tw-text-gray-600 !tw-bg-white !tw-border !tw-border-[#666] !tw-rounded-md focus:!tw-outline-none focus:!tw-ring focus:!tw-ring-yourpropfirm-primary dark:!tw-bg-transparent dark:!tw-text-white dark:!tw-border-[#666] !tw-text-base;
+  }
+
+  .woocommerce-checkout-payment .wc_payment_methods {
+    @apply  !tw-p-0;
+  }
+
+  .woocommerce-checkout-payment .wc_payment_method>input[type="radio"] {
+    @apply  !tw-hidden;
+  }
+
+  .woocommerce-checkout-payment .wc_payment_method>label {
+    @apply  !tw-hidden;
+  }
+
+  .woocommerce-checkout #payment .wc_payment_method .payment_box {
+    @apply  !tw-mb-0 tw-space-y-3;
+    @apply dark:!tw-bg-gray-800 dark:!tw-text-white;
+  }
+
+  .woocommerce-checkout #payment .wc_payment_method .payment_box::before {
+    @apply dark:tw-border-b-gray-800;
+  }
+
+  .woocommerce-checkout #payment .wc_payment_method .payment_box table {
+    @apply dark:tw-text-white;
+  }
+
+  .woocommerce-checkout-payment .wc_payment_method .payment_box td,
+  .woocommerce-checkout-payment .wc_payment_method .payment_box th {
+    @apply  !tw-align-top tw-pr-2;
+  }
+
+  /* === PAYMENT METHOD ICON BUTTONS (aktif bila admin memilih "Icon Buttons") === */
+
+  .ypf-payment-icons #payment_method_select {
+    @apply !tw-hidden;
+  }
+
+  /* Sembunyikan radio secara agresif di mode icon buttons */
+  .ypf-payment-icons .woocommerce-checkout-payment .wc_payment_method>input[type="radio"],
+  .ypf-payment-icons .woocommerce-checkout-payment .wc_payment_method>input.input-radio {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .ypf-payment-icons .woocommerce-checkout-payment .wc_payment_method>label {
+    @apply !tw-flex !tw-flex-row !tw-justify-center !tw-items-center !tw-cursor-pointer !tw-transition-colors !tw-duration-200;
+    padding: 12px 28px !important;
+    height: 40px !important;
+    border: 1px solid #666666 !important;
+    border-radius: 6px !important;
+    box-sizing: border-box !important;
+    /* font-size: 0 menyembunyikan teks; <a> dan <img> di-reset agar em-unit icon tidak collapse */
+    font-size: 0 !important;
+    line-height: 0 !important;
+  }
+
+  .dark .ypf-payment-icons .woocommerce-checkout-payment .wc_payment_method>label {
+    border-color: #FFFFFF !important;
+  }
+
+  .dark .ypf-payment-icons .woocommerce-checkout-payment .wc_payment_method>label img {
+    filter: brightness(0) invert(1) !important;
+  }
+
+  .ypf-payment-icons .woocommerce-checkout-payment .wc_payment_methods {
+    @apply !tw-p-0 !tw-m-0 !tw-flex !tw-flex-row !tw-flex-wrap !tw-gap-2 !tw-list-none;
+    align-content: flex-start !important;
+  }
+
+  .ypf-payment-icons .woocommerce-checkout-payment .wc_payment_method {
+    display: contents !important;
+  }
+
+  /* Reset font-size pada <a> pembungkus icon agar height: 1.5em tidak collapse ke 0 */
+  .ypf-payment-icons .woocommerce-checkout-payment .wc_payment_method>label>a {
+    font-size: 14px !important;
+    line-height: normal !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  .ypf-payment-icons .woocommerce-checkout-payment .wc_payment_method>label img {
+    display: block !important;
+    height: 16px !important;
+    width: auto !important;
+    max-width: 80px !important;
+    font-size: 14px !important;
+  }
+  .ypf-payment-icons .woocommerce-checkout-payment .wc_payment_method>label img:not(:first-of-type) {
+    @apply !tw-hidden;
+  }
+
+  .ypf-payment-icons .woocommerce-checkout-payment .wc_payment_method:has(input[type="radio"]:checked)>label {
+    @apply !tw-border-yourpropfirm-primary;
+  }
+
+  .ypf-payment-icons .woocommerce-checkout #payment .wc_payment_method .payment_box {
+    order: 99 !important;
+    flex-basis: 100% !important;
+  }
+
+  /* =====================================================
+	 * 21. TERMS AND CONDITIONS COMPONENTS
+	 * ===================================================== */
+
+  /* Terms and Conditions - Light Mode */
+
+  .woocommerce-privacy-policy-text {
+    @apply tw-hidden;
+  }
+
+  .terms-conditions-section {
+    @apply tw-mt-0;
+  }
+
+  .terms-checkbox-wrapper {
+    @apply tw-flex tw-items-start tw-gap-3 tw-mb-0;
+  }
+
+  .new-user-agreements-wrapper { 
+    @apply tw-flex tw-flex-col tw-gap-[8px];
+  }
+
+
+  .terms-checkbox-wrapper .woocommerce-terms-and-conditions-checkbox-text {
+    @apply  !tw-text-sm;
+  }
+
+  .terms-checkbox-wrapper .woocommerce-terms-and-conditions-checkbox-text a {
+    @apply dark:!tw-text-white tw-underline tw-font-medium;
+  }
+
+  .terms-checkbox {
+    @apply tw-mt-1 tw-w-4 tw-h-4 tw-bg-transparent tw-border-gray-300 tw-rounded tw-flex-shrink-0 dark:tw-bg-transparent dark:tw-border-gray-600;
+    @apply focus:tw-ring-2;
+    color: var(--yourpropfirm-primary) !important;
+    --ring-color: var(--yourpropfirm-primary);
+  }
+
+  .terms-label {
+    @apply tw-text-sm tw-text-gray-600 tw-cursor-pointer tw-leading-relaxed dark:tw-text-gray-300;
+  }
+
+  .terms-link {
+    @apply tw-underline tw-font-medium;
+    color: var(--yourpropfirm-primary) !important;
+  }
+
+  .terms-link:hover {
+    color: var(--yourpropfirm-primary-hover) !important;
+  }
+
+  /* =====================================================
+	 * 22. PLACE ORDER BUTTON COMPONENTS
+	 * ===================================================== */
+
+  /* Place Order Button - Light Mode */
+  .place-order-section {
+    @apply tw-mt-0 tw-space-y-4;
+  }
+
+  .woocommerce-button.button.alt {
+    @apply btn-primary tw-flex tw-gap-2 tw-justify-center tw-items-center tw-w-full;
+  }
+
+  .place-order-btn-icon {
+    @apply tw-inline-block tw-size-4;
+  }
+
+  /* Place Order Button - Dark Mode */
+  /* Menggunakan CSS variables, tidak perlu override */
+
+  /* =====================================================
+	 * 23. AGREEMENT TEXT COMPONENTS
+	 * ===================================================== */
+
+  /* Agreement Text - Light Mode */
+  .agreement-text {
+    @apply tw-text-center;
+  }
+
+  .agreement-text p {
+    @apply caption-1 gray tw-font-normal;
+  }
+
+  /* .terms-checkbox-wrapper input:checked {
+    @apply tw-outline-yourpropfirm-primary tw-ring-2 tw-ring-offset-2;
+  } */
+
+  /* =====================================================
+	 * 24. SECURE CHECKOUT INDICATOR COMPONENTS
+	 * ===================================================== */
+
+  /* Secure Checkout Indicator - Light Mode */
+  .secure-checkout-indicator {
+    @apply tw-flex tw-items-center tw-justify-center tw-gap-2;
+  }
+
+  .secure-checkout-icon {
+    @apply tw-size-4 tw-text-yourpropfirm-success;
+  }
+
+  .secure-checkout-text {
+    @apply tw-text-xs tw-font-normal gray;
+  }
+
+  /* =====================================================
+	 * 25. YOURPROPFIRM CHECKOUT WRAPPER COMPONENTS
+	 * ===================================================== */
+
+  /* YourPropFirm Checkout Wrapper - Light Mode */
+  .yourpropfirm-checkout.woocommerce-override {
+    @apply tw-text-gray-900 tw-z-20 tw-relative dark:tw-text-white;
+  }
+
+  .checkout-container .background-placement {
+    @apply tw-fixed tw-w-[500px] tw-h-[500px] tw-z-[1];
+    direction: ltr;
+  }
+
+  .checkout-container .background-placement.background-bottom-left {
+    @apply tw-bottom-0 tw-left-0;
+  }
+
+  .checkout-container .background-placement.background-top-right {
+    @apply -tw-top-40 tw-right-60;
+  }
+
+  /* =====================================================
+	 * 26. UTILITY FIELD COMPONENTS
+	 * ===================================================== */
+
+  /* Utility Field - Light Mode */
+  .ypf_mt_version_field {
+    @apply tw-w-full;
+  }
+
+  /* Utility Field - Dark Mode */
+  /* Inherit dari light mode */
+
+  /* =====================================================
+	 * 27. WOOCOMMERCE OVERRIDE COMPONENTS
+	 * ===================================================== */
+
+  /* Hide Original WooCommerce Elements - Light Mode */
+  .order-summary .shop_table,
+  .order-summary .shop_table_responsive {
+    display: none !important;
+  }
+
+  /* Hide Duplicate WooCommerce Sections */
+  .checkout-grid .woocommerce-checkout-review-order:not(.order-summary .woocommerce-checkout-review-order) {
+    display: none !important;
+  }
+
+  #payment:not(.order-summary #payment) {
+    display: none !important;
+  }
+
+  .woocommerce-checkout>#order_review:not(.order-summary #order_review),
+  .woocommerce-checkout>.woocommerce-checkout-review-order:not(.order-summary .woocommerce-checkout-review-order),
+  .woocommerce-checkout>#payment:not(.order-summary #payment),
+  .woocommerce-checkout>.woocommerce-checkout-payment:not(.order-summary .woocommerce-checkout-payment) {
+    display: none !important;
+  }
+
+  .woocommerce-checkout #customer_details~#order_review,
+  .woocommerce-checkout #customer_details~.woocommerce-checkout-review-order,
+  .woocommerce-checkout #customer_details~#payment,
+  .woocommerce-checkout #customer_details~.woocommerce-checkout-payment {
+    display: none !important;
+  }
+
+  .wc_payment_methods:not(.order-summary .wc_payment_methods) {
+    display: none !important;
+  }
+
+  .woocommerce-form-coupon:not(.order-summary .woocommerce-form-coupon),
+  .checkout_coupon:not(.order-summary .checkout_coupon) {
+    display: none !important;
+  }
+
+  /* =====================================================
+	 * 28. FIELD ORDERING COMPONENTS
+	 * ===================================================== */
+
+  /* Billing Field Ordering - Light Mode */
+  
+  .yourpropfirm-checkout .woocommerce-billing-fields {
+    @apply !tw-p-0 !tw-m-0 !tw-border-none !tw-bg-transparent !tw-rounded-none;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row {
+    @apply tw-block tw-overflow-visible tw-clear-none !tw-mb-0 !tw-p-0;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row .yourpropfirm-checkout .woocommerce-billing-fields .form-row:before,
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row:after {
+    content: "" !important;
+    display: table !important;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row:after {
+    clear: both !important;
+  }
+
+  /* Field Priority Ordering */
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row[data-priority="10"] {
+    order: 1 !important;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row[data-priority="15"] {
+    order: 2 !important;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row[data-priority="20"] {
+    order: 3 !important;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row[data-priority="25"] {
+    order: 4 !important;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row[data-priority="30"] {
+    order: 5 !important;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row[data-priority="35"] {
+    order: 6 !important;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row[data-priority="40"] {
+    order: 7 !important;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row[data-priority="45"] {
+    order: 8 !important;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row[data-priority="50"] {
+    order: 9 !important;
+  }
+
+  .yourpropfirm-checkout .woocommerce-billing-fields .form-row[data-priority="55"] {
+    order: 10 !important;
+  }
+
+  /* =====================================================
+	 * 29. COMPREHENSIVE DARK MODE OVERRIDES
+	 * ===================================================== */
+
+  .order-summary .woocommerce-terms-and-conditions-wrapper {
+    @apply tw-space-y-3;
+  }
+
+  /* Dark Mode Terms and Conditions */
+  .order-summary .woocommerce-terms-and-conditions-wrapper input[type="checkbox"] {
+    @apply caption-1 tw-m-0;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  .order-summary .woocommerce-terms-and-conditions-wrapper label {
+    @apply caption-1;
+  }
+
+  .order-summary .woocommerce-terms-and-conditions-wrapper p {
+    @apply caption-1;
+  }
+
+  .order-summary .woocommerce-terms-and-conditions-wrapper a {
+    @apply caption-1 tw-underline;
+  }
+
+  /* =====================================================
+	 * 30. CHECKOUT FOLDER ADDITIONAL COMPONENTS
+	 * ===================================================== */
+
+  /* No Payment Methods Notice - Light Mode */
+  .no-payment-methods-notice {
+    @apply tw-p-4 tw-bg-yellow-50 tw-border tw-border-yellow-200 tw-rounded-md dark:tw-bg-yellow-900 dark:tw-border-yellow-700 dark:tw-text-yellow-200;
+  }
+
+  /* Hidden Place Order */
+  .place-order-hidden {
+    @apply tw-hidden;
+  }
+
+  /* Place Order Button Enhanced - Light Mode */
+  .place-order-btn-enhanced {
+    @apply tw-w-full tw-py-3 tw-px-6 tw-text-lg tw-font-semibold tw-rounded-lg tw-transition-all tw-duration-200;
+    @apply tw-bg-yourpropfirm-primary tw-text-white;
+    @apply hover:tw-opacity-90;
+    @apply focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-yourpropfirm-primary focus:tw-ring-offset-2;
+  }
+
+  /* Shipping Fields Wrapper - Light Mode */
+  .shipping-fields-wrapper {
+    @apply tw-space-y-4;
+  }
+
+  /* Additional Fields Section - Light Mode */
+  .additional-fields-section {
+    @apply tw-mt-6 tw-pt-6 tw-border-t tw-border-gray-200 dark:tw-border-gray-600;
+  }
+
+  /* Additional Fields Heading - Light Mode */
+  .additional-fields-heading {
+    @apply tw-text-lg tw-font-medium tw-text-gray-900 tw-mb-4 dark:tw-text-white;
+  }
+
+  /* Additional Fields Wrapper - Light Mode */
+  .additional-fields-wrapper {
+    @apply tw-space-y-4;
+  }
+
+  /* Order Discount Value - Light Mode */
+  .order-discount-value {
+    @apply tw-text-sm tw-font-medium tw-text-green-600 dark:tw-text-green-400;
+  }
+
+  .woocommerce-checkout #wpadminbar {
+    @apply  !tw-mt-0;
+  }
+
+  /* =====================================================
+	 * 31. ORDER RECEIVED
+	 * ===================================================== */
+
+  .woocommerce-order-received .woocommerce-override>.woocommerce {
+    @apply tw-w-full;
+  }
+
+  .woocommerce-order-received .woocommerce-order {
+    @apply tw-py-0 tw-space-y-8;
+  }
+
+  .woocommerce-order-received .woocommerce-notice {
+    @apply tw-text-center tw-bg-transparent tw-opacity-100 tw-space-y-2;
+  }
+
+  .woocommerce-order-received .woocommerce-notice h1 {
+    @apply heading-4;
+  }
+
+  .woocommerce-order-received .woocommerce-notice p {
+    @apply heading-5;
+  }
+
+  .woocommerce-order-received .woocommerce-notice p.information {
+    @apply caption-1 gray;
+  }
+
+  .woocommerce-order-received .yourpropfirm-dashboard {
+    @apply tw-max-w-xl tw-mx-auto tw-p-6 max-md:tw-px-4 tw-py-6 tw-rounded-md tw-border-gray-500 dark:tw-border-gray-600 tw-border tw-space-y-4 dark:tw-text-white !tw-mt-6;
+  }
+
+  .woocommerce-order-received .yourpropfirm-dashboard h2 {
+    @apply paragraph;
+  }
+
+  .woocommerce-order-received .yourpropfirm-dashboard p {
+    @apply caption-1;
+  }
+
+  .woocommerce-order-received .yourpropfirm-dashboard p span {
+    @apply caption-2 gray;
+  }
+
+  .woocommerce-order-received .yourpropfirm-dashboard .yourpropfirm-dashboard-button {
+    @apply tw-flex tw-flex-col tw-items-center tw-space-y-4;
+  }
+
+  .woocommerce-order-received .yourpropfirm-dashboard .yourpropfirm-dashboard-button a.button {
+    @apply btn-primary max-md:tw-w-full;
+  }
+
+  .woocommerce-order-received .yourpropfirm-dashboard .yourpropfirm-dashboard-button a.button:focus {
+    @apply tw-outline-none tw-ring-2 tw-ring-offset-2 tw-ring-yourpropfirm-primary;
+  }
+
+  .woocommerce-order-received .yourpropfirm-dashboard .yourpropfirm-dashboard-button p.yourpropfirm-dashboard-or {
+    @apply caption-2;
+  }
+
+  .woocommerce-order-received .yourpropfirm-dashboard .yourpropfirm-dashboard-button p.yourpropfirm-dashboard-or a {
+    @apply tw-underline;
+  }
+
+  /* =====================================================
+	 * 32. WOOCOMMERCE NOTIFICATION
+	 * ===================================================== */
+
+  .woocommerce-checkout .woocommerce-message,
+  .woocommerce-checkout .woocommerce-error,
+  .woocommerce-checkout .woocommerce-info {
+    @apply  !tw-border !tw-rounded-lg tw-py-3 tw-px-12;
+  }
+
+  .woocommerce-checkout .woocommerce-error {
+    @apply  !tw-text-message-error-color !tw-border-message-error-color !tw-bg-message-error-background;
+  }
+
+  .woocommerce-checkout .woocommerce-error a {
+    @apply  !tw-text-message-error-color;
+  }
+
+  .woocommerce-checkout .woocommerce-error::before {
+    @apply  !tw-text-message-error-color tw-top-3;
+  }
+
+  .woocommerce-checkout .woocommerce-message {
+    @apply  !tw-text-message-success-color !tw-border-message-success-color !tw-bg-message-success-background;
+  }
+
+  .woocommerce-checkout .woocommerce-message a {
+    @apply  !tw-text-message-success-color;
+  }
+
+  .woocommerce-checkout .woocommerce-message::before {
+    @apply  !tw-text-message-success-color tw-top-3;
+  }
+
+  .woocommerce-checkout .woocommerce-message .button.wc-forward {
+    @apply tw-hidden;
+  }
+
+  /* =====================================================
+	 * 33. PRODUCT SELECTION
+	 * ===================================================== */
+
+  /* Trading Platform Options - Light Mode */
+  .woocommerce-product-selection .product-selection-content,
+  .woocommerce-product-selection .product-selection-content .subcategory-sections-container {
+    @apply tw-flex tw-flex-col tw-gap-4;
+  }
+
+  .woocommerce-product-selection .product-selection-content .category-options {
+    @apply radio-options tw-flex-wrap;
+  }
+
+  .woocommerce-product-selection .product-selection-content .category-option {
+    @apply container-radio-option;
+   flex: 1 1 25%;
+  }
+
+  .woocommerce-product-selection .product-selection-content .category-option input[type="radio"] {
+    @apply box-radio-option;
+  }
+
+  .woocommerce-product-selection .product-selection-content .category-option .category-option-content {
+    @apply box-radio-label;
+  }
+
+  .woocommerce-product-selection .product-selection-content .category-option input[type="radio"]:checked+.category-option-content {
+    @apply box-radio-checked-label;
+  }
+
+  /* =====================================================
+	 * 33b. PRODUCT RADIO OPTIONS
+	 * ===================================================== */
+
+  .woocommerce-product-selection .product-radio-options {
+    @apply tw-grid tw-grid-cols-2 md:tw-grid-cols-3 tw-gap-3;
+  }
+
+  .woocommerce-product-selection .product-option {
+    @apply tw-cursor-pointer tw-block tw-h-full;
+  }
+
+  .woocommerce-product-selection .product-option input[type="radio"] {
+    @apply tw-sr-only;
+  }
+
+  .woocommerce-product-selection .product-option .product-option-content {
+    @apply tw-relative tw-flex tw-flex-col tw-justify-between tw-h-full tw-border tw-border-solid tw-rounded-lg tw-border-gray-600 dark:tw-border-gray-600 tw-bg-transparent tw-p-4 tw-transition-all tw-duration-200 tw-p-2 tw-gap-y-1;
+  }
+
+  .woocommerce-product-selection .product-option .product-option-content:hover {
+    @apply tw-border-yourpropfirm-primary;
+  }
+
+  .woocommerce-product-selection .product-option .product-option-name {
+    @apply tw-text-sm tw-font-medium tw-text-gray-600 dark:tw-text-white;
+  }
+
+  .woocommerce-product-selection .product-option .product-option-price-badge {
+    @apply tw-self-end tw-inline-flex tw-items-center tw-rounded-full tw-px-3 tw-py-1 tw-text-sm tw-font-medium;
+    background-color: var(--yourpropfirm-primary);
+    color: var(--yourpropfirm-button-text);
+  }
+
+  .woocommerce-product-selection .product-option .product-option-popular-badge {
+    @apply tw-absolute tw-top-2 tw-end-2 tw-inline-flex tw-items-center tw-rounded-full tw-px-2 tw-py-0.5 tw-text-xs tw-font-medium;
+    background-color: var(--yourpropfirm-primary);
+    color: var(--yourpropfirm-button-text);
+  }
+
+  .woocommerce-product-selection .product-option input[type="radio"]:checked + .product-option-content {
+    @apply tw-border-yourpropfirm-primary;
+  }
+
+  .woocommerce-product-selection .product-option input[type="radio"]:checked + .product-option-content .product-option-name {
+    color: var(--yourpropfirm-primary);
+  }
+
+  /* =====================================================
+	 * 34b. PRODUCT VARIANT ATTRIBUTE SELECTION
+	 * ===================================================== */
+
+  .container-product-variants {
+    @apply tw-mt-4;
+  }
+
+  .woocommerce-product-variants .variant-attribute-group {
+    @apply tw-mb-4;
+  }
+
+  .woocommerce-product-variants .variant-attribute-group:last-child {
+    @apply tw-mb-0;
+  }
+
+  .woocommerce-product-variants .variant-attribute-options {
+    @apply tw-flex tw-flex-row tw-flex-wrap tw-gap-2;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option {
+    @apply tw-cursor-pointer tw-block;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option input[type="radio"] {
+    @apply tw-sr-only;
+  }
+
+  /* --- Boxed style (default, no badge/description) --- */
+
+  .woocommerce-product-variants .variant-attribute-option .variant-attribute-label {
+    @apply tw-inline-block tw-rounded-lg tw-border tw-border-solid tw-border-gray-600 tw-bg-transparent tw-py-3 tw-px-4 tw-text-sm tw-font-semibold tw-text-gray-600 tw-transition-all tw-duration-200 tw-ease-in-out dark:tw-border-white dark:tw-text-white;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option .variant-attribute-label:hover {
+    @apply tw-border-yourpropfirm-primary dark:tw-border-yourpropfirm-primary;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option input[type="radio"]:checked + .variant-attribute-label {
+    @apply tw-border-yourpropfirm-primary tw-bg-yourpropfirm-primary tw-text-yourpropfirm-button-text;
+  }
+
+  /* --- Wide style (with badge/description) --- */
+
+  .woocommerce-product-variants .variant-attribute-option--wide {
+    @apply tw-w-full;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-content {
+    @apply tw-flex tw-flex-col tw-gap-1 tw-rounded-lg tw-border tw-border-solid tw-border-gray-600 tw-bg-transparent tw-py-3 tw-px-4 tw-transition-all tw-duration-200 tw-ease-in-out dark:tw-border-white;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-content:hover {
+    @apply tw-border-yourpropfirm-primary dark:tw-border-yourpropfirm-primary;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-header {
+    @apply tw-flex tw-items-center tw-gap-2 tw-justify-between;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-name {
+    @apply tw-text-sm tw-font-semibold tw-text-gray-600 dark:tw-text-white;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-badge {
+    @apply tw-inline-flex tw-items-center tw-rounded-full tw-bg-yourpropfirm-primary tw-text-yourpropfirm-button-text tw-px-2 tw-py-0.5 tw-text-xs tw-font-medium tw-text-center;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-description {
+    @apply tw-text-xs tw-text-gray-500 dark:tw-text-gray-600;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option--wide input[type="radio"]:checked + .variant-attribute-content,
+  .woocommerce-product-variants .variant-attribute-option--wide:hover .variant-attribute-content {
+    @apply tw-border-yourpropfirm-primary;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option--wide:hover .variant-attribute-content .variant-attribute-name {
+    @apply dark:tw-text-white tw-text-yourpropfirm-primary;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option--wide input[type="radio"]:checked + .variant-attribute-content .variant-attribute-name {
+    @apply tw-text-yourpropfirm-primary dark:tw-text-yourpropfirm-primary;
+  }
+
+  .woocommerce-product-variants .variant-attribute-option--wide input[type="radio"]:checked + .variant-attribute-content .variant-attribute-description,
+  .woocommerce-product-variants .variant-attribute-option--wide:hover .variant-attribute-content .variant-attribute-description {
+    @apply dark:tw-text-white tw-text-gray-600;
+  }
+
+  /* =====================================================
+	 * 35. RESET PRODUCT IN CHECKOUT
+	 * ===================================================== */
+
+  body.yourpropfirm-has-reset-product .hide-if-reset-product,
+  body.yourpropfirm-has-renewal-subscription .hide-if-renewal-subscription,
+  body.yourpropfirm-has-competition-product .hide-if-competition,
+  body.yourpropfirm-product-is-free-trial .hide-if-trial-product,
+  body.yourpropfirm-product-is-free-trial .payment-section,
+  body.yourpropfirm-product-is-free-trial .coupon-section {
+    @apply  !tw-hidden;
+  }
+}
+
+/**
+ * Utilities untuk override WordPress/WooCommerce styles
+ */
+@layer utilities {
+
+  /* Force override untuk elemen WooCommerce */
+  .woocommerce-override {
+    @apply  !tw-font-sans;
+  }
+
+  /* Responsive helpers */
+  .checkout-responsive {
+    @apply tw-block md:tw-flex;
+  }
+
+  /* Accessibility helpers */
+  .sr-only {
+    @apply tw-sr-only;
+  }
+
+  #order_review_heading,
+  .woocommerce-checkout-review-order {
+    @apply  !tw-w-full !tw-float-none;
+  }
+}
+
+/* =====================================================
+	 * 30. THANK YOU PAGE COMPONENTS
+	 * ===================================================== */
+
+/* Thank You Grid Layout - Light Mode */
+
+.thankyou-order-billing-container {
+  @apply tw-flex tw-gap-4 tw-flex-col md:tw-flex-row tw-w-full;
+}
+
+.thankyou-grid {
+  @apply tw-w-full tw-max-w-6xl tw-justify-center tw-place-self-center tw-flex tw-gap-4 tw-flex-col !tw-my-10;
+}
+
+/* Thank You Card Base - Light Mode */
+.thankyou-order-card {
+  @apply card;
+}
+
+/* Order Summary Header - Light Mode */
+.thankyou-order-card-header {
+  @apply heading-6 tw-mb-3;
+}
+
+/* Order Overview Grid - Light Mode */
+.thankyou-order-overview {
+  @apply tw-flex tw-w-full tw-flex-col;
+}
+
+.thankyou-order-overview .thankyou-order-overview-holder {
+  @apply tw-grid md:tw-grid-cols-4 tw-grid-cols-1;
+}
+
+/* Order Overview Item - Light Mode */
+.thankyou-order-overview-item {
+  @apply tw-border-solid tw-border-s tw-border-gray-200 tw-ps-4 dark:tw-border-black tw-pe-4 first:tw-border-0 first:tw-ps-0 last:tw-border-e-0 last:tw-pe-0;
+  @apply max-md:tw-border-none max-md:tw-p-0 max-md:tw-space-y-4;
+}
+
+/* Order Overview Label - Light Mode */
+.thankyou-order-overview-label {
+  @apply caption-2 gray tw-mb-1 tw-block;
+}
+
+/* Order Overview Value - Light Mode */
+.thankyou-order-overview-value {
+  @apply caption-1;
+}
+
+/* Status Badge Pending - Light Mode */
+.thankyou-status-badge.pending {
+  @apply badge-warning;
+}
+
+/* Status Badge Completed - Light Mode */
+.thankyou-status-badge.completed {
+  @apply badge-success;
+}
+
+/* Status Badge Failed - Light Mode */
+.thankyou-status-badge.failed {
+  @apply badge-error;
+}
+
+/* Order Details Section - Light Mode */
+.thankyou-order-summary {
+  @apply  !tw-space-y-0 tw-w-full md:tw-w-[65%] tw-shrink-0;
+}
+
+.thankyou-order-summary h2 {
+  @apply heading-6;
+}
+
+/* Order Details Row - Light Mode */
+.thankyou-order-details-row {
+  @apply tw-flex tw-justify-between tw-items-center tw-py-3 tw-border-b tw-border-gray-100 dark:tw-border-black;
+}
+
+/* Order Details Row Last - Light Mode */
+.thankyou-order-details-row:last-child {
+  @apply tw-border-0;
+}
+
+/* Order Details Label - Light Mode */
+.thankyou-order-details-label {
+  @apply paragraph;
+}
+
+/* Order Details Value - Light Mode */
+.thankyou-order-details-value {
+  @apply paragraph;
+}
+
+/* Total Amount - Light Mode */
+.thankyou-total-amount {
+  @apply heading-6 tw-text-yourpropfirm-primary dark:tw-text-yourpropfirm-primary;
+}
+
+.thankyou-billing-address h2 {
+  @apply tw-mb-6 tw-shrink-0 tw-w-full;
+}
+
+/* Billing Address Section - Light Mode */
+.thankyou-billing-address {
+  @apply tw-space-y-6 tw-w-full;
+}
+
+.thankyou-billing-address .billing-details {
+  @apply tw-flex tw-items-start;
+}
+
+/* Billing Address Header - Light Mode */
+.thankyou-billing-address-header {
+  @apply tw-text-xl tw-font-semibold tw-text-gray-900 tw-mb-4 dark:tw-text-white;
+}
+
+/* Address Icon - Light Mode */
+.thankyou-billing-icon {
+  @apply tw-inline-flex tw-items-center tw-justify-center tw-size-5 tw-me-2 tw-text-yourpropfirm-primary tw-mt-1;
+}
+
+/* Address Text - Light Mode */
+.thankyou-address-text {
+  @apply tw-text-base tw-text-gray-600 dark:tw-text-white;
+}
+
+/* Phone Text - Light Mode */
+.thankyou-phone-text {
+  @apply paragraph tw-mt-1;
+}
+
+/* Thank You Body Styling - Light Mode */
+body.thankyou-body {
+  @apply tw-bg-gray-50;
+  margin: 0;
+  padding: 0;
+}
+
+/* Thank You Body Styling - Dark Mode */
+body.thankyou-body.dark {
+  @apply  !tw-bg-gray-900;
+}
+
+/* Thank You Page Footer Text - Light Mode */
+.thankyou-footer-text {
+  @apply tw-text-sm tw-text-gray-500 tw-text-center tw-mt-8 dark:tw-text-gray-400;
+}
+
+/**
+ * Base styles untuk override theme
+ */
+@layer base {
+  .yourpropfirm-checkout * {
+    box-sizing: border-box;
+  }
+
+  .yourpropfirm-checkout {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    @apply tw-text-gray-700;
+  }
+
+  .yourpropfirm-thankyou * {
+    box-sizing: border-box;
+    @apply tw-pt-0;
+  }
+
+  .yourpropfirm-thankyou {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    @apply tw-text-gray-700;
+  }
+}
+
+/* Override Error WooCommerce inline styling */
+
+.woocommerce-invalid p {
+  @apply  !tw-text-yourpropfirm-error caption-2 tw-mt-1;
+}
+
+.woocommerce-invalid:has(p) input {
+  @apply  !tw-border-yourpropfirm-error focus:tw-ring-yourpropfirm-error;
+}
+
+/* =====================================================
+	 * 31. 3RD PARTY PLUGIN STYLES
+	 * ===================================================== */
+
+.checkout-body .weglot-container {
+  /* @apply !tw-hidden; */
+}
+
+#payment .payment_methods li .payment_box .woocommerce-SavedPaymentMethods li input[type=radio] {
+  @apply  !tw-w-4 !tw-h-4;
+}
+
+.woocommerce-notices-wrapper {
+  /* Rendered after the checkout form so Triple A and other JS-injected
+     validation errors appear below the form. Empty by default (zero height). */
+}
+
+.woocommerce-notices-wrapper:not(:empty) {
+  @apply tw-mt-6;
+}
+
+.iframe-mode .woocommerce-thankyou-order-received {
+  @apply tw-mt-12;
+}
+
+.iframe-mode .yourpropfirm-dashboard-button,
+.iframe-mode .background-placement,
+.iframe-mode .checkout-header-container {
+  @apply  !tw-hidden;
+}
+
+.hide-on-iframe {
+  @apply  !tw-inline-block;
+}
+
+.show-on-iframe {
+  @apply  !tw-hidden;
+}
+
+.iframe-mode .show-on-iframe {
+  @apply  !tw-inline-block;
+}
+
+.iframe-mode .hide-on-iframe {
+  @apply  !tw-hidden;
+}
+
+#wc-stripe-express-checkout-button-separator {
+  @apply tw-my-6;
+}
+
+.country-restriction-notice {
+  @apply alert-warning tw-flex tw-flex-col tw-gap-2;
+}
+.country-restriction-notice-wrapper {
+  @apply tw-flex tw-gap-2 tw-items-center;
+}
+
+/* =====================================================
+ * SELECTWOO / SELECT2 - BILLING COUNTRY FIELD
+ * ===================================================== */
+
+/* Hide original select when selectWoo is active */
+#billing_country + .select2-container {
+  width: 100% !important;
+}
+
+/* Trigger button */
+.select2-container--default .select2-selection--single {
+  @apply !tw-h-11 tw-rounded-md tw-border tw-border-solid tw-border-gray-600 tw-bg-transparent tw-outline-none;
+  @apply tw-flex tw-items-center;
+}
+
+.dark .select2-container--default .select2-selection--single {
+  @apply tw-border-gray-600;
+}
+
+/* Rendered text inside trigger */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  @apply tw-text-gray-600 tw-text-base tw-leading-5 tw-px-3;
+  line-height: 2.75rem !important;
+}
+
+.dark .select2-container--default .select2-selection--single .select2-selection__rendered {
+  @apply tw-text-white;
+}
+
+/* Dropdown arrow */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  @apply tw-h-full tw-flex tw-items-center;
+  top: 0 !important;
+  right: 0.75rem !important;
+  width: 1.25rem !important;
+}
+
+/* Focus ring */
+.select2-container--default.select2-container--focus .select2-selection--single,
+.select2-container--default.select2-container--open .select2-selection--single {
+  @apply tw-ring-1 tw-ring-gray-600;
+}
+
+.dark .select2-container--default.select2-container--focus .select2-selection--single,
+.dark .select2-container--default.select2-container--open .select2-selection--single {
+  @apply tw-ring-white tw-border-white;
+}
+
+/* Dropdown panel */
+.select2-dropdown {
+  @apply tw-border tw-border-solid tw-border-gray-600 tw-rounded-md tw-bg-white tw-shadow-lg tw-z-[99999];
+}
+
+.dark .select2-dropdown {
+  @apply tw-border-white tw-bg-gray-900;
+}
+
+/* Search field inside dropdown */
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  @apply !tw-h-9 tw-px-3 tw-py-2 tw-text-sm tw-border-gray-300 tw-rounded tw-bg-white tw-text-gray-700;
+}
+
+.dark .select2-container--default .select2-search--dropdown .select2-search__field {
+  @apply tw-border-gray-600 tw-bg-gray-800 tw-text-white;
+}
+
+/* Options */
+.select2-results__option {
+  @apply tw-text-gray-700 tw-text-sm tw-px-3 tw-py-2;
+}
+
+.dark .select2-results__option {
+  @apply tw-text-gray-200;
+}
+
+/* Highlighted / hovered option */
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  background-color: var(--yourpropfirm-primary) !important;
+  @apply tw-text-white;
+}
+
+/* Selected option */
+.select2-container--default .select2-results__option--selected {
+  background-color: var(--yourpropfirm-primary-50) !important;
+  @apply tw-text-gray-700;
+}
+
+.dark .select2-container--default .select2-results__option--selected {
+  @apply tw-text-white;
+}
+/* =====================================================
+ * AFFILIATE INFO CARD COMPONENT
+ * ===================================================== */
+
+.affiliate-info-card {
+  @apply tw-mt-3 tw-rounded-md tw-py-3.5 tw-px-4;
+  background:
+    linear-gradient(
+      131.84deg,
+      color-mix(in srgb, var(--yourpropfirm-primary) 15%, transparent) 0%,
+      transparent 50%,
+      color-mix(in srgb, var(--yourpropfirm-primary) 15%, transparent) 99.83%
+    ),
+    #ffffff;
+  border: 1px solid color-mix(in srgb, var(--yourpropfirm-primary) 25%, transparent);
+}
+
+.affiliate-info-label {
+  @apply tw-flex tw-items-center tw-gap-1.5 tw-text-xs tw-font-medium tw-mb-[0.3rem];
+  color: var(--yourpropfirm-primary);
+}
+
+.affiliate-info-label svg {
+  @apply tw-w-3.5 tw-h-3.5 tw-shrink-0;
+}
+
+.affiliate-info-name {
+  @apply tw-text-lg tw-font-semibold tw-leading-[1.4];
+  color: var(--yourpropfirm-primary, #111827);
+  font-family: 'Inter', sans-serif;
+}
+
+.dark .affiliate-info-card {
+  @apply tw-border-0;
+  background:
+    linear-gradient(
+      131.84deg,
+      color-mix(in srgb, var(--yourpropfirm-primary) 30%, transparent) 0%,
+      transparent 50%,
+      color-mix(in srgb, var(--yourpropfirm-primary) 30%, transparent) 99.83%
+    ),
+    var(--yourpropfirm-dark-bg-primary, #0f0f0f);
+  box-shadow:
+    -4px -4px 12px 4px color-mix(in srgb, var(--yourpropfirm-primary) 50%, transparent),
+    4px 4px 12px 4px color-mix(in srgb, var(--yourpropfirm-primary) 50%, transparent);
+}
+
+.dark .affiliate-info-name {
+  @apply tw-text-white;
+  font-family: 'Inter', sans-serif;
+}

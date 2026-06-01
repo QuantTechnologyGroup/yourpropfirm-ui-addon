@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+build/node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# NOTE: dist/css/checkout.css is intentionally tracked.
+# The plugin consumer requires the compiled artifact — do not add it here.
