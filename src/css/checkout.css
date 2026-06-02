@@ -1958,7 +1958,11 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 /* ---- Header logo (FUNDEDBIT, top-left) ---- */
 .woocommerce-checkout .checkout-logo {
   justify-content: flex-start !important;
+  /* zero BOTH vertical margins: on mobile .checkout-logo gets max-md:tw-my-8,
+   * which pushed the logo below the vertically-centered controls. */
+  margin-top: 0 !important;
   margin-bottom: 0 !important;
+  align-items: center;
 }
 .ypf-brand-logo {
   @apply tw-inline-flex tw-items-center;
