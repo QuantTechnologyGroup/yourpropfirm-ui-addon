@@ -79,34 +79,37 @@
     });
   }
 
+  // Arrow icon kept on the Next button (the multistep JS wipes it via textContent).
+  var ARROW_SVG =
+    '<svg class="ypf-nav-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+
+  function applyNavLabel() {
+    var nextBtn = document.querySelector("[data-checkout-step-next]");
+    if (!nextBtn || nextBtn.disabled) return; // don't clobber the loading state
+    var m = location.hash.match(/step=(\d)/);
+    var label = m && m[1] === "2" ? payLabel : continueLabel;
+    nextBtn.innerHTML = "<span>" + label + "</span>" + ARROW_SVG;
+  }
+
   function bindNavLabel() {
     var nextBtn = document.querySelector("[data-checkout-step-next]");
     if (!nextBtn) return;
 
     // Best effort: nudge the multistep label object (it computes NEXT_LABELS
-    // once at parse time, so we also re-apply the text after each step change).
+    // once at parse time, so we also re-apply the label after each step change).
     if (window.ypfMultistep && window.ypfMultistep.labels) {
       window.ypfMultistep.labels.enterBillingDetails = continueLabel;
       window.ypfMultistep.labels.payAndGetAccess = payLabel;
     }
 
-    function currentStep() {
-      var m = location.hash.match(/step=(\d)/);
-      return m ? m[1] : "1";
-    }
-    function applyLabel() {
-      if (nextBtn.disabled) return; // don't clobber the loading state
-      nextBtn.textContent = currentStep() === "2" ? payLabel : continueLabel;
-    }
-
-    applyLabel();
+    applyNavLabel();
     // Run after the multistep handler (which also sets the text on hashchange).
     window.addEventListener("hashchange", function () {
-      setTimeout(applyLabel, 0);
+      setTimeout(applyNavLabel, 0);
     });
     if (window.jQuery) {
       window.jQuery(document.body).on("updated_checkout", function () {
-        setTimeout(applyLabel, 0);
+        setTimeout(applyNavLabel, 0);
       });
     }
   }
@@ -117,13 +120,7 @@
     bindNavLabel();
     updateSummary();
     // Re-apply the label shortly after load in case multistep init runs later.
-    setTimeout(function () {
-      var nextBtn = document.querySelector("[data-checkout-step-next]");
-      if (nextBtn && !nextBtn.disabled) {
-        var m = location.hash.match(/step=(\d)/);
-        nextBtn.textContent = (m && m[1] === "2") ? payLabel : continueLabel;
-      }
-    }, 50);
+    setTimeout(applyNavLabel, 50);
   }
 
   if (document.readyState === "loading") {

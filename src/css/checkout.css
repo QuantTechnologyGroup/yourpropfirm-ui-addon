@@ -1965,6 +1965,18 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   display: block;
 }
 
+/* ---- Header controls: theme toggle on the LEFT, language on the RIGHT ----
+ * DOM order is [language][toggle]; row-reverse flips it to [toggle][language]
+ * to match the design. Borders softened to the subtle brand border. */
+.woocommerce-checkout .dark-mode-toggle-container {
+  flex-direction: row-reverse;
+}
+.woocommerce-checkout .dark-mode-toggle,
+.woocommerce-checkout .yourpropfirm-lang-select,
+.woocommerce-checkout .select-trigger {
+  border-color: var(--yourpropfirm-border) !important;
+}
+
 /* ---- Stepper ---- */
 .ypf-stepper {
   @apply tw-mb-8 tw-mt-2;
@@ -1998,15 +2010,20 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 .ypf-stepper .checkout-step-indicator__text {
   @apply tw-flex tw-flex-col tw-leading-tight;
 }
+/* design has no "You are here / Next step" hint line */
 .ypf-stepper .checkout-step-indicator__hint {
-  @apply tw-text-xs;
-  color: var(--yourpropfirm-secondary-text);
+  display: none;
 }
 .ypf-stepper .checkout-step-indicator__label {
   @apply tw-text-sm tw-font-semibold;
   color: var(--yourpropfirm-text);
 }
-.ypf-stepper .checkout-step-indicator__item.is-active .checkout-step-indicator__number,
+/* active = green outline ring + green number; completed = solid green */
+.ypf-stepper .checkout-step-indicator__item.is-active .checkout-step-indicator__number {
+  border-color: var(--yourpropfirm-primary);
+  background: transparent;
+  color: var(--yourpropfirm-primary);
+}
 .ypf-stepper .checkout-step-indicator__item.is-completed .checkout-step-indicator__number {
   border-color: var(--yourpropfirm-primary);
   background: var(--yourpropfirm-primary);
@@ -2081,16 +2098,16 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   color: var(--yourpropfirm-text);
 }
 
-/* shared radio-dot indicator */
+/* shared radio-dot indicator — shown ONLY on the selected option (per design) */
 .ypf-radio-dot {
   @apply tw-relative tw-shrink-0 tw-rounded-full;
   width: 1.15rem;
   height: 1.15rem;
-  border: 2px solid var(--yourpropfirm-border);
-  transition: border-color 0.15s ease;
+  display: none;
 }
 :is(.ypf-eval-option, .ypf-balance-option, .ypf-platform-option):has(:checked) .ypf-radio-dot {
-  border-color: var(--yourpropfirm-primary);
+  display: block;
+  border: 2px solid var(--yourpropfirm-primary);
 }
 :is(.ypf-eval-option, .ypf-balance-option, .ypf-platform-option):has(:checked) .ypf-radio-dot::after {
   content: "";
@@ -2236,13 +2253,19 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 .checkout-step-nav {
   @apply tw-flex tw-gap-3 tw-mt-5;
 }
-.checkout-step-nav .ypf-nav-next { @apply tw-flex-1; }
+.checkout-step-nav .ypf-nav-next {
+  @apply tw-flex-1 tw-inline-flex tw-items-center tw-justify-center tw-gap-2;
+}
 .checkout-step-nav .ypf-nav-prev { @apply tw-flex-1; }
+.ypf-secure-checkout {
+  @apply tw-flex tw-items-center tw-justify-center tw-gap-1.5 tw-mt-3 tw-text-xs;
+  color: var(--yourpropfirm-secondary-text);
+}
 
-/* ---- We Accept (placeholder chips) ---- */
+/* ---- We Accept (placeholder chips, boxed) ---- */
 .ypf-we-accept {
-  @apply tw-mt-5 tw-pt-5;
-  border-top: 1px solid var(--yourpropfirm-border);
+  @apply tw-mt-5 tw-p-4 tw-rounded-xl;
+  border: 1px solid var(--yourpropfirm-border);
 }
 .ypf-we-accept__label {
   @apply tw-block tw-text-xs tw-font-medium tw-mb-3;
@@ -2276,6 +2299,11 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 }
 
 /* ---- TOS agreement (step 2) ---- */
+/* Ensure step-specific sidebar panels honour the [hidden] attribute even though
+ * their display is set via classes (otherwise the step-2 TOS shows on step 1). */
+.order-summary [data-sidebar-step][hidden] {
+  display: none !important;
+}
 .ypf-step-agreements {
   @apply tw-mt-4 tw-flex tw-gap-2 tw-items-start;
 }
