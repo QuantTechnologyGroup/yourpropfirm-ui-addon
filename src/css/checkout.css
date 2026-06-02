@@ -1948,8 +1948,8 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   margin-right: calc(50% - 50vw) !important;
   padding-left: clamp(0.75rem, 2vw, 1.5rem) !important;
   padding-right: clamp(0.75rem, 2vw, 1.5rem) !important;
-  padding-top: 0.6rem !important;
-  padding-bottom: 0.9rem !important;
+  padding-top: clamp(0.75rem, 2vw, 1.5rem) !important;
+  padding-bottom: clamp(0.75rem, 2vw, 1.5rem) !important;
   margin-bottom: 3rem;
   border-bottom: 1px solid var(--yourpropfirm-border);
   box-sizing: border-box;
@@ -1978,9 +1978,9 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
    * ignores the header's padding), so inset it explicitly to match the logo. */
   right: clamp(0.75rem, 2vw, 1.5rem) !important;
 }
-/* Modest space above the header (was a large container top padding). */
+/* Header sits near the top; its own (uniform) padding provides the inset. */
 .woocommerce-checkout .checkout-container {
-  padding-top: 1.25rem !important;
+  padding-top: 0 !important;
 }
 .woocommerce-checkout .dark-mode-toggle,
 .woocommerce-checkout .yourpropfirm-lang-select,
@@ -2056,7 +2056,7 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 
 /* ---- Step titles (centered, above BOTH columns) ---- */
 .ypf-step-titles {
-  margin-bottom: 2.5rem;
+  margin-bottom: 3.5rem;
 }
 .ypf-step-header {
   @apply tw-text-center;
@@ -2320,8 +2320,8 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
  * doesn't hug the content. */
 .ypf-trust-badges {
   position: relative;
-  margin-top: 6rem;
-  padding-top: 3rem;
+  margin-top: 8rem;
+  padding-top: 3.5rem;
 }
 .ypf-trust-badges::before {
   content: "";
