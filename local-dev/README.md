@@ -83,6 +83,11 @@ handles them, but if you set up by hand, you need all three:
    in the YPF checkout; it needs `_yourpropfirm_selection_type`,
    `_yourpropfirm_program_id`, `_yourpropfirm_trading_options`. `setup.sh` adds
    them to the test product.
+4. **Classic checkout shortcode, not the block.** Modern WooCommerce defaults
+   the checkout page to the React *Checkout block*, which ignores the plugin's
+   (and this add-on's) PHP templates entirely. `setup.sh` sets the checkout page
+   content to `[woocommerce_checkout]` and enables the multi-step + product
+   selection theme options so the FundedBot wizard renders.
 
 Light vs dark: append `?theme=dark` or `?theme=light` to any checkout URL.
 

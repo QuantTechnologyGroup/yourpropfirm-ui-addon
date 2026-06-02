@@ -43,6 +43,17 @@ echo "==> Pretty permalinks (required — /checkout/ must resolve)…"
 wp rewrite structure '/%postname%/' --hard >/dev/null
 wp rewrite flush --hard >/dev/null
 
+echo "==> Force the CLASSIC checkout shortcode (the plugin's PHP templates are"
+echo "    ignored by the WooCommerce block checkout)…"
+CHECKOUT_ID="$(wp option get woocommerce_checkout_page_id 2>/dev/null || echo 7)"
+wp post update "$CHECKOUT_ID" --post_content='[woocommerce_checkout]' >/dev/null
+
+echo "==> Enable multi-step wizard + product selection (Carbon theme options)…"
+wp option update _yourpropfirm_checkout_enable_multi_step "yes" >/dev/null
+wp option update _yourpropfirm_checkout_enable_product_selection "yes" >/dev/null
+wp option update _yourpropfirm_checkout_display_product_as_radio "yes" >/dev/null
+wp option update _yourpropfirm_checkout_product_display_account_size "yes" >/dev/null
+
 echo "==> Sample product (id 10) with YPF program meta…"
 if ! wp post list --post_type=product --field=ID 2>/dev/null | grep -qx 10; then
   wp wc product create --name="Test Challenge" --type=simple \

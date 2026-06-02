@@ -1871,3 +1871,272 @@ body.thankyou-body.dark {
   @apply tw-text-white;
   font-family: 'Inter', sans-serif;
 }
+
+/* =====================================================================
+ * FUNDEDBOT MULTI-STEP WIZARD
+ * Stepper, step headers, "Choose Your Challenge" selectors, dark inputs,
+ * nav buttons, We-Accept chips and trust badges. Plain CSS (not @apply)
+ * so explicit !important wins over the host theme's form styles.
+ * ===================================================================== */
+
+/* ---- Dark form inputs (beat the host theme's white inputs) ---- */
+body.woocommerce-checkout .ypf-checkout-wizard :is(
+    input[type="text"], input[type="email"], input[type="tel"],
+    input[type="password"], input[type="number"], input[type="search"],
+    input[type="url"], textarea, select),
+body.woocommerce-checkout .order-summary :is(
+    input[type="text"], input[type="email"], input[type="number"], select) {
+  background-color: #0a110d !important;
+  border: 1px solid var(--yourpropfirm-border) !important;
+  color: var(--yourpropfirm-text) !important;
+  border-radius: 0.5rem !important;
+}
+body.woocommerce-checkout .ypf-checkout-wizard :is(input, textarea)::placeholder {
+  color: var(--yourpropfirm-secondary-text) !important;
+  opacity: 1;
+}
+body.woocommerce-checkout .ypf-checkout-wizard :is(input, textarea, select):focus {
+  border-color: var(--yourpropfirm-primary) !important;
+  box-shadow: 0 0 0 2px rgba(22, 201, 90, 0.25) !important;
+  outline: none !important;
+}
+body.woocommerce-checkout .ypf-checkout-wizard select option {
+  background-color: #0a110d;
+  color: var(--yourpropfirm-text);
+}
+
+/* ---- Stepper ---- */
+.ypf-stepper {
+  @apply tw-mb-8 tw-mt-2;
+}
+.ypf-stepper .checkout-step-indicator__list {
+  @apply tw-flex tw-items-center tw-justify-center tw-gap-2 tw-p-0 tw-m-0 tw-list-none;
+}
+.ypf-stepper .checkout-step-indicator__item {
+  @apply tw-flex tw-items-center tw-gap-3;
+  color: var(--yourpropfirm-secondary-text);
+}
+/* connector line after first item */
+.ypf-stepper .checkout-step-indicator__item:not(:last-child)::after {
+  content: "";
+  @apply tw-block tw-h-px tw-mx-3;
+  width: clamp(40px, 8vw, 110px);
+  background: var(--yourpropfirm-border);
+}
+.ypf-stepper .checkout-step-indicator__item.is-completed:not(:last-child)::after {
+  background: linear-gradient(90deg, var(--yourpropfirm-progressbar-from), var(--yourpropfirm-progressbar-to));
+}
+.ypf-stepper .checkout-step-indicator__number {
+  @apply tw-flex tw-items-center tw-justify-center tw-rounded-full tw-text-sm tw-font-semibold tw-shrink-0;
+  width: 2rem;
+  height: 2rem;
+  border: 1.5px solid var(--yourpropfirm-border);
+  background: var(--yourpropfirm-card);
+  color: var(--yourpropfirm-secondary-text);
+  transition: all 0.2s ease;
+}
+.ypf-stepper .checkout-step-indicator__text {
+  @apply tw-flex tw-flex-col tw-leading-tight;
+}
+.ypf-stepper .checkout-step-indicator__hint {
+  @apply tw-text-xs;
+  color: var(--yourpropfirm-secondary-text);
+}
+.ypf-stepper .checkout-step-indicator__label {
+  @apply tw-text-sm tw-font-semibold;
+  color: var(--yourpropfirm-text);
+}
+.ypf-stepper .checkout-step-indicator__item.is-active .checkout-step-indicator__number,
+.ypf-stepper .checkout-step-indicator__item.is-completed .checkout-step-indicator__number {
+  border-color: var(--yourpropfirm-primary);
+  background: var(--yourpropfirm-primary);
+  color: var(--yourpropfirm-button-text);
+}
+.ypf-stepper .checkout-step-indicator__item.is-active .checkout-step-indicator__label {
+  color: var(--yourpropfirm-primary);
+}
+
+/* ---- Step header ----
+ * Neutralise the legacy single-page reordering (.checkout-form-left
+ * .checkout-card>*:first-child{order:1}) which would push our header to the
+ * bottom; keep the title pinned to the top of each step card. */
+.ypf-checkout-wizard .checkout-form-left .checkout-card > * {
+  order: 0;
+}
+.ypf-checkout-wizard .checkout-form-left .checkout-card > .ypf-step-header {
+  order: -1;
+}
+.ypf-step-header {
+  @apply tw-text-center tw-mb-6;
+}
+.ypf-step-title {
+  @apply tw-text-2xl tw-font-bold tw-mb-1;
+  color: var(--yourpropfirm-primary-text);
+}
+.ypf-step-subtitle {
+  @apply tw-text-sm;
+  color: var(--yourpropfirm-secondary-text);
+}
+
+/* ---- Field groups ---- */
+.ypf-field-group {
+  @apply tw-mb-6;
+}
+.ypf-field-label {
+  @apply tw-text-sm tw-font-semibold tw-mb-3;
+  color: var(--yourpropfirm-text);
+}
+
+/* ---- Evaluation type cards ---- */
+.ypf-eval-grid {
+  @apply tw-grid tw-gap-3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 640px) {
+  .ypf-eval-grid { grid-template-columns: 1fr; }
+}
+.ypf-eval-option {
+  @apply tw-relative tw-flex tw-flex-col tw-gap-1 tw-rounded-xl tw-p-4 tw-cursor-pointer tw-transition-all;
+  border: 1.5px solid var(--yourpropfirm-border);
+  background: var(--yourpropfirm-card);
+}
+.ypf-eval-option:hover {
+  border-color: var(--yourpropfirm-primary-300);
+}
+.ypf-eval-option .ypf-eval-radio {
+  @apply tw-absolute tw-opacity-0 tw-pointer-events-none;
+}
+.ypf-eval-option.is-selected,
+.ypf-eval-option:has(.ypf-eval-radio:checked) {
+  border-color: var(--yourpropfirm-primary);
+  background: var(--yourpropfirm-primary-light);
+}
+.ypf-eval-badge {
+  @apply tw-absolute tw-right-2 tw-top-2 tw-rounded-full tw-px-2 tw-py-0.5 tw-text-[10px] tw-font-semibold;
+  background: var(--yourpropfirm-primary);
+  color: var(--yourpropfirm-button-text);
+}
+.ypf-eval-title {
+  @apply tw-text-base tw-font-bold;
+  color: var(--yourpropfirm-primary-text);
+}
+.ypf-eval-desc {
+  @apply tw-text-xs;
+  color: var(--yourpropfirm-secondary-text);
+}
+
+/* ---- Account balance grid ---- */
+.ypf-balance-grid {
+  @apply tw-grid tw-gap-3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 480px) {
+  .ypf-balance-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.ypf-balance-option {
+  @apply tw-flex tw-items-center tw-justify-center tw-rounded-lg tw-py-3 tw-px-2 tw-cursor-pointer tw-transition-all tw-text-sm tw-font-semibold;
+  border: 1.5px solid var(--yourpropfirm-border);
+  background: var(--yourpropfirm-card);
+  color: var(--yourpropfirm-text);
+}
+.ypf-balance-option:hover { border-color: var(--yourpropfirm-primary-300); }
+.ypf-balance-option .ypf-balance-radio {
+  @apply tw-absolute tw-opacity-0 tw-pointer-events-none;
+}
+.ypf-balance-option.is-selected,
+.ypf-balance-option:has(.ypf-balance-radio:checked) {
+  border-color: var(--yourpropfirm-primary);
+  background: var(--yourpropfirm-primary-light);
+  color: var(--yourpropfirm-primary);
+}
+
+/* ---- Platform select ---- */
+.ypf-platform-row {
+  @apply tw-flex tw-items-center tw-gap-3;
+}
+.ypf-select-wrapper {
+  @apply tw-relative tw-flex-1;
+}
+.ypf-platform-select {
+  @apply tw-w-full tw-appearance-none tw-rounded-lg tw-py-3 tw-pl-4 tw-pr-10 tw-text-sm tw-font-semibold tw-cursor-pointer;
+  background: #0a110d !important;
+  border: 1px solid var(--yourpropfirm-border) !important;
+  color: var(--yourpropfirm-text) !important;
+}
+.ypf-select-chevron {
+  @apply tw-absolute tw-right-4 tw-top-1/2 tw--translate-y-1/2 tw-pointer-events-none;
+  color: var(--yourpropfirm-secondary-text);
+}
+.ypf-platform-hint {
+  @apply tw-rounded-lg tw-px-4 tw-py-3 tw-text-sm tw-font-medium;
+  border: 1px solid var(--yourpropfirm-border);
+  color: var(--yourpropfirm-secondary-text);
+}
+
+/* ---- Step nav buttons ---- */
+.checkout-step-nav {
+  @apply tw-flex tw-gap-3 tw-mt-4;
+}
+.checkout-step-nav .ypf-nav-next { @apply tw-flex-1; }
+.checkout-step-nav .ypf-nav-prev { @apply tw-flex-1; }
+
+/* ---- We Accept ---- */
+.ypf-we-accept {
+  @apply tw-mt-4 tw-pt-4;
+  border-top: 1px solid var(--yourpropfirm-border);
+}
+.ypf-we-accept__label {
+  @apply tw-block tw-text-xs tw-font-medium tw-mb-2;
+  color: var(--yourpropfirm-secondary-text);
+}
+.ypf-we-accept__icons {
+  @apply tw-flex tw-flex-wrap tw-gap-2;
+}
+.ypf-pay-chip {
+  @apply tw-rounded-md;
+  width: 2.4rem;
+  height: 1.5rem;
+  background: linear-gradient(180deg, #182219, #0d130f);
+  border: 1px solid var(--yourpropfirm-border);
+}
+
+/* ---- TOS agreement (step 2) ---- */
+.ypf-step-agreements {
+  @apply tw-mt-4 tw-flex tw-gap-2 tw-items-start;
+}
+.ypf-agreement-label {
+  @apply tw-text-xs tw-leading-relaxed;
+  color: var(--yourpropfirm-secondary-text);
+}
+.ypf-agreement-label .terms-link {
+  color: var(--yourpropfirm-primary);
+  text-decoration: underline;
+}
+
+/* ---- Trust badges (footer) ---- */
+.ypf-trust-badges {
+  @apply tw-grid tw-gap-4 tw-mt-8 tw-pt-6;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--yourpropfirm-border);
+}
+@media (max-width: 640px) {
+  .ypf-trust-badges { grid-template-columns: 1fr; }
+}
+.ypf-trust-badge {
+  @apply tw-flex tw-flex-col tw-items-center tw-text-center tw-gap-1;
+}
+.ypf-trust-badge__icon {
+  @apply tw-flex tw-items-center tw-justify-center tw-rounded-full tw-mb-1;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: var(--yourpropfirm-primary-light);
+  color: var(--yourpropfirm-primary);
+}
+.ypf-trust-badge__title {
+  @apply tw-text-sm tw-font-semibold;
+  color: var(--yourpropfirm-text);
+}
+.ypf-trust-badge__sub {
+  @apply tw-text-xs;
+  color: var(--yourpropfirm-secondary-text);
+}
