@@ -219,21 +219,21 @@ For a full list of available template files, the hooks they expose, and the PHP 
 
 ---
 
-## Workflow Sehari-hari
+## Day-to-Day Workflow
 
-Karena repo ini **sudah merupakan plugin WordPress**, tidak ada langkah sync yang diperlukan. Perubahan yang Anda buat langsung aktif di WordPress.
+Because this repo **is** the WordPress plugin, no sync step is needed. Any changes you make are immediately live in WordPress.
 
-1. Edit file di `src/css/` atau `templates/`
-2. Jika mengubah CSS — watcher Tailwind otomatis recompile `dist/css/checkout.css`:
+1. Edit files in `src/css/` or `templates/`
+2. If editing CSS — start the Tailwind watcher to auto-recompile `dist/css/checkout.css`:
    ```bash
    cd build && npm run dev
    ```
-3. Reload browser → perubahan langsung terlihat
-4. Setelah selesai, build production dan commit:
+3. Reload the browser to see your changes
+4. When done, build for production and commit:
    ```bash
    cd build && npm run build
    git add -A
-   git commit -m "feat: deskripsi perubahan"
+   git commit -m "feat: describe your change"
    git push origin main
    ```
 
