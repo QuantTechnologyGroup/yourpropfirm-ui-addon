@@ -81,25 +81,13 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 
 				<!-- ===================== STEP 1: CHOOSE YOUR CHALLENGE ===================== -->
 				<section data-checkout-step="1" class="checkout-step">
-					<div class="checkout-card">
-						<header class="ypf-step-header">
-							<h2 class="ypf-step-title"><?php esc_html_e( 'Choose Your Challenge', 'yourpropfirm' ); ?></h2>
-							<p class="ypf-step-subtitle"><?php esc_html_e( 'Select evaluation type and account size to get started', 'yourpropfirm' ); ?></p>
-						</header>
+					<header class="ypf-step-header">
+						<h2 class="ypf-step-title"><?php esc_html_e( 'Choose Your Challenge', 'yourpropfirm' ); ?></h2>
+						<p class="ypf-step-subtitle"><?php esc_html_e( 'Select evaluation type and account size to get started', 'yourpropfirm' ); ?></p>
+					</header>
 
-						<div class="container-product-selection-group">
-							<div class="container-product-selection hide-if-reset-product hide-if-renewal-subscription">
-								<?php wc_get_template( 'checkout/form-product-selection.php' ); ?>
-							</div>
-
-							<div class="container-trading-platform hide-if-reset-product hide-if-renewal-subscription">
-								<?php wc_get_template( 'checkout/form-trading-platform.php' ); ?>
-							</div>
-
-							<div class="container-available-addons hide-if-reset-product hide-if-renewal-subscription">
-								<?php wc_get_template( 'checkout/form-available-addons.php' ); ?>
-							</div>
-						</div>
+					<div class="container-product-selection-group">
+						<?php wc_get_template( 'checkout/form-product-selection.php' ); ?>
 					</div>
 				</section>
 
@@ -164,39 +152,43 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 						<?php esc_html_e( 'Order Summary', 'yourpropfirm' ); ?>
 					</h3>
 
-					<!-- Coupon — step 1 only -->
-					<?php if ( wc_coupons_enabled() ) : ?>
-						<div class="coupon-section" data-sidebar-step="1">
-							<div class="coupon-form-group">
-								<label for="coupon_code" class="form-label">
-									<?php esc_html_e( 'Coupon Code', 'yourpropfirm' ); ?>
-									<span class="coupon-label-optional"><?php esc_html_e( 'Optional', 'yourpropfirm' ); ?></span>
-								</label>
-								<div class="coupon-input-group error">
-									<input type="text" name="coupon_code" class="coupon-input"
-										placeholder="<?php esc_attr_e( 'Insert coupon code', 'yourpropfirm' ); ?>"
-										id="coupon_code" value="" />
-									<button type="button" class="btn-outline" id="apply_coupon_btn"
-										data-sub-section="Apply Coupon">
-										<?php esc_html_e( 'Apply', 'yourpropfirm' ); ?>
-									</button>
-								</div>
-								<p class="coupon-message checkout-inline-error-message">
-									<?php _e( 'Coupon code applied successfully.', 'yourpropfirm' ); ?>
-								</p>
-								<div class="affiliate-info-message" style="display:none;"></div>
-							</div>
+					<!-- Static, JS-driven order summary (updated by js/checkout-wizard.js) -->
+					<div id="ypf-order-summary" class="ypf-order-summary">
+						<button type="button" class="ypf-summary-toggle" data-ypf-toggle aria-expanded="true">
+							<span><?php esc_html_e( 'Challenge Requirement', 'yourpropfirm' ); ?></span>
+							<svg class="ypf-summary-chevron" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						</button>
+						<div class="ypf-summary-details" data-ypf-details>
+							<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Product', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="product">&mdash;</span></div>
+							<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Category', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="category">&mdash;</span></div>
+							<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Account', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="account">&mdash;</span></div>
+							<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Platform', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="platform">&mdash;</span></div>
+							<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Currency', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="currency">USD</span></div>
 						</div>
-					<?php endif; ?>
+						<hr class="ypf-summary-divider" />
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Base Price', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="base">&mdash;</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Sub Total', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="subtotal">&mdash;</span></div>
+						<hr class="ypf-summary-divider" />
+						<div class="ypf-summary-row ypf-summary-total"><span><?php esc_html_e( 'Total', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="total">&mdash;</span></div>
+					</div>
 
-					<!-- Order review — always visible -->
-					<?php wc_get_template( 'checkout/review-order.php' ); ?>
-
-					<!-- We Accept payment icons -->
-					<div class="ypf-we-accept" data-sidebar-step="1">
+					<!-- We Accept payment methods (placeholder chips) -->
+					<div class="ypf-we-accept">
 						<span class="ypf-we-accept__label"><?php esc_html_e( 'We Accept', 'yourpropfirm' ); ?></span>
-						<div class="ypf-we-accept__icons" aria-hidden="true">
-							<?php for ( $i = 0; $i < 6; $i++ ) : ?><span class="ypf-pay-chip"></span><?php endfor; ?>
+						<div class="ypf-we-accept__cards">
+							<span class="ypf-pay-card">Mastercard</span>
+							<span class="ypf-pay-card">VISA</span>
+							<span class="ypf-pay-card">PayPal</span>
+							<span class="ypf-pay-card">G&nbsp;Pay</span>
+							<span class="ypf-pay-card">&#63743;&nbsp;Pay</span>
+						</div>
+						<div class="ypf-we-accept__crypto">
+							<span class="ypf-crypto-dot" style="--c:#f7931a">&#8383;</span>
+							<span class="ypf-crypto-dot" style="--c:#627eea">&#926;</span>
+							<span class="ypf-crypto-dot" style="--c:#26a17b">&#8366;</span>
+							<span class="ypf-crypto-dot" style="--c:#23292f">&#9830;</span>
+							<span class="ypf-crypto-dot" style="--c:#345d9d">L</span>
+							<span class="ypf-crypto-more">+</span>
 						</div>
 					</div>
 

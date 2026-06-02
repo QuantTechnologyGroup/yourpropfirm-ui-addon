@@ -131,17 +131,12 @@ $theme_class = yourpropfirm_detect_theme_mode();
 				} elseif ( $logo ) {
 					echo $logo;
 				} else {
-					// Placeholder brand wordmark until a real logo is configured.
+					// FUNDEDBIT brand logo.
 					?>
-					<h1 class="ypf-brand-wordmark">
-						<span class="ypf-brand-mark" aria-hidden="true">
-							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M12 2 21 7v10l-9 5-9-5V7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-								<circle cx="12" cy="12" r="3.2" fill="currentColor"/>
-							</svg>
-						</span>
-						<span class="ypf-brand-text">FUNDED<span class="ypf-brand-accent">BIT</span></span>
-					</h1><?php
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="ypf-brand-logo" aria-label="FundedBit">
+						<img src="<?php echo esc_url( YOURPROPFIRM_UI_ADDON_URL . 'assets/images/fundedbit.png' ); ?>"
+							alt="FundedBit" width="176" height="29" />
+					</a><?php
 				}
 				?>
 			</div>

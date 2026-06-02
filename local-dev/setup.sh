@@ -54,6 +54,10 @@ wp option update _yourpropfirm_checkout_enable_product_selection "yes" >/dev/nul
 wp option update _yourpropfirm_checkout_display_product_as_radio "yes" >/dev/null
 wp option update _yourpropfirm_checkout_product_display_account_size "yes" >/dev/null
 
+echo "==> Disable WooCommerce 'coming soon' mode (so the checkout is visible to"
+echo "    logged-out visitors / headless screenshots)…"
+wp option update woocommerce_coming_soon "no" >/dev/null 2>&1 || true
+
 echo "==> Sample product (id 10) with YPF program meta…"
 if ! wp post list --post_type=product --field=ID 2>/dev/null | grep -qx 10; then
   wp wc product create --name="Test Challenge" --type=simple \

@@ -24,8 +24,50 @@ class YPF_UI_Addon_Hooks {
 		// plugin's override_checkout_template_hierarchy at 9999. The main plugin
 		// loads its own woocommerce/single-checkout.php directly via
 		// template_include (bypassing woocommerce_locate_template), so we re-point
-		// it to our copy when one exists.
+		// it to our copy to control the header (logo) and wrapper markup.
 		add_filter( 'template_include', [ __CLASS__, 'override_single_checkout' ], 10001 );
+
+		// Interactive wizard JS — priority 1001 runs after the main plugin has
+		// registered its checkout scripts (window.ypfMultistep etc.).
+		add_action( 'wp_enqueue_scripts', [ __CLASS__, 'enqueue_wizard_script' ], 1001 );
+	}
+
+	/**
+	 * Enqueue the static, JS-driven checkout wizard controller + its price catalog.
+	 * Only on the checkout (not order-received).
+	 */
+	public static function enqueue_wizard_script(): void {
+		if ( ! is_checkout() || is_wc_endpoint_url( 'order-received' ) ) {
+			return;
+		}
+
+		$js_path = YOURPROPFIRM_UI_ADDON_DIR . 'js/checkout-wizard.js';
+		$js_ver  = file_exists( $js_path ) ? filemtime( $js_path ) : YOURPROPFIRM_UI_ADDON_VERSION;
+
+		wp_enqueue_script(
+			'yourpropfirm-ui-addon-wizard',
+			YOURPROPFIRM_UI_ADDON_URL . 'js/checkout-wizard.js',
+			[ 'jquery' ],
+			$js_ver,
+			true
+		);
+
+		// Static placeholder catalog (UI only — not wired to real products yet).
+		// Price = base price for each evaluation type × account balance.
+		wp_localize_script(
+			'yourpropfirm-ui-addon-wizard',
+			'ypfCheckoutWizard',
+			[
+				'currency'      => 'USD',
+				'continueLabel' => __( 'Continue', 'yourpropfirm' ),
+				'payLabel'      => __( 'Proceed to Payment', 'yourpropfirm' ),
+				'prices'        => [
+					'1-step'     => [ 5000 => 59, 10000 => 99, 25000 => 189, 50000 => 289, 100000 => 489 ],
+					'2-step'     => [ 5000 => 49, 10000 => 89, 25000 => 169, 50000 => 259, 100000 => 439 ],
+					'fast-track' => [ 5000 => 69, 10000 => 119, 25000 => 219, 50000 => 329, 100000 => 549 ],
+				],
+			]
+		);
 	}
 
 	/**
