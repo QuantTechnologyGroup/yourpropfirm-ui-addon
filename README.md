@@ -43,14 +43,13 @@ This repo **is** the WordPress plugin. Clone it directly into your plugins direc
 # Navigate to your WordPress plugins directory
 cd /path/to/wp-content/plugins/
 
-# Clone the repo as yourpropfirm-ui-addon
+# Clone the repo
 git clone https://github.com/QuantTechnologyGroup/yourpropfirm-ui-addon yourpropfirm-ui-addon
-
-# Install Tailwind build dependencies
-cd yourpropfirm-ui-addon/build && npm install
 ```
 
 Then go to **WordPress Admin → Plugins** and activate **YourPropFirm UI Addon**.
+
+> The compiled CSS (`dist/css/checkout.css`) is already included in the repo — **no build step required** to get started. Node.js is only needed if you intend to edit the CSS source files.
 
 > The plugin requires the main **YourPropFirm Plugin** to be installed and active. It will show an admin notice if the dependency is missing.
 
@@ -223,19 +222,30 @@ For a full list of available template files, the hooks they expose, and the PHP 
 
 Because this repo **is** the WordPress plugin, no sync step is needed. Any changes you make are immediately live in WordPress.
 
-1. Edit files in `src/css/` or `templates/`
-2. If editing CSS — start the Tailwind watcher to auto-recompile `dist/css/checkout.css`:
-   ```bash
-   cd build && npm run dev
-   ```
-3. Reload the browser to see your changes
-4. When done, build for production and commit:
-   ```bash
-   cd build && npm run build
-   git add -A
-   git commit -m "feat: describe your change"
-   git push origin main
-   ```
+| What you're changing | Build step needed? |
+|---|---|
+| PHP templates (`templates/`) | No — reload browser |
+| JavaScript (`js/`) | No — reload browser |
+| CSS source (`src/css/`) | Yes — run `npm run dev` or `npm run build` |
+
+**Editing CSS:**
+```bash
+# One-time setup (only needed once after cloning)
+cd build && npm install
+
+# Watch mode — auto-recompiles dist/css/checkout.css on every save
+npm run dev
+```
+
+**Committing changes:**
+```bash
+# If you edited CSS, build production output first
+cd build && npm run build
+
+git add -A
+git commit -m "feat: describe your change"
+git push origin main
+```
 
 ---
 
