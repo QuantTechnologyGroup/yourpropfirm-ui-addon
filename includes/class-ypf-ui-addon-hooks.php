@@ -19,6 +19,31 @@ class YPF_UI_Addon_Hooks {
 
 		// CSS override — priority 1000 runs after main plugin's enqueue_checkout_styles at 999.
 		add_action( 'wp_enqueue_scripts', [ __CLASS__, 'override_styles' ], 1000 );
+
+		// Full-page checkout wrapper override — priority 10001 beats the main
+		// plugin's override_checkout_template_hierarchy at 9999. The main plugin
+		// loads its own woocommerce/single-checkout.php directly via
+		// template_include (bypassing woocommerce_locate_template), so we re-point
+		// it to our copy when one exists.
+		add_filter( 'template_include', [ __CLASS__, 'override_single_checkout' ], 10001 );
+	}
+
+	/**
+	 * Re-point the checkout page wrapper to the add-on's single-checkout.php
+	 * when the main plugin has resolved it to its own copy.
+	 *
+	 * @param string $template Resolved absolute template path.
+	 * @return string
+	 */
+	public static function override_single_checkout( string $template ): string {
+		if ( 'single-checkout.php' === basename( $template ) ) {
+			$addon_template = YOURPROPFIRM_UI_ADDON_DIR . 'templates/woocommerce/single-checkout.php';
+			if ( file_exists( $addon_template ) ) {
+				return $addon_template;
+			}
+		}
+
+		return $template;
 	}
 
 	/**
@@ -52,12 +77,18 @@ class YPF_UI_Addon_Hooks {
 		// Remove main plugin CSS.
 		wp_dequeue_style( 'yourpropfirm-checkout' );
 
+		// Version the stylesheet by its file modification time so every rebuild
+		// busts the browser cache automatically (no stale CSS during development,
+		// and a fresh cache key on every deploy).
+		$css_path = YOURPROPFIRM_UI_ADDON_DIR . 'dist/css/checkout.css';
+		$css_ver  = file_exists( $css_path ) ? filemtime( $css_path ) : YOURPROPFIRM_UI_ADDON_VERSION;
+
 		// Enqueue add-on CSS (dist/css/checkout.css — compiled Tailwind output).
 		wp_enqueue_style(
 			'yourpropfirm-ui-addon',
 			YOURPROPFIRM_UI_ADDON_URL . 'dist/css/checkout.css',
 			[],
-			YOURPROPFIRM_UI_ADDON_VERSION
+			$css_ver
 		);
 	}
 }

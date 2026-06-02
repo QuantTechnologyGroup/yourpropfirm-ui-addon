@@ -1938,6 +1938,24 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   color: var(--yourpropfirm-text);
 }
 
+/* ---- Brand wordmark (placeholder logo) ---- */
+.ypf-brand-wordmark {
+  @apply tw-flex tw-items-center tw-justify-center tw-gap-2 tw-m-0;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.ypf-brand-mark {
+  @apply tw-inline-flex tw-items-center tw-justify-center;
+  color: var(--yourpropfirm-primary);
+}
+.ypf-brand-text {
+  color: var(--yourpropfirm-primary-text);
+}
+.ypf-brand-accent {
+  color: var(--yourpropfirm-primary);
+}
+
 /* ---- Stepper ---- */
 .ypf-stepper {
   @apply tw-mb-8 tw-mt-2;
@@ -2146,9 +2164,12 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   text-decoration: underline;
 }
 
-/* ---- Trust badges (footer) ---- */
+/* ---- Trust badges (footer) ----
+ * Generous, symmetric separation so the divider reads as a distinct footer
+ * rather than hugging whichever column happens to be taller. */
 .ypf-trust-badges {
-  @apply tw-grid tw-gap-4 tw-mt-8 tw-pt-6;
+  @apply tw-grid tw-gap-4 tw-pt-10;
+  margin-top: 5rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   border-top: 1px solid var(--yourpropfirm-border);
 }
