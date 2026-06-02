@@ -1991,7 +1991,7 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 /* ---- Stepper ---- */
 .ypf-stepper {
   @apply tw-mt-2;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 .ypf-stepper .checkout-step-indicator__list {
   @apply tw-flex tw-items-center tw-justify-center tw-gap-2 tw-p-0 tw-m-0 tw-list-none;
@@ -2056,7 +2056,7 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 
 /* ---- Step titles (centered, above BOTH columns) ---- */
 .ypf-step-titles {
-  margin-bottom: 5rem;
+  margin-bottom: 2.5rem;
 }
 
 /* ---- Wizard section spacing override ----
@@ -2066,13 +2066,13 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
  * silently overrode the wizard's section margins. Re-assert them here with
  * matching specificity (form + 2 classes) so they actually take effect. */
 form.woocommerce-checkout.ypf-checkout-wizard > .ypf-stepper:not([hidden]) {
-  margin-bottom: 3rem !important;
+  margin-bottom: 2rem !important;
 }
 form.woocommerce-checkout.ypf-checkout-wizard > .ypf-step-titles:not([hidden]) {
-  margin-bottom: 5rem !important;
+  margin-bottom: 2.5rem !important;
 }
 form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) {
-  margin-top: 8rem !important;
+  margin-top: 4rem !important;
 }
 .ypf-step-header {
   @apply tw-text-center;
@@ -2336,8 +2336,8 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
  * doesn't hug the content. */
 .ypf-trust-badges {
   position: relative;
-  margin-top: 8rem;
-  padding-top: 3.5rem;
+  margin-top: 4rem;
+  padding-top: 3rem;
 }
 .ypf-trust-badges::before {
   content: "";
