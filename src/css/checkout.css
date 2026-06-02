@@ -1950,7 +1950,7 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   padding-right: clamp(0.75rem, 2vw, 1.5rem) !important;
   padding-top: 0.6rem !important;
   padding-bottom: 0.9rem !important;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   border-bottom: 1px solid var(--yourpropfirm-border);
   box-sizing: border-box;
 }
@@ -1978,9 +1978,9 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
    * ignores the header's padding), so inset it explicitly to match the logo. */
   right: clamp(0.75rem, 2vw, 1.5rem) !important;
 }
-/* Tighten the space above the header (was a large container top padding). */
+/* Modest space above the header (was a large container top padding). */
 .woocommerce-checkout .checkout-container {
-  padding-top: 0 !important;
+  padding-top: 1.25rem !important;
 }
 .woocommerce-checkout .dark-mode-toggle,
 .woocommerce-checkout .yourpropfirm-lang-select,
@@ -1990,7 +1990,8 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 
 /* ---- Stepper ---- */
 .ypf-stepper {
-  @apply tw-mb-8 tw-mt-2;
+  @apply tw-mt-2;
+  margin-bottom: 3rem;
 }
 .ypf-stepper .checkout-step-indicator__list {
   @apply tw-flex tw-items-center tw-justify-center tw-gap-2 tw-p-0 tw-m-0 tw-list-none;
@@ -2055,7 +2056,7 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 
 /* ---- Step titles (centered, above BOTH columns) ---- */
 .ypf-step-titles {
-  @apply tw-mb-6;
+  margin-bottom: 2.5rem;
 }
 .ypf-step-header {
   @apply tw-text-center;
@@ -2314,16 +2315,29 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 }
 
 /* ---- Trust badges (footer) ----
- * Generous, symmetric separation so the divider reads as a distinct footer
- * rather than hugging whichever column happens to be taller. */
+ * Badges stay aligned with the content; the divider LINE spans the full window
+ * (via a full-bleed ::before) like the header border. Generous gap above so it
+ * doesn't hug the content. */
 .ypf-trust-badges {
-  @apply tw-grid tw-gap-4 tw-pt-10;
-  margin-top: 5rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  position: relative;
+  margin-top: 6rem;
+  padding-top: 3rem;
+}
+.ypf-trust-badges::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
   border-top: 1px solid var(--yourpropfirm-border);
 }
+.ypf-trust-badges__inner {
+  @apply tw-grid tw-gap-4;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 @media (max-width: 640px) {
-  .ypf-trust-badges { grid-template-columns: 1fr; }
+  .ypf-trust-badges__inner { grid-template-columns: 1fr; }
 }
 .ypf-trust-badge {
   @apply tw-flex tw-flex-col tw-items-center tw-text-center tw-gap-1;
