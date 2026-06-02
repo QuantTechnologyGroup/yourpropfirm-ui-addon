@@ -2058,6 +2058,22 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 .ypf-step-titles {
   margin-bottom: 5rem;
 }
+
+/* ---- Wizard section spacing override ----
+ * The legacy `form.woocommerce-checkout` rules (`@apply tw-space-y-8` and
+ * `> :not([hidden]) ~ :not([hidden]) { @apply tw-mt-0 }`) compile to
+ * `margin-top/bottom: 0 !important` on every direct child of the form, which
+ * silently overrode the wizard's section margins. Re-assert them here with
+ * matching specificity (form + 2 classes) so they actually take effect. */
+form.woocommerce-checkout.ypf-checkout-wizard > .ypf-stepper:not([hidden]) {
+  margin-bottom: 3rem !important;
+}
+form.woocommerce-checkout.ypf-checkout-wizard > .ypf-step-titles:not([hidden]) {
+  margin-bottom: 5rem !important;
+}
+form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) {
+  margin-top: 8rem !important;
+}
 .ypf-step-header {
   @apply tw-text-center;
 }
