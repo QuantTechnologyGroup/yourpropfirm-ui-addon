@@ -21,3 +21,5 @@ Thumbs.db
 
 # Local dev: teammate-supplied main plugin (proprietary, not ours to commit)
 local-dev/yourpropfirm-plugin/
+
+.env

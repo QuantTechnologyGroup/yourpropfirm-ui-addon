@@ -12,49 +12,82 @@
 
 :root {
   /* =====================================================
-   * FUNDEDBOT THEME TOKENS (dark-first)
-   * The main plugin's checkout CSS (which carried the default
-   * blue/light tokens) is dequeued by this add-on, so we own the
-   * full brand palette here. The add-on stylesheet also loads after
-   * the main plugin's, so these win by source order regardless.
+   * BRAND THEME TOKENS — aligned to the main YourPropFirm plugin.
+   * :root = light, .dark = dark (the add-on dequeues the plugin's
+   * checkout CSS, so it re-declares the brand palette here and loads
+   * after the plugin, winning by source order). Extra tokens the
+   * add-on consumes (primary-hover/-light/-dark/-300, -50, border,
+   * input, text) are derived from the brand primary.
    * ===================================================== */
 
-  /* Brand / accent — vivid FundedBot green */
-  --yourpropfirm-primary: #16c95a;
-  --yourpropfirm-primary-hover: #14b552;
-  --yourpropfirm-primary-light: rgba(22, 201, 90, 0.12);
-  --yourpropfirm-primary-dark: #0f9c44;
-  --yourpropfirm-primary-50: rgba(22, 201, 90, 0.08);
-  --yourpropfirm-primary-300: #4ade80;
-  --yourpropfirm-accent: #16c95a;
+  /* Brand accent — YourPropFirm green */
+  --yourpropfirm-primary: #56a23c;
+  --yourpropfirm-primary-hover: #4a8d34;
+  --yourpropfirm-primary-light: rgba(86, 162, 60, 0.12);
+  --yourpropfirm-primary-dark: #3d7a2b;
+  --yourpropfirm-primary-50: rgba(86, 162, 60, 0.08);
+  --yourpropfirm-primary-300: #7bc05f;
+  --yourpropfirm-accent: #56a23c;
 
-  /* Surfaces — near-black green base, slightly lifted cards */
-  --yourpropfirm-background: #060c08;
-  --yourpropfirm-card: #0c130f;
-  --yourpropfirm-secondary: #111a14;
+  /* Light surfaces */
+  --yourpropfirm-background: #ededed;
+  --yourpropfirm-card: #ffffff;
+  --yourpropfirm-secondary: #ededed;
+  --yourpropfirm-input: #ffffff;
 
   /* Text */
-  --yourpropfirm-primary-text: #f1f6f2;
-  --yourpropfirm-text: #dce5de;
-  --yourpropfirm-secondary-text: #889389;
-  --yourpropfirm-button-text: #03140a;
+  --yourpropfirm-primary-text: #666666;
+  --yourpropfirm-text: #555555;
+  --yourpropfirm-secondary-text: #56a23c;
+  --yourpropfirm-button-text: #ffffff;
 
   /* Borders */
-  --yourpropfirm-border: #1d2a22;
-  --border-standby: #2a3830;
+  --yourpropfirm-border: #e2e2e2;
+  --border-standby: #cccccc;
 
   /* Stepper / progress bar gradient */
-  --yourpropfirm-progressbar-from: #16c95a;
-  --yourpropfirm-progressbar-to: #4ade80;
+  --yourpropfirm-progressbar-from: #535ee0;
+  --yourpropfirm-progressbar-to: #00ff9c;
 
   /* Status Colors */
-  --yourpropfirm-success: #16c95a;
+  --yourpropfirm-success: #56a23c;
   --yourpropfirm-warning: #ffc107;
   --yourpropfirm-error: #ff4d4d;
   --danger-color: #ff4d4d;
   --danger-background: #ff4d4d1a;
-  --success-color: #16c95a;
-  --success-background: #16c9531a;
+  --success-color: #56a23c;
+  --success-background: #56a23c1a;
+}
+
+.dark {
+  /* Brand accent (same green in both modes) */
+  --yourpropfirm-primary: #56a23c;
+  --yourpropfirm-primary-hover: #4a8d34;
+  --yourpropfirm-primary-light: rgba(86, 162, 60, 0.16);
+  --yourpropfirm-primary-dark: #3d7a2b;
+  --yourpropfirm-primary-50: rgba(86, 162, 60, 0.10);
+  --yourpropfirm-primary-300: #7bc05f;
+  --yourpropfirm-accent: #56a23c;
+
+  /* Dark surfaces — neutral (matches main plugin) */
+  --yourpropfirm-background: #0f0f0f;
+  --yourpropfirm-card: #1a1a1a;
+  --yourpropfirm-secondary: #0f0f0f;
+  --yourpropfirm-input: #141414;
+
+  /* Text */
+  --yourpropfirm-primary-text: #fffafa;
+  --yourpropfirm-text: #e5e5e5;
+  --yourpropfirm-secondary-text: #888888;
+  --yourpropfirm-button-text: #ffffff;
+
+  /* Borders */
+  --yourpropfirm-border: #2a2a2a;
+  --border-standby: #333333;
+
+  /* Stepper / progress bar gradient */
+  --yourpropfirm-progressbar-from: #535ee0;
+  --yourpropfirm-progressbar-to: #00ff9c;
 }
 
 @tailwind base;
@@ -1886,7 +1919,7 @@ body.woocommerce-checkout .ypf-checkout-wizard :is(
     input[type="url"], textarea, select),
 body.woocommerce-checkout .order-summary :is(
     input[type="text"], input[type="email"], input[type="number"], select) {
-  background-color: #0a110d !important;
+  background-color: var(--yourpropfirm-input) !important;
   border: 1px solid var(--yourpropfirm-border) !important;
   color: var(--yourpropfirm-text) !important;
   border-radius: 0.5rem !important;
@@ -1897,11 +1930,11 @@ body.woocommerce-checkout .ypf-checkout-wizard :is(input, textarea)::placeholder
 }
 body.woocommerce-checkout .ypf-checkout-wizard :is(input, textarea, select):focus {
   border-color: var(--yourpropfirm-primary) !important;
-  box-shadow: 0 0 0 2px rgba(22, 201, 90, 0.25) !important;
+  box-shadow: 0 0 0 2px var(--yourpropfirm-primary-light) !important;
   outline: none !important;
 }
 body.woocommerce-checkout .ypf-checkout-wizard select option {
-  background-color: #0a110d;
+  background-color: var(--yourpropfirm-input);
   color: var(--yourpropfirm-text);
 }
 
@@ -2059,7 +2092,7 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 }
 .ypf-platform-select {
   @apply tw-w-full tw-appearance-none tw-rounded-lg tw-py-3 tw-pl-4 tw-pr-10 tw-text-sm tw-font-semibold tw-cursor-pointer;
-  background: #0a110d !important;
+  background: var(--yourpropfirm-input) !important;
   border: 1px solid var(--yourpropfirm-border) !important;
   color: var(--yourpropfirm-text) !important;
 }
@@ -2096,7 +2129,7 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   @apply tw-rounded-md;
   width: 2.4rem;
   height: 1.5rem;
-  background: linear-gradient(180deg, #182219, #0d130f);
+  background: var(--yourpropfirm-input);
   border: 1px solid var(--yourpropfirm-border);
 }
 
