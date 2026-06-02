@@ -1,0 +1,72 @@
+# Portable local WordPress stack for developing the YourPropFirm UI Addon.
+#
+# Mounts (relative to this file):
+#   ..                     -> wp-content/plugins/yourpropfirm-ui-addon   (this repo)
+#   ./yourpropfirm-plugin  -> wp-content/plugins/yourpropfirm-plugin     (you provide — see README)
+#
+# Usage:
+#   1. Extract the main YourPropFirm plugin into ./yourpropfirm-plugin
+#   2. docker compose up -d
+#   3. ./setup.sh
+#   4. open http://localhost:8080/?add-to-cart=10&quantity=1&theme=dark
+services:
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpass"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  wordpress:
+    image: wordpress:php8.2-apache
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: "1"
+      # Keep debug logging but never print notices inline — inline output
+      # breaks the checkout's header redirects (see README troubleshooting).
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG_DISPLAY', false);
+        define('WP_DEBUG_LOG', true);
+        @ini_set('display_errors', 0);
+    volumes:
+      - wp_data:/var/www/html
+      - ../:/var/www/html/wp-content/plugins/yourpropfirm-ui-addon
+      - ./yourpropfirm-plugin:/var/www/html/wp-content/plugins/yourpropfirm-plugin
+
+  wpcli:
+    image: wordpress:cli-php8.2
+    depends_on:
+      db:
+        condition: service_healthy
+    user: "33:33"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp_data:/var/www/html
+      - ../:/var/www/html/wp-content/plugins/yourpropfirm-ui-addon
+      - ./yourpropfirm-plugin:/var/www/html/wp-content/plugins/yourpropfirm-plugin
+    entrypoint: ["tail", "-f", "/dev/null"]
+
+volumes:
+  db_data:
+  wp_data:
