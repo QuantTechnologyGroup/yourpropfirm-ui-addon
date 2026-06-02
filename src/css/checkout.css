@@ -1970,6 +1970,9 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
  * to match the design. Borders softened to the subtle brand border. */
 .woocommerce-checkout .dark-mode-toggle-container {
   flex-direction: row-reverse;
+  /* the container is absolutely positioned (right:0 = padding-box edge, which
+   * ignores the header's padding), so inset it explicitly from the window edge */
+  right: clamp(1rem, 4vw, 3rem) !important;
 }
 .woocommerce-checkout .dark-mode-toggle,
 .woocommerce-checkout .yourpropfirm-lang-select,
@@ -2053,18 +2056,15 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   height: 100%;
 }
 
-/* ---- Step header ----
- * Neutralise the legacy single-page reordering (.checkout-form-left
- * .checkout-card>*:first-child{order:1}) which would push our header to the
- * bottom; keep the title pinned to the top of each step card. */
-.ypf-checkout-wizard .checkout-form-left .checkout-card > * {
-  order: 0;
-}
-.ypf-checkout-wizard .checkout-form-left .checkout-card > .ypf-step-header {
-  order: -1;
+/* ---- Step titles (centered, above BOTH columns) ---- */
+.ypf-step-titles {
+  @apply tw-mb-6;
 }
 .ypf-step-header {
-  @apply tw-text-center tw-mb-6;
+  @apply tw-text-center;
+}
+.ypf-step-header[hidden] {
+  display: none;
 }
 .ypf-step-title {
   @apply tw-text-2xl tw-font-bold tw-mb-1;

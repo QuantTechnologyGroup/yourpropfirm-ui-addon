@@ -76,16 +76,23 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 			</ol>
 		</nav>
 
+		<!-- Step titles — centered above BOTH columns; multistep JS toggles per step -->
+		<div class="ypf-step-titles">
+			<header class="ypf-step-header" data-checkout-step="1">
+				<h2 class="ypf-step-title"><?php esc_html_e( 'Choose Your Challenge', 'yourpropfirm' ); ?></h2>
+				<p class="ypf-step-subtitle"><?php esc_html_e( 'Select evaluation type and account size to get started', 'yourpropfirm' ); ?></p>
+			</header>
+			<header class="ypf-step-header" data-checkout-step="2" hidden>
+				<h2 class="ypf-step-title"><?php esc_html_e( 'Your Information', 'yourpropfirm' ); ?></h2>
+				<p class="ypf-step-subtitle"><?php esc_html_e( 'Fill in your billing details to proceed', 'yourpropfirm' ); ?></p>
+			</header>
+		</div>
+
 		<div class="checkout-grid" id="customer_details">
 			<div class="checkout-form-left">
 
 				<!-- ===================== STEP 1: CHOOSE YOUR CHALLENGE ===================== -->
 				<section data-checkout-step="1" class="checkout-step">
-					<header class="ypf-step-header">
-						<h2 class="ypf-step-title"><?php esc_html_e( 'Choose Your Challenge', 'yourpropfirm' ); ?></h2>
-						<p class="ypf-step-subtitle"><?php esc_html_e( 'Select evaluation type and account size to get started', 'yourpropfirm' ); ?></p>
-					</header>
-
 					<div class="container-product-selection-group">
 						<?php wc_get_template( 'checkout/form-product-selection.php' ); ?>
 					</div>
@@ -94,11 +101,6 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 				<!-- ===================== STEP 2: YOUR INFORMATION ===================== -->
 				<section data-checkout-step="2" class="checkout-step" hidden>
 					<div class="checkout-card">
-						<header class="ypf-step-header">
-							<h2 class="ypf-step-title"><?php esc_html_e( 'Your Information', 'yourpropfirm' ); ?></h2>
-							<p class="ypf-step-subtitle"><?php esc_html_e( 'Fill in your billing details to proceed', 'yourpropfirm' ); ?></p>
-						</header>
-
 						<div class="woocommerce-billing-fields">
 							<?php do_action( 'woocommerce_before_checkout_billing_form', $checkout ); ?>
 
