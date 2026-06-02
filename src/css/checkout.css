@@ -2056,7 +2056,7 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 
 /* ---- Step titles (centered, above BOTH columns) ---- */
 .ypf-step-titles {
-  margin-bottom: 3.5rem;
+  margin-bottom: 5rem;
 }
 .ypf-step-header {
   @apply tw-text-center;
