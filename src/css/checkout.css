@@ -11,17 +11,50 @@
 /* Root Variables untuk YourPropFirm Theme Colors */
 
 :root {
-  /* Primary Colors - Menggunakan Blue 600 sebagai primary */
+  /* =====================================================
+   * FUNDEDBOT THEME TOKENS (dark-first)
+   * The main plugin's checkout CSS (which carried the default
+   * blue/light tokens) is dequeued by this add-on, so we own the
+   * full brand palette here. The add-on stylesheet also loads after
+   * the main plugin's, so these win by source order regardless.
+   * ===================================================== */
+
+  /* Brand / accent — vivid FundedBot green */
+  --yourpropfirm-primary: #16c95a;
+  --yourpropfirm-primary-hover: #14b552;
+  --yourpropfirm-primary-light: rgba(22, 201, 90, 0.12);
+  --yourpropfirm-primary-dark: #0f9c44;
+  --yourpropfirm-primary-50: rgba(22, 201, 90, 0.08);
+  --yourpropfirm-primary-300: #4ade80;
+  --yourpropfirm-accent: #16c95a;
+
+  /* Surfaces — near-black green base, slightly lifted cards */
+  --yourpropfirm-background: #060c08;
+  --yourpropfirm-card: #0c130f;
+  --yourpropfirm-secondary: #111a14;
+
+  /* Text */
+  --yourpropfirm-primary-text: #f1f6f2;
+  --yourpropfirm-text: #dce5de;
+  --yourpropfirm-secondary-text: #889389;
+  --yourpropfirm-button-text: #03140a;
+
+  /* Borders */
+  --yourpropfirm-border: #1d2a22;
+  --border-standby: #2a3830;
+
+  /* Stepper / progress bar gradient */
+  --yourpropfirm-progressbar-from: #16c95a;
+  --yourpropfirm-progressbar-to: #4ade80;
 
   /* Status Colors */
-  --yourpropfirm-success: #28a745;
+  --yourpropfirm-success: #16c95a;
   --yourpropfirm-warning: #ffc107;
-  --yourpropfirm-error: #dc3545;
-  --border-standby: #666666;
+  --yourpropfirm-error: #ff4d4d;
   --danger-color: #ff4d4d;
   --danger-background: #ff4d4d1a;
-  --success-color: #16bc53;
-  --success-background: #16bc531a;
+  --success-color: #16c95a;
+  --success-background: #16c9531a;
 }
 
 @tailwind base;
