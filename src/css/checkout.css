@@ -1946,8 +1946,12 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   max-width: 100vw !important;
   margin-left: calc(50% - 50vw) !important;
   margin-right: calc(50% - 50vw) !important;
-  padding-left: clamp(1rem, 4vw, 3rem) !important;
-  padding-right: clamp(1rem, 4vw, 3rem) !important;
+  padding-left: clamp(0.75rem, 2vw, 1.5rem) !important;
+  padding-right: clamp(0.75rem, 2vw, 1.5rem) !important;
+  padding-top: 0.6rem !important;
+  padding-bottom: 0.9rem !important;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--yourpropfirm-border);
   box-sizing: border-box;
 }
 
@@ -1971,8 +1975,12 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 .woocommerce-checkout .dark-mode-toggle-container {
   flex-direction: row-reverse;
   /* the container is absolutely positioned (right:0 = padding-box edge, which
-   * ignores the header's padding), so inset it explicitly from the window edge */
-  right: clamp(1rem, 4vw, 3rem) !important;
+   * ignores the header's padding), so inset it explicitly to match the logo. */
+  right: clamp(0.75rem, 2vw, 1.5rem) !important;
+}
+/* Tighten the space above the header (was a large container top padding). */
+.woocommerce-checkout .checkout-container {
+  padding-top: 0 !important;
 }
 .woocommerce-checkout .dark-mode-toggle,
 .woocommerce-checkout .yourpropfirm-lang-select,
@@ -2036,24 +2044,13 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   color: var(--yourpropfirm-primary);
 }
 
-/* ---- Equal-height columns ----
- * Stretch the visible step card and the order-summary card to the same height
- * so the trust-badge divider below the grid sits symmetrically under both,
- * instead of hugging whichever column happens to be taller. */
-.ypf-checkout-wizard .checkout-form-left,
-.ypf-checkout-wizard .checkout-form-right {
-  display: flex;
-  flex-direction: column;
-}
-.ypf-checkout-wizard .checkout-form-left > .checkout-step:not([hidden]),
+/* ---- Columns ----
+ * Natural heights (no forced stretch) so the order-summary card doesn't expand
+ * with empty space down toward the footer divider. The grid's default stretch
+ * keeps the columns aligned; cards size to their content. Order summary is not
+ * sticky here so it sits in normal flow. */
 .ypf-checkout-wizard .checkout-form-right > .order-summary {
-  flex: 1 1 auto;
-}
-.ypf-checkout-wizard .checkout-form-right > .order-summary {
-  position: static; /* allow the card to stretch (overrides sticky) */
-}
-.ypf-checkout-wizard .checkout-step > .checkout-card {
-  height: 100%;
+  position: static;
 }
 
 /* ---- Step titles (centered, above BOTH columns) ---- */
