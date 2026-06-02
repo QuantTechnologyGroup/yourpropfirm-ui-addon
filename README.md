@@ -44,7 +44,7 @@ This repo **is** the WordPress plugin. Clone it directly into your plugins direc
 cd /path/to/wp-content/plugins/
 
 # Clone the repo as yourpropfirm-ui-addon
-git clone https://github.com/ibnukasyfulhaq/checkout-frontend yourpropfirm-ui-addon
+git clone https://github.com/QuantTechnologyGroup/yourpropfirm-ui-addon yourpropfirm-ui-addon
 
 # Install Tailwind build dependencies
 cd yourpropfirm-ui-addon/build && npm install
@@ -54,7 +54,7 @@ Then go to **WordPress Admin → Plugins** and activate **YourPropFirm UI Addon*
 
 > The plugin requires the main **YourPropFirm Plugin** to be installed and active. It will show an admin notice if the dependency is missing.
 
-To update to the latest customizations from this repo:
+To update to the latest version from this repo:
 ```bash
 cd /path/to/wp-content/plugins/yourpropfirm-ui-addon
 git pull origin main
@@ -67,7 +67,7 @@ git pull origin main
 1. Fork this repository on GitHub, then clone your fork **into the plugins directory**:
    ```bash
    cd /path/to/wp-content/plugins/
-   git clone https://github.com/<your-username>/checkout-frontend yourpropfirm-ui-addon
+   git clone https://github.com/QuantTechnologyGroup/yourpropfirm-ui-addon yourpropfirm-ui-addon
    ```
 
 2. Move into the build directory and install dependencies:
@@ -219,36 +219,23 @@ For a full list of available template files, the hooks they expose, and the PHP 
 
 ---
 
-## Sync Scripts
+## Workflow Sehari-hari
 
-After editing source files, use the sync scripts to copy compiled output and templates into your local WordPress plugin directory.
+Karena repo ini **sudah merupakan plugin WordPress**, tidak ada langkah sync yang diperlukan. Perubahan yang Anda buat langsung aktif di WordPress.
 
-### PowerShell (Windows)
-
-```powershell
-# Default — uses the path configured inside the script
-.\scripts\sync-to-plugin.ps1
-
-# Override plugin path at runtime
-.\scripts\sync-to-plugin.ps1 -PluginPath "C:\Users\YourName\Local Sites\ypf\app\public\wp-content\plugins\yourpropfirm-plugin"
-```
-
-### bash (macOS / Linux / WSL)
-
-```bash
-# Default
-./scripts/sync-to-plugin.sh
-
-# Override plugin path at runtime
-PLUGIN_PATH="/Users/yourname/Local Sites/yourpropfirm/app/public/wp-content/plugins/yourpropfirm-plugin" ./scripts/sync-to-plugin.sh
-```
-
-Both scripts copy:
-- `dist/css/checkout.css` → plugin `public/css/`
-- `js/` → plugin `public/js/`
-- `templates/` → plugin `woocommerce/` and `public/partials/`
-
-For advanced usage (watch + auto-sync, dry-run mode, rsync options), see [docs/SYNC_WORKFLOW.md](docs/SYNC_WORKFLOW.md).
+1. Edit file di `src/css/` atau `templates/`
+2. Jika mengubah CSS — watcher Tailwind otomatis recompile `dist/css/checkout.css`:
+   ```bash
+   cd build && npm run dev
+   ```
+3. Reload browser → perubahan langsung terlihat
+4. Setelah selesai, build production dan commit:
+   ```bash
+   cd build && npm run build
+   git add -A
+   git commit -m "feat: deskripsi perubahan"
+   git push origin main
+   ```
 
 ---
 
