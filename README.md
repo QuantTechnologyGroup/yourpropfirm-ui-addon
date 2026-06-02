@@ -1,8 +1,10 @@
 # YourPropFirm Checkout Frontend
 
-This repository contains the **UI layer** for the YourPropFirm WooCommerce checkout experience. It is not a standalone application and does not include any backend logic, REST endpoints, payment processing, or WordPress/WooCommerce internals. Everything here — CSS, JavaScript, and PHP templates — is consumed by the [yourpropfirm-plugin](https://github.com/yourpropfirm/yourpropfirm-plugin) at runtime.
+This repository is a **WordPress add-on plugin** (`yourpropfirm-ui-addon`) that overrides the UI layer of the [YourPropFirm Plugin](https://github.com/yourpropfirm/yourpropfirm-plugin) checkout experience. It contains CSS, JavaScript, and PHP templates — no backend logic, no payment processing, no REST endpoints.
 
-If you are a client frontend developer, this is the correct starting point. You do not need to touch the plugin's PHP business logic to iterate on the checkout UI.
+**Why a plugin instead of editing the main plugin directly?** The main plugin will be updated over time, and direct edits would be overwritten. This add-on hooks in at a higher WordPress priority than the main plugin, so UI customizations survive any main plugin update automatically.
+
+If you are a client frontend developer, this is the correct starting point. You do not need to touch the main plugin at all.
 
 ---
 
@@ -15,7 +17,9 @@ If you are a client frontend developer, this is the correct starting point. You 
 | `js/` | Frontend scripts (`checkout.js`, `dark-mode.js`) |
 | `templates/` | WooCommerce checkout PHP template overrides |
 | `build/` | Node.js build tooling (`package.json`, `tailwind.config.js`, PostCSS config) |
-| `scripts/` | Sync helpers (`sync-to-plugin.ps1`, `sync-to-plugin.sh`) |
+| `yourpropfirm-ui-addon.php` | WordPress plugin entry point — registers hooks and constants |
+| `includes/` | `class-ypf-ui-addon-hooks.php` — template and CSS override logic |
+| `scripts/` | `sync-from-plugin` helpers to pull template updates from the main plugin |
 | `docs/` | Extended reference docs (`CSS_VARIABLES.md`, `TEMPLATE_REFERENCE.md`, `SYNC_WORKFLOW.md`) |
 
 ---
@@ -31,43 +35,63 @@ The recommended local WordPress environment is [Local by Flywheel](https://local
 
 ---
 
-## Getting Started
+## Installation as a WordPress Plugin
 
-1. Fork this repository on GitHub, then clone your fork:
+This repo **is** the WordPress plugin. Clone it directly into your plugins directory:
+
+```bash
+# Navigate to your WordPress plugins directory
+cd /path/to/wp-content/plugins/
+
+# Clone the repo as yourpropfirm-ui-addon
+git clone https://github.com/ibnukasyfulhaq/checkout-frontend yourpropfirm-ui-addon
+
+# Install Tailwind build dependencies
+cd yourpropfirm-ui-addon/build && npm install
+```
+
+Then go to **WordPress Admin → Plugins** and activate **YourPropFirm UI Addon**.
+
+> The plugin requires the main **YourPropFirm Plugin** to be installed and active. It will show an admin notice if the dependency is missing.
+
+To update to the latest customizations from this repo:
+```bash
+cd /path/to/wp-content/plugins/yourpropfirm-ui-addon
+git pull origin main
+```
+
+---
+
+## Getting Started (Development)
+
+1. Fork this repository on GitHub, then clone your fork **into the plugins directory**:
    ```bash
-   git clone https://github.com/<your-username>/checkout-frontend.git
+   cd /path/to/wp-content/plugins/
+   git clone https://github.com/<your-username>/checkout-frontend yourpropfirm-ui-addon
    ```
 
 2. Move into the build directory and install dependencies:
    ```bash
-   cd checkout-frontend/build && npm install
+   cd yourpropfirm-ui-addon/build && npm install
    ```
 
-3. Start the CSS watcher. Tailwind will recompile `dist/css/checkout.css` on every save:
+3. Activate the plugin in WordPress Admin → Plugins → **YourPropFirm UI Addon**.
+
+4. Start the CSS watcher. Tailwind will recompile `dist/css/checkout.css` on every save:
    ```bash
    npm run dev
    ```
 
-4. Edit source files in `src/css/`, `js/`, or `templates/` as needed.
+5. Edit source files in `src/css/`, `js/`, or `templates/` as needed. Reload the browser to see changes (CSS reloads automatically if the watcher is running).
 
-5. Sync your changes into the running WordPress plugin so the browser reflects them:
-   ```bash
-   # PowerShell (Windows)
-   ../scripts/sync-to-plugin.ps1
-
-   # bash (macOS / Linux / WSL)
-   ../scripts/sync-to-plugin.sh
-   ```
-   See [Sync Scripts](#sync-scripts) for configuration options.
-
-6. Open `http://yourpropfirm.local/checkout` in your browser to test. The cart is auto-populated with a test product on every visit — no manual cart setup is required.
+6. Open `http://ypf.local/checkout` in your browser to test. The cart is auto-populated with a test product on every visit — no manual cart setup is required.
 
 7. Before opening a pull request, produce a production-minified build:
    ```bash
    npm run build
    ```
 
-8. Submit a pull request from your fork. See [Submitting a Pull Request](#submitting-a-pull-request) for the required checklist.
+8. Commit `dist/css/checkout.css` alongside your source changes, then submit a pull request. See [Submitting a Pull Request](#submitting-a-pull-request) for the required checklist.
 
 ---
 
