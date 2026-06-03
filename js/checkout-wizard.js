@@ -126,6 +126,7 @@
     var nextBtn    = document.getElementById("ypf-email-next");
     var prevBtn    = document.getElementById("ypf-email-prev");
     var sidebarNav = document.querySelector(".checkout-step-nav");
+    var secureCheckout = document.querySelector(".ypf-secure-checkout");
     var billingEmail = document.getElementById("billing_email");
     if (!substepNav || !nextBtn || !prevBtn || !billingEmail) return;
 
@@ -147,6 +148,9 @@
       substepNav.classList.remove("ypf-field-hidden");
       nextBtn.classList.remove("ypf-field-hidden");
       if (sidebarNav) sidebarNav.classList.add("ypf-field-hidden");
+      // "Secure checkout" assurance shows on screen 1 and the final (full-form)
+      // screen only — hide it on the intermediate email sub-step.
+      if (secureCheckout) secureCheckout.classList.add("ypf-field-hidden");
     }
 
     function enterFullForm() {
@@ -155,6 +159,7 @@
       nextBtn.classList.add("ypf-field-hidden");
       substepNav.classList.remove("ypf-field-hidden");
       if (sidebarNav) sidebarNav.classList.remove("ypf-field-hidden");
+      if (secureCheckout) secureCheckout.classList.remove("ypf-field-hidden");
     }
 
     // Activate email sub-step when step 2 section becomes visible.
@@ -197,8 +202,9 @@
     var step1Section = document.querySelector('[data-checkout-step="1"]');
     if (step1Section) {
       new MutationObserver(function () {
-        if (!step1Section.hidden && sidebarNav) {
-          sidebarNav.classList.remove("ypf-field-hidden");
+        if (!step1Section.hidden) {
+          if (sidebarNav) sidebarNav.classList.remove("ypf-field-hidden");
+          if (secureCheckout) secureCheckout.classList.remove("ypf-field-hidden");
         }
       }).observe(step1Section, { attributes: true, attributeFilter: ["hidden"] });
     }
