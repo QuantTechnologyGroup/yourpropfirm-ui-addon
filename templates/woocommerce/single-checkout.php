@@ -131,8 +131,12 @@ $theme_class = yourpropfirm_detect_theme_mode();
 				} elseif ( $logo ) {
 					echo $logo;
 				} else {
+					// FUNDEDBIT brand logo.
 					?>
-					<h1>YourPropFirm</h1><?php
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="ypf-brand-logo" aria-label="FundedBit">
+						<img src="<?php echo esc_url( YOURPROPFIRM_UI_ADDON_URL . 'assets/images/fundedbit.png' ); ?>"
+							alt="FundedBit" width="176" height="29" />
+					</a><?php
 				}
 				?>
 			</div>

@@ -18,3 +18,8 @@ Thumbs.db
 
 # NOTE: dist/css/checkout.css is intentionally tracked.
 # The plugin consumer requires the compiled artifact — do not add it here.
+
+# Local dev: teammate-supplied main plugin (proprietary, not ours to commit)
+local-dev/yourpropfirm-plugin/
+
+.env

@@ -11,17 +11,83 @@
 /* Root Variables untuk YourPropFirm Theme Colors */
 
 :root {
-  /* Primary Colors - Menggunakan Blue 600 sebagai primary */
+  /* =====================================================
+   * BRAND THEME TOKENS — aligned to the main YourPropFirm plugin.
+   * :root = light, .dark = dark (the add-on dequeues the plugin's
+   * checkout CSS, so it re-declares the brand palette here and loads
+   * after the plugin, winning by source order). Extra tokens the
+   * add-on consumes (primary-hover/-light/-dark/-300, -50, border,
+   * input, text) are derived from the brand primary.
+   * ===================================================== */
+
+  /* Brand accent — YourPropFirm green */
+  --yourpropfirm-primary: #56a23c;
+  --yourpropfirm-primary-hover: #4a8d34;
+  --yourpropfirm-primary-light: rgba(86, 162, 60, 0.12);
+  --yourpropfirm-primary-dark: #3d7a2b;
+  --yourpropfirm-primary-50: rgba(86, 162, 60, 0.08);
+  --yourpropfirm-primary-300: #7bc05f;
+  --yourpropfirm-accent: #56a23c;
+
+  /* Light surfaces */
+  --yourpropfirm-background: #ededed;
+  --yourpropfirm-card: #ffffff;
+  --yourpropfirm-secondary: #ededed;
+  --yourpropfirm-input: #ffffff;
+
+  /* Text */
+  --yourpropfirm-primary-text: #666666;
+  --yourpropfirm-text: #555555;
+  --yourpropfirm-secondary-text: #56a23c;
+  --yourpropfirm-button-text: #ffffff;
+
+  /* Borders */
+  --yourpropfirm-border: #e2e2e2;
+  --border-standby: #cccccc;
+
+  /* Stepper / progress bar gradient */
+  --yourpropfirm-progressbar-from: #535ee0;
+  --yourpropfirm-progressbar-to: #00ff9c;
 
   /* Status Colors */
-  --yourpropfirm-success: #28a745;
+  --yourpropfirm-success: #56a23c;
   --yourpropfirm-warning: #ffc107;
-  --yourpropfirm-error: #dc3545;
-  --border-standby: #666666;
+  --yourpropfirm-error: #ff4d4d;
   --danger-color: #ff4d4d;
   --danger-background: #ff4d4d1a;
-  --success-color: #16bc53;
-  --success-background: #16bc531a;
+  --success-color: #56a23c;
+  --success-background: #56a23c1a;
+}
+
+.dark {
+  /* Brand accent (same green in both modes) */
+  --yourpropfirm-primary: #56a23c;
+  --yourpropfirm-primary-hover: #4a8d34;
+  --yourpropfirm-primary-light: rgba(86, 162, 60, 0.16);
+  --yourpropfirm-primary-dark: #3d7a2b;
+  --yourpropfirm-primary-50: rgba(86, 162, 60, 0.10);
+  --yourpropfirm-primary-300: #7bc05f;
+  --yourpropfirm-accent: #56a23c;
+
+  /* Dark surfaces — neutral (matches main plugin) */
+  --yourpropfirm-background: #0f0f0f;
+  --yourpropfirm-card: #1a1a1a;
+  --yourpropfirm-secondary: #0f0f0f;
+  --yourpropfirm-input: #141414;
+
+  /* Text */
+  --yourpropfirm-primary-text: #fffafa;
+  --yourpropfirm-text: #e5e5e5;
+  --yourpropfirm-secondary-text: #888888;
+  --yourpropfirm-button-text: #ffffff;
+
+  /* Borders */
+  --yourpropfirm-border: #2a2a2a;
+  --border-standby: #333333;
+
+  /* Stepper / progress bar gradient */
+  --yourpropfirm-progressbar-from: #535ee0;
+  --yourpropfirm-progressbar-to: #00ff9c;
 }
 
 @tailwind base;
@@ -1837,4 +1903,477 @@ body.thankyou-body.dark {
 .dark .affiliate-info-name {
   @apply tw-text-white;
   font-family: 'Inter', sans-serif;
+}
+
+/* =====================================================================
+ * FUNDEDBOT MULTI-STEP WIZARD
+ * Stepper, step headers, "Choose Your Challenge" selectors, dark inputs,
+ * nav buttons, We-Accept chips and trust badges. Plain CSS (not @apply)
+ * so explicit !important wins over the host theme's form styles.
+ * ===================================================================== */
+
+/* ---- Dark form inputs (beat the host theme's white inputs) ---- */
+body.woocommerce-checkout .ypf-checkout-wizard :is(
+    input[type="text"], input[type="email"], input[type="tel"],
+    input[type="password"], input[type="number"], input[type="search"],
+    input[type="url"], textarea, select),
+body.woocommerce-checkout .order-summary :is(
+    input[type="text"], input[type="email"], input[type="number"], select) {
+  background-color: var(--yourpropfirm-input) !important;
+  border: 1px solid var(--yourpropfirm-border) !important;
+  color: var(--yourpropfirm-text) !important;
+  border-radius: 0.5rem !important;
+}
+body.woocommerce-checkout .ypf-checkout-wizard :is(input, textarea)::placeholder {
+  color: var(--yourpropfirm-secondary-text) !important;
+  opacity: 1;
+}
+body.woocommerce-checkout .ypf-checkout-wizard :is(input, textarea, select):focus {
+  border-color: var(--yourpropfirm-primary) !important;
+  box-shadow: 0 0 0 2px var(--yourpropfirm-primary-light) !important;
+  outline: none !important;
+}
+body.woocommerce-checkout .ypf-checkout-wizard select option {
+  background-color: var(--yourpropfirm-input);
+  color: var(--yourpropfirm-text);
+}
+
+/* ---- Header: full-bleed navbar (logo left, controls right) ----
+ * Break the header out of the centered .checkout-container so it spans the
+ * full viewport width; the content below stays centered. */
+.woocommerce-checkout .checkout-header-container {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding-left: clamp(0.75rem, 2vw, 1.5rem) !important;
+  padding-right: clamp(0.75rem, 2vw, 1.5rem) !important;
+  padding-top: clamp(0.75rem, 2vw, 1.5rem) !important;
+  padding-bottom: clamp(0.75rem, 2vw, 1.5rem) !important;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--yourpropfirm-border);
+  box-sizing: border-box;
+}
+
+/* ---- Header logo (FUNDEDBIT, top-left) ---- */
+.woocommerce-checkout .checkout-logo {
+  justify-content: flex-start !important;
+  /* zero BOTH vertical margins: on mobile .checkout-logo gets max-md:tw-my-8,
+   * which pushed the logo below the vertically-centered controls. */
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  align-items: center;
+}
+.ypf-brand-logo {
+  @apply tw-inline-flex tw-items-center;
+}
+.ypf-brand-logo img {
+  height: 1.9rem;
+  width: auto;
+  display: block;
+}
+
+/* ---- Header controls: theme toggle on the LEFT, language on the RIGHT ----
+ * DOM order is [language][toggle]; row-reverse flips it to [toggle][language]
+ * to match the design. Borders softened to the subtle brand border. */
+.woocommerce-checkout .dark-mode-toggle-container {
+  flex-direction: row-reverse;
+  /* the container is absolutely positioned (right:0 = padding-box edge, which
+   * ignores the header's padding), so inset it explicitly to match the logo. */
+  right: clamp(0.75rem, 2vw, 1.5rem) !important;
+}
+/* Header sits near the top; its own (uniform) padding provides the inset. */
+.woocommerce-checkout .checkout-container {
+  padding-top: 0 !important;
+}
+.woocommerce-checkout .dark-mode-toggle,
+.woocommerce-checkout .yourpropfirm-lang-select,
+.woocommerce-checkout .select-trigger {
+  border-color: var(--yourpropfirm-border) !important;
+}
+
+/* ---- Stepper ---- */
+.ypf-stepper {
+  @apply tw-mt-2;
+  margin-bottom: 2rem;
+}
+.ypf-stepper .checkout-step-indicator__list {
+  @apply tw-flex tw-items-center tw-justify-center tw-gap-2 tw-p-0 tw-m-0 tw-list-none;
+}
+.ypf-stepper .checkout-step-indicator__item {
+  @apply tw-flex tw-items-center tw-gap-3;
+  color: var(--yourpropfirm-secondary-text);
+}
+/* connector line after first item */
+.ypf-stepper .checkout-step-indicator__item:not(:last-child)::after {
+  content: "";
+  @apply tw-block tw-h-px tw-mx-3;
+  width: clamp(40px, 8vw, 110px);
+  background: var(--yourpropfirm-border);
+}
+.ypf-stepper .checkout-step-indicator__item.is-completed:not(:last-child)::after {
+  background: linear-gradient(90deg, var(--yourpropfirm-progressbar-from), var(--yourpropfirm-progressbar-to));
+}
+.ypf-stepper .checkout-step-indicator__number {
+  @apply tw-flex tw-items-center tw-justify-center tw-rounded-full tw-text-sm tw-font-semibold tw-shrink-0;
+  width: 2rem;
+  height: 2rem;
+  border: 1.5px solid var(--yourpropfirm-border);
+  background: var(--yourpropfirm-card);
+  color: var(--yourpropfirm-secondary-text);
+  transition: all 0.2s ease;
+}
+.ypf-stepper .checkout-step-indicator__text {
+  @apply tw-flex tw-flex-col tw-leading-tight;
+}
+/* design has no "You are here / Next step" hint line */
+.ypf-stepper .checkout-step-indicator__hint {
+  display: none;
+}
+.ypf-stepper .checkout-step-indicator__label {
+  @apply tw-text-sm tw-font-semibold;
+  color: var(--yourpropfirm-text);
+}
+/* active = green outline ring + green number; completed = solid green */
+.ypf-stepper .checkout-step-indicator__item.is-active .checkout-step-indicator__number {
+  border-color: var(--yourpropfirm-primary);
+  background: transparent;
+  color: var(--yourpropfirm-primary);
+}
+.ypf-stepper .checkout-step-indicator__item.is-completed .checkout-step-indicator__number {
+  border-color: var(--yourpropfirm-primary);
+  background: var(--yourpropfirm-primary);
+  color: var(--yourpropfirm-button-text);
+}
+.ypf-stepper .checkout-step-indicator__item.is-active .checkout-step-indicator__label {
+  color: var(--yourpropfirm-primary);
+}
+
+/* ---- Columns ----
+ * Natural heights (no forced stretch) so the order-summary card doesn't expand
+ * with empty space down toward the footer divider. The grid's default stretch
+ * keeps the columns aligned; cards size to their content. Order summary is not
+ * sticky here so it sits in normal flow. */
+.ypf-checkout-wizard .checkout-form-right > .order-summary {
+  position: static;
+}
+
+/* ---- Step titles (centered, above BOTH columns) ---- */
+.ypf-step-titles {
+  margin-bottom: 2.5rem;
+}
+
+/* ---- Wizard section spacing override ----
+ * The legacy `form.woocommerce-checkout` rules (`@apply tw-space-y-8` and
+ * `> :not([hidden]) ~ :not([hidden]) { @apply tw-mt-0 }`) compile to
+ * `margin-top/bottom: 0 !important` on every direct child of the form, which
+ * silently overrode the wizard's section margins. Re-assert them here with
+ * matching specificity (form + 2 classes) so they actually take effect. */
+form.woocommerce-checkout.ypf-checkout-wizard > .ypf-stepper:not([hidden]) {
+  margin-bottom: 2rem !important;
+}
+form.woocommerce-checkout.ypf-checkout-wizard > .ypf-step-titles:not([hidden]) {
+  margin-bottom: 2.5rem !important;
+}
+form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) {
+  margin-top: 4rem !important;
+}
+.ypf-step-header {
+  @apply tw-text-center;
+}
+.ypf-step-header[hidden] {
+  display: none;
+}
+.ypf-step-title {
+  @apply tw-text-2xl tw-font-bold tw-mb-1;
+  color: var(--yourpropfirm-primary-text);
+}
+.ypf-step-subtitle {
+  @apply tw-text-sm;
+  color: var(--yourpropfirm-secondary-text);
+}
+
+/* ---- Field groups ---- */
+.ypf-field-group {
+  @apply tw-mb-6;
+}
+.ypf-field-label {
+  @apply tw-text-sm tw-font-semibold tw-mb-3;
+  color: var(--yourpropfirm-text);
+}
+
+/* ---- Select cards (one panel per selector group) ---- */
+.ypf-challenge-selection {
+  @apply tw-flex tw-flex-col tw-gap-4;
+}
+.ypf-select-card {
+  @apply tw-rounded-2xl tw-p-5;
+  border: 1px solid var(--yourpropfirm-border);
+  background: var(--yourpropfirm-card);
+}
+.ypf-select-card .ypf-field-label {
+  @apply tw-text-sm tw-font-semibold tw-mb-4;
+  color: var(--yourpropfirm-text);
+}
+
+/* shared radio-dot indicator — shown ONLY on the selected option (per design) */
+.ypf-radio-dot {
+  @apply tw-relative tw-shrink-0 tw-rounded-full;
+  width: 1.15rem;
+  height: 1.15rem;
+  display: none;
+}
+:is(.ypf-eval-option, .ypf-balance-option, .ypf-platform-option):has(:checked) .ypf-radio-dot {
+  display: block;
+  border: 2px solid var(--yourpropfirm-primary);
+}
+:is(.ypf-eval-option, .ypf-balance-option, .ypf-platform-option):has(:checked) .ypf-radio-dot::after {
+  content: "";
+  @apply tw-absolute tw-rounded-full;
+  inset: 3px;
+  background: var(--yourpropfirm-primary);
+}
+
+/* ---- Evaluation type cards ---- */
+.ypf-eval-grid {
+  @apply tw-grid tw-gap-3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 640px) {
+  .ypf-eval-grid { grid-template-columns: 1fr; }
+}
+.ypf-eval-option {
+  @apply tw-relative tw-flex tw-flex-col tw-gap-1 tw-rounded-xl tw-p-4 tw-pr-9 tw-cursor-pointer tw-transition-all;
+  border: 1.5px solid var(--yourpropfirm-border);
+  background: var(--yourpropfirm-card);
+}
+.ypf-eval-option:hover { border-color: var(--yourpropfirm-primary-300); }
+.ypf-eval-option .ypf-eval-radio {
+  @apply tw-absolute tw-opacity-0 tw-pointer-events-none;
+}
+.ypf-eval-option:has(.ypf-eval-radio:checked) {
+  border-color: var(--yourpropfirm-primary);
+  background: var(--yourpropfirm-primary-light);
+}
+.ypf-eval-option .ypf-radio-dot {
+  @apply tw-absolute tw-right-3 tw-top-4;
+}
+.ypf-eval-title {
+  @apply tw-text-base tw-font-bold;
+  color: var(--yourpropfirm-primary-text);
+}
+.ypf-eval-desc {
+  @apply tw-text-xs;
+  color: var(--yourpropfirm-secondary-text);
+}
+/* badges centered on the top border */
+.ypf-eval-badge {
+  @apply tw-absolute tw-left-1/2 tw--translate-x-1/2 tw-inline-flex tw-items-center tw-gap-1 tw-rounded-full tw-px-2.5 tw-py-0.5 tw-text-[10px] tw-font-bold tw-whitespace-nowrap;
+  top: -0.6rem;
+}
+.ypf-badge--best-value {
+  background: #f59e0b;
+  color: #1a1200;
+}
+.ypf-badge--popular {
+  background: var(--yourpropfirm-primary);
+  color: var(--yourpropfirm-button-text);
+}
+
+/* ---- Account balance grid ---- */
+.ypf-balance-grid {
+  @apply tw-grid tw-gap-3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 480px) {
+  .ypf-balance-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.ypf-balance-option {
+  @apply tw-relative tw-flex tw-items-center tw-justify-center tw-gap-2 tw-rounded-lg tw-py-3.5 tw-px-3 tw-cursor-pointer tw-transition-all tw-text-sm tw-font-semibold;
+  border: 1.5px solid var(--yourpropfirm-border);
+  background: var(--yourpropfirm-card);
+  color: var(--yourpropfirm-text);
+}
+.ypf-balance-option:hover { border-color: var(--yourpropfirm-primary-300); }
+.ypf-balance-option .ypf-balance-radio {
+  @apply tw-absolute tw-opacity-0 tw-pointer-events-none;
+}
+.ypf-balance-option:has(.ypf-balance-radio:checked) {
+  border-color: var(--yourpropfirm-primary);
+  background: var(--yourpropfirm-primary-light);
+  color: var(--yourpropfirm-primary);
+}
+.ypf-balance-option .ypf-radio-dot {
+  @apply tw-absolute tw-right-3;
+}
+
+/* ---- Platform cards ---- */
+.ypf-platform-grid {
+  @apply tw-grid tw-gap-3;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.ypf-platform-option {
+  @apply tw-relative tw-flex tw-items-center tw-justify-center tw-rounded-xl tw-py-4 tw-px-4 tw-pr-9 tw-cursor-pointer tw-transition-all tw-text-base tw-font-bold;
+  border: 1.5px solid var(--yourpropfirm-border);
+  background: var(--yourpropfirm-card);
+  color: var(--yourpropfirm-primary-text);
+}
+.ypf-platform-option:hover { border-color: var(--yourpropfirm-primary-300); }
+.ypf-platform-option .ypf-platform-radio {
+  @apply tw-absolute tw-opacity-0 tw-pointer-events-none;
+}
+.ypf-platform-option:has(.ypf-platform-radio:checked) {
+  border-color: var(--yourpropfirm-primary);
+  background: var(--yourpropfirm-primary-light);
+}
+.ypf-platform-option .ypf-radio-dot {
+  @apply tw-absolute tw-right-3;
+}
+
+/* ---- Order summary (static, JS-driven) ---- */
+.ypf-order-summary { @apply tw-mt-2; }
+.ypf-summary-toggle {
+  @apply tw-flex tw-w-full tw-items-center tw-justify-between tw-rounded-lg tw-px-4 tw-py-3 tw-text-sm tw-font-semibold tw-mb-3;
+  border: 1px solid var(--yourpropfirm-border);
+  background: var(--yourpropfirm-input);
+  color: var(--yourpropfirm-text);
+}
+.ypf-summary-chevron {
+  color: var(--yourpropfirm-secondary-text);
+  transition: transform 0.2s ease;
+}
+.ypf-summary-toggle[aria-expanded="false"] .ypf-summary-chevron {
+  transform: rotate(-90deg);
+}
+.ypf-summary-details { @apply tw-flex tw-flex-col; }
+.ypf-summary-row {
+  @apply tw-flex tw-items-center tw-justify-between tw-py-2 tw-text-sm;
+}
+.ypf-summary-label { color: var(--yourpropfirm-secondary-text); }
+.ypf-summary-value {
+  @apply tw-font-semibold;
+  color: var(--yourpropfirm-text);
+}
+.ypf-summary-divider {
+  @apply tw-my-2 tw-border-0;
+  border-top: 1px solid var(--yourpropfirm-border);
+}
+.ypf-summary-total > span:first-child {
+  @apply tw-text-lg tw-font-bold;
+  color: var(--yourpropfirm-primary-text);
+}
+.ypf-summary-total .ypf-summary-value {
+  @apply tw-text-xl tw-font-extrabold;
+  color: var(--yourpropfirm-primary-text);
+}
+
+/* ---- Step nav buttons ---- */
+.checkout-step-nav {
+  @apply tw-flex tw-gap-3 tw-mt-5;
+}
+.checkout-step-nav .ypf-nav-next {
+  @apply tw-flex-1 tw-inline-flex tw-items-center tw-justify-center tw-gap-2;
+}
+.checkout-step-nav .ypf-nav-prev { @apply tw-flex-1; }
+.ypf-secure-checkout {
+  @apply tw-flex tw-items-center tw-justify-center tw-gap-1.5 tw-mt-3 tw-text-xs;
+  color: var(--yourpropfirm-secondary-text);
+}
+
+/* ---- We Accept (placeholder chips, boxed) ---- */
+.ypf-we-accept {
+  @apply tw-mt-5 tw-p-4 tw-rounded-xl;
+  border: 1px solid var(--yourpropfirm-border);
+}
+.ypf-we-accept__label {
+  @apply tw-block tw-text-xs tw-font-medium tw-mb-3;
+  color: var(--yourpropfirm-secondary-text);
+}
+.ypf-we-accept__cards {
+  @apply tw-flex tw-flex-wrap tw-gap-2 tw-mb-2;
+}
+.ypf-pay-card {
+  @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-px-2 tw-text-[10px] tw-font-bold;
+  height: 1.65rem;
+  min-width: 2.6rem;
+  background: #ffffff;
+  color: #1a1a1a;
+}
+.ypf-we-accept__crypto {
+  @apply tw-flex tw-flex-wrap tw-items-center tw-gap-1.5;
+}
+.ypf-crypto-dot {
+  @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-full tw-text-[11px] tw-font-bold tw-text-white;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: var(--c, #444);
+}
+.ypf-crypto-more {
+  @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-full tw-text-xs tw-font-bold;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 1px solid var(--yourpropfirm-border);
+  color: var(--yourpropfirm-secondary-text);
+}
+
+/* ---- TOS agreement (step 2) ---- */
+/* Ensure step-specific sidebar panels honour the [hidden] attribute even though
+ * their display is set via classes (otherwise the step-2 TOS shows on step 1). */
+.order-summary [data-sidebar-step][hidden] {
+  display: none !important;
+}
+.ypf-step-agreements {
+  @apply tw-mt-4 tw-flex tw-gap-2 tw-items-start;
+}
+.ypf-agreement-label {
+  @apply tw-text-xs tw-leading-relaxed;
+  color: var(--yourpropfirm-secondary-text);
+}
+.ypf-agreement-label .terms-link {
+  color: var(--yourpropfirm-primary);
+  text-decoration: underline;
+}
+
+/* ---- Trust badges (footer) ----
+ * Badges stay aligned with the content; the divider LINE spans the full window
+ * (via a full-bleed ::before) like the header border. Generous gap above so it
+ * doesn't hug the content. */
+.ypf-trust-badges {
+  position: relative;
+  margin-top: 4rem;
+  padding-top: 3rem;
+}
+.ypf-trust-badges::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  border-top: 1px solid var(--yourpropfirm-border);
+}
+.ypf-trust-badges__inner {
+  @apply tw-grid tw-gap-4;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 640px) {
+  .ypf-trust-badges__inner { grid-template-columns: 1fr; }
+}
+.ypf-trust-badge {
+  @apply tw-flex tw-flex-col tw-items-center tw-text-center tw-gap-1;
+}
+.ypf-trust-badge__icon {
+  @apply tw-flex tw-items-center tw-justify-center tw-rounded-full tw-mb-1;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: var(--yourpropfirm-primary-light);
+  color: var(--yourpropfirm-primary);
+}
+.ypf-trust-badge__title {
+  @apply tw-text-sm tw-font-semibold;
+  color: var(--yourpropfirm-text);
+}
+.ypf-trust-badge__sub {
+  @apply tw-text-xs;
+  color: var(--yourpropfirm-secondary-text);
 }

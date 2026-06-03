@@ -30,10 +30,9 @@
       return storedTheme;
     }
 
-    // Priority 3: Check system preference
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
+    // Priority 3: FundedBot is a dark-first experience — default to dark
+    // unless the user has explicitly opted into light via toggle/cookie above.
+    return "dark";
   };
 
   const setTheme = (theme) => {
