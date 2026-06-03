@@ -86,16 +86,15 @@
     });
   }
 
-  // Arrow icon kept on the Next button (the multistep JS wipes it via textContent).
-  var ARROW_SVG =
-    '<svg class="ypf-nav-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
-
   function applyNavLabel() {
     var nextBtn = document.querySelector("[data-checkout-step-next]");
     if (!nextBtn || nextBtn.disabled) return; // don't clobber the loading state
     var m = location.hash.match(/step=(\d)/);
-    var label = m && m[1] === "2" ? payLabel : continueLabel;
-    nextBtn.innerHTML = "<span>" + label + "</span>" + ARROW_SVG;
+    // Label is also set at the source via window.ypfMultistep.labels (the add-on's
+    // `before` inline script), so this is a defensive re-apply. Use textContent —
+    // the trailing arrow is a CSS ::after on .ypf-nav-next, so it survives the
+    // multistep JS overwriting the label via textContent.
+    nextBtn.textContent = m && m[1] === "2" ? payLabel : continueLabel;
   }
 
   function bindNavLabel() {
@@ -127,6 +126,8 @@
     var prevBtn    = document.getElementById("ypf-email-prev");
     var sidebarNav = document.querySelector(".checkout-step-nav");
     var secureCheckout = document.querySelector(".ypf-secure-checkout");
+    var challengeReq = document.getElementById("ypf-challenge-req");
+    var paymentCoupon = document.getElementById("ypf-payment-coupon");
     var billingEmail = document.getElementById("billing_email");
     if (!substepNav || !nextBtn || !prevBtn || !billingEmail) return;
 
@@ -151,6 +152,9 @@
       // "Secure checkout" assurance shows on screen 1 and the final (full-form)
       // screen only — hide it on the intermediate email sub-step.
       if (secureCheckout) secureCheckout.classList.add("ypf-field-hidden");
+      // Challenge Requirement is step-1 only; Payment/Coupon is full-form only.
+      if (challengeReq) challengeReq.classList.add("ypf-field-hidden");
+      if (paymentCoupon) paymentCoupon.classList.add("ypf-field-hidden");
     }
 
     function enterFullForm() {
@@ -160,6 +164,9 @@
       substepNav.classList.remove("ypf-field-hidden");
       if (sidebarNav) sidebarNav.classList.remove("ypf-field-hidden");
       if (secureCheckout) secureCheckout.classList.remove("ypf-field-hidden");
+      // Challenge Requirement stays hidden on step 2; Payment/Coupon appears now.
+      if (challengeReq) challengeReq.classList.add("ypf-field-hidden");
+      if (paymentCoupon) paymentCoupon.classList.remove("ypf-field-hidden");
     }
 
     // Activate email sub-step when step 2 section becomes visible.
@@ -205,6 +212,9 @@
         if (!step1Section.hidden) {
           if (sidebarNav) sidebarNav.classList.remove("ypf-field-hidden");
           if (secureCheckout) secureCheckout.classList.remove("ypf-field-hidden");
+          // Back on step 1: Challenge Requirement returns, Payment/Coupon hides.
+          if (challengeReq) challengeReq.classList.remove("ypf-field-hidden");
+          if (paymentCoupon) paymentCoupon.classList.add("ypf-field-hidden");
         }
       }).observe(step1Section, { attributes: true, attributeFilter: ["hidden"] });
     }

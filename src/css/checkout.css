@@ -2303,6 +2303,58 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
   color: var(--yourpropfirm-primary-text);
 }
 
+/* ---- Payment method + Coupon (full-form step only) ---- */
+.ypf-payment-coupon {
+  @apply tw-flex tw-flex-col tw-gap-4 tw-mb-4;
+}
+.ypf-pm-label,
+.ypf-coupon-label {
+  @apply tw-block tw-text-sm tw-mb-2;
+  color: var(--yourpropfirm-secondary-text);
+}
+.ypf-required { color: var(--yourpropfirm-primary); }
+.ypf-pm-select-wrap { position: relative; }
+.ypf-payment-coupon .ypf-pm-select {
+  @apply tw-w-full tw-rounded-lg tw-text-sm !tw-h-11;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: var(--yourpropfirm-card) !important;
+  border: 1px solid var(--yourpropfirm-border) !important;
+  color: var(--yourpropfirm-text) !important;
+  padding: 0 2.5rem 0 0.875rem !important;
+}
+.ypf-pm-select-wrap::after {
+  content: "";
+  position: absolute;
+  right: 0.875rem;
+  top: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+.ypf-coupon-row {
+  @apply tw-flex tw-items-center tw-gap-2;
+}
+.ypf-payment-coupon .ypf-coupon-input {
+  @apply tw-flex-1 tw-rounded-lg tw-text-sm !tw-h-11;
+  background: var(--yourpropfirm-card) !important;
+  border: 1px solid var(--yourpropfirm-border) !important;
+  color: var(--yourpropfirm-text) !important;
+  padding: 0 0.875rem !important;
+}
+.ypf-coupon-apply {
+  @apply tw-rounded-lg tw-text-sm tw-font-semibold tw-px-4 !tw-h-11;
+  background: transparent;
+  border: 1px solid var(--yourpropfirm-border);
+  color: var(--yourpropfirm-primary);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.ypf-coupon-apply:hover { border-color: var(--yourpropfirm-primary); }
+
 /* ---- Step nav buttons ---- */
 /* ---- Email sub-step nav (step 2a) ---- */
 .ypf-field-hidden { display: none !important; }
@@ -2326,6 +2378,19 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
 .checkout-step-nav .ypf-nav-next {
   @apply tw-flex-1 tw-inline-flex tw-items-center tw-justify-center tw-gap-2;
 }
+/* Trailing right-arrow — CSS so it survives the multistep JS setting textContent.
+   currentColor mask keeps it the same color as the button label. */
+.checkout-step-nav .ypf-nav-next::after {
+  content: "";
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") no-repeat center / contain;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m12 5 7 7-7 7'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+/* No arrow during the loading/processing state. */
+.checkout-step-nav .ypf-nav-next:disabled::after { display: none; }
 .checkout-step-nav .ypf-nav-prev { @apply tw-flex-1; }
 .ypf-secure-checkout {
   @apply tw-flex tw-items-center tw-justify-center tw-gap-1.5 tw-mt-3 tw-text-xs;

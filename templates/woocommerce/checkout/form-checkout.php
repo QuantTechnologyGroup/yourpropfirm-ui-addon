@@ -172,7 +172,8 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 
 					<!-- Static, JS-driven order summary (updated by js/checkout-wizard.js) -->
 					<div id="ypf-order-summary" class="ypf-order-summary">
-						<div class="ypf-challenge-req-card">
+						<!-- Challenge Requirement — step 1 only (JS hides it on step 2) -->
+						<div class="ypf-challenge-req-card" id="ypf-challenge-req">
 							<button type="button" class="ypf-summary-toggle" data-ypf-toggle aria-expanded="true">
 								<span><?php esc_html_e( 'Challenge Requirement', 'yourpropfirm' ); ?></span>
 								<svg class="ypf-summary-chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 8L7 2L13 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -184,6 +185,27 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 								<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Max. Daily Loss', 'yourpropfirm' ); ?></span><span class="ypf-summary-value ypf-value--red">4%</span></div>
 							</div>
 						</div>
+
+						<!-- Payment method + Coupon — full-form step only (JS shows it after email) -->
+						<div class="ypf-payment-coupon ypf-field-hidden" id="ypf-payment-coupon">
+							<div class="ypf-pm-field">
+								<label class="ypf-pm-label" for="ypf-payment-select"><?php esc_html_e( 'Payment method', 'yourpropfirm' ); ?> <span class="ypf-required">*</span></label>
+								<div class="ypf-pm-select-wrap">
+									<select class="ypf-pm-select" id="ypf-payment-select" name="ypf_payment_method">
+										<option value="crypto-confirmo"><?php esc_html_e( 'Crypto (Confirmo)', 'yourpropfirm' ); ?></option>
+										<option value="card"><?php esc_html_e( 'Card', 'yourpropfirm' ); ?></option>
+									</select>
+								</div>
+							</div>
+							<div class="ypf-coupon-field">
+								<label class="ypf-coupon-label" for="ypf-coupon-input"><?php esc_html_e( 'Coupon code', 'yourpropfirm' ); ?></label>
+								<div class="ypf-coupon-row">
+									<input type="text" class="ypf-coupon-input" id="ypf-coupon-input" placeholder="<?php esc_attr_e( 'Insert coupon code', 'yourpropfirm' ); ?>" />
+									<button type="button" class="ypf-coupon-apply" id="ypf-coupon-apply"><?php esc_html_e( 'Apply', 'yourpropfirm' ); ?></button>
+								</div>
+							</div>
+						</div>
+
 						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Product', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="product">&mdash;</span></div>
 						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Category', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="category">&mdash;</span></div>
 						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Account', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="account">&mdash;</span></div>

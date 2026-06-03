@@ -68,6 +68,25 @@ class YPF_UI_Addon_Hooks {
 				],
 			]
 		);
+
+		// Override the main plugin's multistep Next-button labels at the source.
+		// The plugin's checkout-multistep.js freezes NEXT_LABELS from
+		// window.ypfMultistep.labels when its IIFE runs; a `before` inline script
+		// on that handle lands after the plugin's localized data but before the
+		// file executes, so the plugin itself renders our copy ("Proceed to
+		// Payment" / "Continue") — nothing to fight on step changes.
+		$ypf_labels = wp_json_encode(
+			[
+				'enterBillingDetails' => __( 'Continue', 'yourpropfirm' ),
+				'payAndGetAccess'     => __( 'Proceed to Payment', 'yourpropfirm' ),
+			]
+		);
+		wp_add_inline_script(
+			'yourpropfirm-checkout-multistep',
+			'window.ypfMultistep = window.ypfMultistep || {};'
+				. 'window.ypfMultistep.labels = Object.assign({}, window.ypfMultistep.labels, ' . $ypf_labels . ');',
+			'before'
+		);
 	}
 
 	/**
