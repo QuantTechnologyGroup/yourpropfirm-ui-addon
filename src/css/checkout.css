@@ -107,7 +107,7 @@
 
   /* Checkout Container - Light Mode */
   .checkout-container {
-    @apply tw-max-w-7xl tw-mx-auto tw-px-4 tw-py-8 tw-transition-colors tw-duration-300 tw-relative tw-pt-10;
+    @apply tw-max-w-7xl tw-mx-auto tw-px-3 md:tw-px-4 tw-py-4 md:tw-py-8 tw-transition-colors tw-duration-300 tw-relative tw-pt-6 md:tw-pt-10;
   }
 
   .iframe-mode .checkout-container {
@@ -1954,6 +1954,11 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   border-bottom: 1px solid var(--yourpropfirm-border);
   box-sizing: border-box;
 }
+@media (max-width: 768px) {
+  .woocommerce-checkout .checkout-header-container {
+    margin-bottom: 1.5rem;
+  }
+}
 
 /* ---- Header logo (FUNDEDBIT, top-left) ---- */
 .woocommerce-checkout .checkout-logo {
@@ -2012,7 +2017,7 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   background: var(--yourpropfirm-border);
 }
 .ypf-stepper .checkout-step-indicator__item.is-completed:not(:last-child)::after {
-  background: linear-gradient(90deg, var(--yourpropfirm-progressbar-from), var(--yourpropfirm-progressbar-to));
+  background: var(--yourpropfirm-primary)
 }
 .ypf-stepper .checkout-step-indicator__number {
   @apply tw-flex tw-items-center tw-justify-center tw-rounded-full tw-text-sm tw-font-semibold tw-shrink-0;
@@ -2040,10 +2045,22 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   background: transparent;
   color: var(--yourpropfirm-primary);
 }
+.checkout-step-indicator__check { display: none; }
 .ypf-stepper .checkout-step-indicator__item.is-completed .checkout-step-indicator__number {
-  border-color: var(--yourpropfirm-primary);
-  background: var(--yourpropfirm-primary);
-  color: var(--yourpropfirm-button-text);
+  border: none;
+  background: transparent;
+}
+.ypf-stepper .checkout-step-indicator__item.is-completed .checkout-step-indicator__num-text {
+  display: none;
+}
+.ypf-stepper .checkout-step-indicator__item.is-completed .checkout-step-indicator__check {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+.ypf-stepper .checkout-step-indicator__item.is-completed .checkout-step-indicator__label {
+  color: var(--yourpropfirm-primary);
 }
 .ypf-stepper .checkout-step-indicator__item.is-active .checkout-step-indicator__label {
   color: var(--yourpropfirm-primary);
@@ -2209,14 +2226,19 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
 
 /* ---- Platform cards ---- */
 .ypf-platform-grid {
-  @apply tw-grid tw-gap-3;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  @apply tw-flex tw-gap-3 tw-w-full;
 }
 .ypf-platform-option {
-  @apply tw-relative tw-flex tw-items-center tw-justify-center tw-rounded-xl tw-py-4 tw-px-4 tw-pr-9 tw-cursor-pointer tw-transition-all tw-text-base tw-font-bold;
+  @apply tw-relative tw-flex tw-flex-1 tw-items-center tw-justify-center tw-rounded-xl tw-py-4 tw-px-4 tw-pr-9 tw-cursor-pointer tw-transition-all tw-text-base tw-font-bold;
   border: 1.5px solid var(--yourpropfirm-border);
   background: var(--yourpropfirm-card);
   color: var(--yourpropfirm-primary-text);
+}
+.ypf-platform-img {
+  @apply tw-block;
+  height: 24px;
+  width: auto;
+  object-fit: contain;
 }
 .ypf-platform-option:hover { border-color: var(--yourpropfirm-primary-300); }
 .ypf-platform-option .ypf-platform-radio {
@@ -2232,20 +2254,32 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
 
 /* ---- Order summary (static, JS-driven) ---- */
 .ypf-order-summary { @apply tw-mt-2; }
-.ypf-summary-toggle {
-  @apply tw-flex tw-w-full tw-items-center tw-justify-between tw-rounded-lg tw-px-4 tw-py-3 tw-text-sm tw-font-semibold tw-mb-3;
+.ypf-challenge-req-card {
+  @apply tw-rounded-xl tw-p-4 tw-mb-3;
   border: 1px solid var(--yourpropfirm-border);
-  background: var(--yourpropfirm-input);
+  background: var(--yourpropfirm-card);
+}
+.ypf-summary-toggle {
+  @apply tw-flex tw-w-full tw-items-center tw-justify-between tw-text-base tw-font-semibold;
+  background: transparent;
+  border: none;
   color: var(--yourpropfirm-text);
+  padding: 0;
 }
 .ypf-summary-chevron {
   color: var(--yourpropfirm-secondary-text);
   transition: transform 0.2s ease;
 }
+/* chevron flips down when collapsed */
 .ypf-summary-toggle[aria-expanded="false"] .ypf-summary-chevron {
-  transform: rotate(-90deg);
+  transform: rotate(-180deg);
 }
+.ypf-summary-toggle[aria-expanded="true"] {
+  @apply tw-mb-3;
+}
+/* fix: flex overrides [hidden]; explicitly hide when collapsed */
 .ypf-summary-details { @apply tw-flex tw-flex-col; }
+.ypf-summary-details.is-collapsed { display: none !important; }
 .ypf-summary-row {
   @apply tw-flex tw-items-center tw-justify-between tw-py-2 tw-text-sm;
 }
@@ -2254,6 +2288,8 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
   @apply tw-font-semibold;
   color: var(--yourpropfirm-text);
 }
+.ypf-value--green { color: #4ade80; }
+.ypf-value--red   { color: #f87171; }
 .ypf-summary-divider {
   @apply tw-my-2 tw-border-0;
   border-top: 1px solid var(--yourpropfirm-border);
@@ -2268,6 +2304,22 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
 }
 
 /* ---- Step nav buttons ---- */
+/* ---- Email sub-step nav (step 2a) ---- */
+.ypf-field-hidden { display: none !important; }
+.ypf-substep-label {
+  @apply tw-text-sm tw-font-semibold tw-mb-4;
+  color: var(--yourpropfirm-secondary-text);
+  order: -1 !important;
+}
+.ypf-substep-nav {
+  @apply tw-flex tw-gap-3 tw-mt-5;
+  justify-content: flex-start;
+}
+.ypf-substep-prev,
+.ypf-substep-next {
+  @apply tw-inline-flex tw-items-center tw-gap-2 tw-w-auto;
+}
+
 .checkout-step-nav {
   @apply tw-flex tw-gap-3 tw-mt-5;
 }
@@ -2290,30 +2342,33 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
   color: var(--yourpropfirm-secondary-text);
 }
 .ypf-we-accept__cards {
-  @apply tw-flex tw-flex-wrap tw-gap-2 tw-mb-2;
+  @apply tw-flex tw-flex-wrap tw-items-center tw-gap-2 tw-mb-3;
 }
-.ypf-pay-card {
-  @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-md tw-px-2 tw-text-[10px] tw-font-bold;
-  height: 1.65rem;
-  min-width: 2.6rem;
-  background: #ffffff;
-  color: #1a1a1a;
+.ypf-pay-card-img {
+  height: 1.75rem;
+  width: auto;
+  object-fit: contain;
+}
+.ypf-crypto-card {
+  @apply tw-rounded-xl tw-p-3 tw-mt-6 tw-w-fit;
+  border: 1px solid var(--yourpropfirm-border);
+  background: var(--yourpropfirm-card);
 }
 .ypf-we-accept__crypto {
-  @apply tw-flex tw-flex-wrap tw-items-center tw-gap-1.5;
+  @apply tw-flex tw-items-center;
 }
-.ypf-crypto-dot {
-  @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-full tw-text-[11px] tw-font-bold tw-text-white;
-  width: 1.4rem;
-  height: 1.4rem;
-  background: var(--c, #444);
+.ypf-crypto-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: -0.5rem;
+  border: 2px solid var(--yourpropfirm-card);
 }
+.ypf-crypto-icon:first-child { margin-left: 0; }
 .ypf-crypto-more {
-  @apply tw-inline-flex tw-items-center tw-justify-center tw-rounded-full tw-text-xs tw-font-bold;
-  width: 1.4rem;
-  height: 1.4rem;
-  border: 1px solid var(--yourpropfirm-border);
-  color: var(--yourpropfirm-secondary-text);
+  @apply tw-inline-flex tw-items-center tw-justify-center tw-text-sm tw-font-bold tw-ml-2;
+  color: var(--yourpropfirm-primary);
 }
 
 /* ---- TOS agreement (step 2) ---- */

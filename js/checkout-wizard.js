@@ -13,6 +13,13 @@
 (function () {
   "use strict";
 
+  // Always start at step 1 on page load. Runs synchronously before any
+  // DOMContentLoaded handler (including the main plugin's step-restore logic)
+  // so the plugin sees no hash and initialises at step 1.
+  if (location.hash.match(/step=/)) {
+    history.replaceState(null, null, location.pathname + location.search);
+  }
+
   var cfg = window.ypfCheckoutWizard || {};
   var currency = cfg.currency || "USD";
   var prices = cfg.prices || {};
@@ -75,7 +82,7 @@
     toggle.addEventListener("click", function () {
       var open = toggle.getAttribute("aria-expanded") === "true";
       toggle.setAttribute("aria-expanded", open ? "false" : "true");
-      details.hidden = open;
+      details.classList.toggle("is-collapsed", open);
     });
   }
 
@@ -114,10 +121,107 @@
     }
   }
 
+  function initEmailSubstep() {
+    var substepNav = document.getElementById("ypf-substep-nav");
+    var nextBtn    = document.getElementById("ypf-email-next");
+    var prevBtn    = document.getElementById("ypf-email-prev");
+    var sidebarNav = document.querySelector(".checkout-step-nav");
+    var billingEmail = document.getElementById("billing_email");
+    if (!substepNav || !nextBtn || !prevBtn || !billingEmail) return;
+
+    // All billing .form-row elements except the email one.
+    var billingWrapper = document.querySelector(".woocommerce-billing-fields__field-wrapper");
+    function getNonEmailRows() {
+      if (!billingWrapper) return [];
+      return Array.prototype.filter.call(
+        billingWrapper.querySelectorAll(".form-row"),
+        function (row) { return !row.querySelector("#billing_email"); }
+      );
+    }
+
+    var expanded = false; // tracks whether the full form is visible
+
+    function enterEmailSubstep() {
+      expanded = false;
+      getNonEmailRows().forEach(function (row) { row.classList.add("ypf-field-hidden"); });
+      substepNav.classList.remove("ypf-field-hidden");
+      nextBtn.classList.remove("ypf-field-hidden");
+      if (sidebarNav) sidebarNav.classList.add("ypf-field-hidden");
+    }
+
+    function enterFullForm() {
+      expanded = true;
+      getNonEmailRows().forEach(function (row) { row.classList.remove("ypf-field-hidden"); });
+      nextBtn.classList.add("ypf-field-hidden");
+      substepNav.classList.remove("ypf-field-hidden");
+      if (sidebarNav) sidebarNav.classList.remove("ypf-field-hidden");
+    }
+
+    // Activate email sub-step when step 2 section becomes visible.
+    // MutationObserver is primary (fires as soon as the plugin removes [hidden]);
+    // hashchange is a fallback for plugins that update the hash separately.
+    var step2Section = document.querySelector('[data-checkout-step="2"]');
+    if (step2Section) {
+      new MutationObserver(function () {
+        if (!step2Section.hidden) enterEmailSubstep();
+      }).observe(step2Section, { attributes: true, attributeFilter: ["hidden"] });
+    }
+    window.addEventListener("hashchange", function () {
+      if ((location.hash.match(/step=(\d+)/) || [])[1] === "2") enterEmailSubstep();
+    });
+
+    // Previous: back to email-only (if full form showing) or back to step 1.
+    prevBtn.addEventListener("click", function () {
+      if (expanded) {
+        enterEmailSubstep();
+      } else {
+        // Restore sidebar nav before the main plugin navigates to step 1.
+        if (sidebarNav) sidebarNav.classList.remove("ypf-field-hidden");
+        var sidebarPrev = document.querySelector("[data-checkout-step-prev]");
+        if (sidebarPrev) sidebarPrev.click();
+      }
+    });
+
+    // Continue: validate email, expand to full billing form.
+    // Re-query billing_email each time — WooCommerce AJAX can re-render the field.
+    nextBtn.addEventListener("click", function () {
+      var emailField = document.getElementById("billing_email");
+      if (!emailField || !emailField.value || !emailField.validity.valid) {
+        if (emailField) emailField.reportValidity();
+        return;
+      }
+      enterFullForm();
+    });
+
+    // Belt-and-suspenders: whenever step 1 becomes visible, ensure sidebar nav is shown.
+    var step1Section = document.querySelector('[data-checkout-step="1"]');
+    if (step1Section) {
+      new MutationObserver(function () {
+        if (!step1Section.hidden && sidebarNav) {
+          sidebarNav.classList.remove("ypf-field-hidden");
+        }
+      }).observe(step1Section, { attributes: true, attributeFilter: ["hidden"] });
+    }
+
+    // Intercept sidebar Prev when full form is visible → go back to email sub-step.
+    if (sidebarNav) {
+      var sidebarPrevBtn = sidebarNav.querySelector("[data-checkout-step-prev]");
+      if (sidebarPrevBtn) {
+        sidebarPrevBtn.addEventListener("click", function (e) {
+          if (expanded) {
+            e.stopImmediatePropagation();
+            enterEmailSubstep();
+          }
+        }, true);
+      }
+    }
+  }
+
   function init() {
     bindSelections();
     bindDropdown();
     bindNavLabel();
+    initEmailSubstep();
     updateSummary();
     // Re-apply the label shortly after load in case multistep init runs later.
     setTimeout(applyNavLabel, 50);

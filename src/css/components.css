@@ -100,7 +100,7 @@
 	 * ===================================================== */
 
 .card {
-  @apply tw-bg-yourpropfirm-card md:tw-p-6 tw-rounded-xl tw-py-6 tw-px-4 tw-shadow;
+  @apply tw-bg-yourpropfirm-card md:tw-p-6 tw-rounded-xl tw-py-5 tw-px-3 tw-shadow;
 }
 
 /* =====================================================

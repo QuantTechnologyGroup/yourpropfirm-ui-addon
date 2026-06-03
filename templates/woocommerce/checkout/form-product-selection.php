@@ -29,8 +29,8 @@ $ypf_balances = array( 100000, 50000, 25000, 10000, 5000 );
 $ypf_default_balance = 5000;
 
 $ypf_platforms = array(
-	array( 'id' => 'bybit', 'label' => 'Bybit', 'selected' => true ),
-	array( 'id' => 'platform5', 'label' => __( 'Platform 5', 'yourpropfirm' ), 'selected' => false ),
+	array( 'id' => 'bybit', 'label' => 'Bybit', 'img' => 'bybit.png', 'selected' => true ),
+	array( 'id' => 'platform5', 'label' => __( 'Platform 5', 'yourpropfirm' ), 'img' => 'platform5.png', 'selected' => false ),
 );
 ?>
 <div class="ypf-challenge-selection">
@@ -86,7 +86,10 @@ $ypf_platforms = array(
 					<input type="radio" name="ypf_platform" value="<?php echo esc_attr( $platform['id'] ); ?>"
 						class="ypf-platform-radio" data-label="<?php echo esc_attr( $platform['label'] ); ?>"
 						<?php checked( $platform['selected'], true ); ?> />
-					<span class="ypf-platform-name"><?php echo esc_html( $platform['label'] ); ?></span>
+					<?php if ( ! empty( $platform['img'] ) ) : ?>
+						<img src="<?php echo esc_url( YOURPROPFIRM_UI_ADDON_URL . 'assets/images/' . $platform['img'] ); ?>"
+							alt="<?php echo esc_attr( $platform['label'] ); ?>" class="ypf-platform-img" />
+					<?php endif; ?>
 					<span class="ypf-radio-dot" aria-hidden="true"></span>
 				</label>
 			<?php endforeach; ?>
