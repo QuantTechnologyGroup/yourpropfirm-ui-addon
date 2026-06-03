@@ -234,20 +234,6 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 						</div>
 					</div>
 
-					<!-- Step 2 only: TOS agreement -->
-					<div class="ypf-step-agreements" data-sidebar-step="2" hidden>
-						<div class="ypf-agreement-item">
-							<input type="checkbox" id="ypf_terms" name="ypf_terms" value="1"
-								class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" />
-							<label for="ypf_terms" class="ypf-agreement-label">
-								<?php esc_html_e( 'I agree to the', 'yourpropfirm' ); ?>
-								<a href="<?php echo $ypf_terms_link; ?>" class="terms-link" target="_blank"><?php esc_html_e( 'Terms & Conditions', 'yourpropfirm' ); ?></a>
-								<?php esc_html_e( 'and', 'yourpropfirm' ); ?>
-								<a href="<?php echo $ypf_privacy_policy_link; ?>" class="terms-link" target="_blank"><?php esc_html_e( 'Privacy Policy', 'yourpropfirm' ); ?></a>.
-							</label>
-						</div>
-					</div>
-
 					<!-- Back / Next nav — JS controls visibility + label per step -->
 					<div class="checkout-step-nav">
 						<button type="button" class="btn-outline ypf-nav-prev" data-checkout-step-prev hidden>
@@ -265,10 +251,6 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 						<span><?php esc_html_e( 'Secure checkout — data is protected', 'yourpropfirm' ); ?></span>
 					</div>
 
-					<!-- Consent line — step 2 -->
-					<div class="agreement-text" data-sidebar-step="2" hidden>
-						<p><?php esc_html_e( 'By proceeding with your purchase you agree to our Terms and Conditions and Privacy Policy.', 'yourpropfirm' ); ?></p>
-					</div>
 				</div>
 			</div>
 		</div>

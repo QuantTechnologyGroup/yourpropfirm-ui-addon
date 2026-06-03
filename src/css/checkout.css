@@ -2331,6 +2331,10 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
   @apply tw-flex tw-items-center tw-justify-center tw-gap-1.5 tw-mt-3 tw-text-xs;
   color: var(--yourpropfirm-secondary-text);
 }
+/* green shield icon (the label text stays muted) */
+.ypf-secure-checkout svg {
+  color: var(--yourpropfirm-primary);
+}
 
 /* ---- We Accept (placeholder chips, boxed) ---- */
 .ypf-we-accept {
