@@ -13,6 +13,13 @@
 (function () {
   "use strict";
 
+  // Always start at step 1 on page load. Runs synchronously before any
+  // DOMContentLoaded handler (including the main plugin's step-restore logic)
+  // so the plugin sees no hash and initialises at step 1.
+  if (location.hash.match(/step=/)) {
+    history.replaceState(null, null, location.pathname + location.search);
+  }
+
   var cfg = window.ypfCheckoutWizard || {};
   var currency = cfg.currency || "USD";
   var prices = cfg.prices || {};
@@ -75,20 +82,19 @@
     toggle.addEventListener("click", function () {
       var open = toggle.getAttribute("aria-expanded") === "true";
       toggle.setAttribute("aria-expanded", open ? "false" : "true");
-      details.hidden = open;
+      details.classList.toggle("is-collapsed", open);
     });
   }
-
-  // Arrow icon kept on the Next button (the multistep JS wipes it via textContent).
-  var ARROW_SVG =
-    '<svg class="ypf-nav-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
 
   function applyNavLabel() {
     var nextBtn = document.querySelector("[data-checkout-step-next]");
     if (!nextBtn || nextBtn.disabled) return; // don't clobber the loading state
     var m = location.hash.match(/step=(\d)/);
-    var label = m && m[1] === "2" ? payLabel : continueLabel;
-    nextBtn.innerHTML = "<span>" + label + "</span>" + ARROW_SVG;
+    // Label is also set at the source via window.ypfMultistep.labels (the add-on's
+    // `before` inline script), so this is a defensive re-apply. Use textContent —
+    // the trailing arrow is a CSS ::after on .ypf-nav-next, so it survives the
+    // multistep JS overwriting the label via textContent.
+    nextBtn.textContent = m && m[1] === "2" ? payLabel : continueLabel;
   }
 
   function bindNavLabel() {
@@ -114,10 +120,124 @@
     }
   }
 
+  function initEmailSubstep() {
+    var substepNav = document.getElementById("ypf-substep-nav");
+    var nextBtn    = document.getElementById("ypf-email-next");
+    var prevBtn    = document.getElementById("ypf-email-prev");
+    var sidebarNav = document.querySelector(".checkout-step-nav");
+    var secureCheckout = document.querySelector(".ypf-secure-checkout");
+    var challengeReq = document.getElementById("ypf-challenge-req");
+    var paymentCoupon = document.getElementById("ypf-payment-coupon");
+    var billingEmail = document.getElementById("billing_email");
+    if (!substepNav || !nextBtn || !prevBtn || !billingEmail) return;
+
+    // All billing .form-row elements except the email one.
+    var billingWrapper = document.querySelector(".woocommerce-billing-fields__field-wrapper");
+    function getNonEmailRows() {
+      if (!billingWrapper) return [];
+      return Array.prototype.filter.call(
+        billingWrapper.querySelectorAll(".form-row"),
+        function (row) { return !row.querySelector("#billing_email"); }
+      );
+    }
+
+    var expanded = false; // tracks whether the full form is visible
+
+    function enterEmailSubstep() {
+      expanded = false;
+      getNonEmailRows().forEach(function (row) { row.classList.add("ypf-field-hidden"); });
+      substepNav.classList.remove("ypf-field-hidden");
+      nextBtn.classList.remove("ypf-field-hidden");
+      if (sidebarNav) sidebarNav.classList.add("ypf-field-hidden");
+      // "Secure checkout" assurance shows on screen 1 and the final (full-form)
+      // screen only — hide it on the intermediate email sub-step.
+      if (secureCheckout) secureCheckout.classList.add("ypf-field-hidden");
+      // Challenge Requirement is step-1 only; Payment/Coupon is full-form only.
+      if (challengeReq) challengeReq.classList.add("ypf-field-hidden");
+      if (paymentCoupon) paymentCoupon.classList.add("ypf-field-hidden");
+    }
+
+    function enterFullForm() {
+      expanded = true;
+      getNonEmailRows().forEach(function (row) { row.classList.remove("ypf-field-hidden"); });
+      nextBtn.classList.add("ypf-field-hidden");
+      substepNav.classList.remove("ypf-field-hidden");
+      if (sidebarNav) sidebarNav.classList.remove("ypf-field-hidden");
+      if (secureCheckout) secureCheckout.classList.remove("ypf-field-hidden");
+      // Challenge Requirement stays hidden on step 2; Payment/Coupon appears now.
+      if (challengeReq) challengeReq.classList.add("ypf-field-hidden");
+      if (paymentCoupon) paymentCoupon.classList.remove("ypf-field-hidden");
+    }
+
+    // Activate email sub-step when step 2 section becomes visible.
+    // MutationObserver is primary (fires as soon as the plugin removes [hidden]);
+    // hashchange is a fallback for plugins that update the hash separately.
+    var step2Section = document.querySelector('[data-checkout-step="2"]');
+    if (step2Section) {
+      new MutationObserver(function () {
+        if (!step2Section.hidden) enterEmailSubstep();
+      }).observe(step2Section, { attributes: true, attributeFilter: ["hidden"] });
+    }
+    window.addEventListener("hashchange", function () {
+      if ((location.hash.match(/step=(\d+)/) || [])[1] === "2") enterEmailSubstep();
+    });
+
+    // Previous: back to email-only (if full form showing) or back to step 1.
+    prevBtn.addEventListener("click", function () {
+      if (expanded) {
+        enterEmailSubstep();
+      } else {
+        // Restore sidebar nav before the main plugin navigates to step 1.
+        if (sidebarNav) sidebarNav.classList.remove("ypf-field-hidden");
+        var sidebarPrev = document.querySelector("[data-checkout-step-prev]");
+        if (sidebarPrev) sidebarPrev.click();
+      }
+    });
+
+    // Continue: validate email, expand to full billing form.
+    // Re-query billing_email each time — WooCommerce AJAX can re-render the field.
+    nextBtn.addEventListener("click", function () {
+      var emailField = document.getElementById("billing_email");
+      if (!emailField || !emailField.value || !emailField.validity.valid) {
+        if (emailField) emailField.reportValidity();
+        return;
+      }
+      enterFullForm();
+    });
+
+    // Belt-and-suspenders: whenever step 1 becomes visible, ensure sidebar nav is shown.
+    var step1Section = document.querySelector('[data-checkout-step="1"]');
+    if (step1Section) {
+      new MutationObserver(function () {
+        if (!step1Section.hidden) {
+          if (sidebarNav) sidebarNav.classList.remove("ypf-field-hidden");
+          if (secureCheckout) secureCheckout.classList.remove("ypf-field-hidden");
+          // Back on step 1: Challenge Requirement returns, Payment/Coupon hides.
+          if (challengeReq) challengeReq.classList.remove("ypf-field-hidden");
+          if (paymentCoupon) paymentCoupon.classList.add("ypf-field-hidden");
+        }
+      }).observe(step1Section, { attributes: true, attributeFilter: ["hidden"] });
+    }
+
+    // Intercept sidebar Prev when full form is visible → go back to email sub-step.
+    if (sidebarNav) {
+      var sidebarPrevBtn = sidebarNav.querySelector("[data-checkout-step-prev]");
+      if (sidebarPrevBtn) {
+        sidebarPrevBtn.addEventListener("click", function (e) {
+          if (expanded) {
+            e.stopImmediatePropagation();
+            enterEmailSubstep();
+          }
+        }, true);
+      }
+    }
+  }
+
   function init() {
     bindSelections();
     bindDropdown();
     bindNavLabel();
+    initEmailSubstep();
     updateSummary();
     // Re-apply the label shortly after load in case multistep init runs later.
     setTimeout(applyNavLabel, 50);

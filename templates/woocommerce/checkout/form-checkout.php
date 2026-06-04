@@ -57,7 +57,10 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 					data-hint-active="<?php esc_attr_e( 'You are here', 'yourpropfirm' ); ?>"
 					data-hint-completed="<?php esc_attr_e( 'Completed', 'yourpropfirm' ); ?>"
 					data-hint-upcoming="<?php esc_attr_e( 'Next step', 'yourpropfirm' ); ?>">
-					<span class="checkout-step-indicator__number">1</span>
+					<span class="checkout-step-indicator__number">
+							<span class="checkout-step-indicator__num-text">1</span>
+							<img src="<?php echo esc_url( YOURPROPFIRM_UI_ADDON_URL . 'assets/images/check.png' ); ?>" alt="" class="checkout-step-indicator__check" aria-hidden="true" />
+						</span>
 					<span class="checkout-step-indicator__text">
 						<span class="checkout-step-indicator__hint"><?php esc_html_e( 'You are here', 'yourpropfirm' ); ?></span>
 						<span class="checkout-step-indicator__label"><?php esc_html_e( 'Challenge', 'yourpropfirm' ); ?></span>
@@ -101,6 +104,7 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 				<!-- ===================== STEP 2: YOUR INFORMATION ===================== -->
 				<section data-checkout-step="2" class="checkout-step" hidden>
 					<div class="checkout-card">
+						<p class="ypf-substep-label"><?php esc_html_e( 'Information', 'yourpropfirm' ); ?></p>
 						<div class="woocommerce-billing-fields">
 							<?php do_action( 'woocommerce_before_checkout_billing_form', $checkout ); ?>
 
@@ -142,6 +146,18 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 								<?php do_action( 'woocommerce_after_checkout_registration_form', $checkout ); ?>
 							</div>
 						<?php endif; ?>
+
+						<!-- Shown on email-only sub-step; hidden after Continue -->
+						<div class="ypf-substep-nav ypf-field-hidden" id="ypf-substep-nav">
+							<button type="button" class="btn-outline ypf-substep-prev" id="ypf-email-prev">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+								<span><?php esc_html_e( 'Previous', 'yourpropfirm' ); ?></span>
+							</button>
+							<button type="button" class="btn-primary ypf-substep-next" id="ypf-email-next">
+								<span><?php esc_html_e( 'Continue', 'yourpropfirm' ); ?></span>
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+							</button>
+						</div>
 					</div>
 				</section>
 
@@ -156,17 +172,45 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 
 					<!-- Static, JS-driven order summary (updated by js/checkout-wizard.js) -->
 					<div id="ypf-order-summary" class="ypf-order-summary">
-						<button type="button" class="ypf-summary-toggle" data-ypf-toggle aria-expanded="true">
-							<span><?php esc_html_e( 'Challenge Requirement', 'yourpropfirm' ); ?></span>
-							<svg class="ypf-summary-chevron" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-						</button>
-						<div class="ypf-summary-details" data-ypf-details>
-							<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Product', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="product">&mdash;</span></div>
-							<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Category', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="category">&mdash;</span></div>
-							<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Account', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="account">&mdash;</span></div>
-							<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Platform', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="platform">&mdash;</span></div>
-							<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Currency', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="currency">USD</span></div>
+						<!-- Challenge Requirement — step 1 only (JS hides it on step 2) -->
+						<div class="ypf-challenge-req-card" id="ypf-challenge-req">
+							<button type="button" class="ypf-summary-toggle" data-ypf-toggle aria-expanded="true">
+								<span><?php esc_html_e( 'Challenge Requirement', 'yourpropfirm' ); ?></span>
+								<svg class="ypf-summary-chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 8L7 2L13 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+							</button>
+							<div class="ypf-summary-details" data-ypf-details>
+								<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Phase 1 Target', 'yourpropfirm' ); ?></span><span class="ypf-summary-value ypf-value--green">8%</span></div>
+								<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Phase 2 Target', 'yourpropfirm' ); ?></span><span class="ypf-summary-value ypf-value--green">5%</span></div>
+								<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Max. Loss', 'yourpropfirm' ); ?></span><span class="ypf-summary-value ypf-value--red">8%</span></div>
+								<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Max. Daily Loss', 'yourpropfirm' ); ?></span><span class="ypf-summary-value ypf-value--red">4%</span></div>
+							</div>
 						</div>
+
+						<!-- Payment method + Coupon — full-form step only (JS shows it after email) -->
+						<div class="ypf-payment-coupon ypf-field-hidden" id="ypf-payment-coupon">
+							<div class="ypf-pm-field">
+								<label class="ypf-pm-label" for="ypf-payment-select"><?php esc_html_e( 'Payment method', 'yourpropfirm' ); ?> <span class="ypf-required">*</span></label>
+								<div class="ypf-pm-select-wrap">
+									<select class="ypf-pm-select" id="ypf-payment-select" name="ypf_payment_method">
+										<option value="crypto-confirmo"><?php esc_html_e( 'Crypto (Confirmo)', 'yourpropfirm' ); ?></option>
+										<option value="card"><?php esc_html_e( 'Card', 'yourpropfirm' ); ?></option>
+									</select>
+								</div>
+							</div>
+							<div class="ypf-coupon-field">
+								<label class="ypf-coupon-label" for="ypf-coupon-input"><?php esc_html_e( 'Coupon code', 'yourpropfirm' ); ?></label>
+								<div class="ypf-coupon-row">
+									<input type="text" class="ypf-coupon-input" id="ypf-coupon-input" placeholder="<?php esc_attr_e( 'Insert coupon code', 'yourpropfirm' ); ?>" />
+									<button type="button" class="ypf-coupon-apply" id="ypf-coupon-apply"><?php esc_html_e( 'Apply', 'yourpropfirm' ); ?></button>
+								</div>
+							</div>
+						</div>
+
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Product', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="product">&mdash;</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Category', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="category">&mdash;</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Account', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="account">&mdash;</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Platform', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="platform">&mdash;</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Currency', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="currency">USD</span></div>
 						<hr class="ypf-summary-divider" />
 						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Base Price', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="base">&mdash;</span></div>
 						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Sub Total', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="subtotal">&mdash;</span></div>
@@ -174,37 +218,41 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 						<div class="ypf-summary-row ypf-summary-total"><span><?php esc_html_e( 'Total', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="total">&mdash;</span></div>
 					</div>
 
-					<!-- We Accept payment methods (placeholder chips) -->
+					<!-- We Accept payment methods -->
 					<div class="ypf-we-accept">
 						<span class="ypf-we-accept__label"><?php esc_html_e( 'We Accept', 'yourpropfirm' ); ?></span>
 						<div class="ypf-we-accept__cards">
-							<span class="ypf-pay-card">Mastercard</span>
-							<span class="ypf-pay-card">VISA</span>
-							<span class="ypf-pay-card">PayPal</span>
-							<span class="ypf-pay-card">G&nbsp;Pay</span>
-							<span class="ypf-pay-card">&#63743;&nbsp;Pay</span>
+							<?php
+							$ypf_cards = array(
+								array( 'file' => 'MasterCard.png', 'label' => 'Mastercard' ),
+								array( 'file' => 'Visa.png',       'label' => 'Visa' ),
+								array( 'file' => 'PayPal.png',     'label' => 'PayPal' ),
+								array( 'file' => 'Google Pay.png', 'label' => 'Google Pay' ),
+								array( 'file' => 'ApplePay.png',   'label' => 'Apple Pay' ),
+							);
+							foreach ( $ypf_cards as $card ) : ?>
+								<img src="<?php echo esc_url( YOURPROPFIRM_UI_ADDON_URL . 'assets/images/' . $card['file'] ); ?>"
+									alt="<?php echo esc_attr( $card['label'] ); ?>" class="ypf-pay-card-img" />
+							<?php endforeach; ?>
 						</div>
-						<div class="ypf-we-accept__crypto">
-							<span class="ypf-crypto-dot" style="--c:#f7931a">&#8383;</span>
-							<span class="ypf-crypto-dot" style="--c:#627eea">&#926;</span>
-							<span class="ypf-crypto-dot" style="--c:#26a17b">&#8366;</span>
-							<span class="ypf-crypto-dot" style="--c:#23292f">&#9830;</span>
-							<span class="ypf-crypto-dot" style="--c:#345d9d">L</span>
-							<span class="ypf-crypto-more">+</span>
-						</div>
-					</div>
-
-					<!-- Step 2 only: TOS agreement -->
-					<div class="ypf-step-agreements" data-sidebar-step="2" hidden>
-						<div class="ypf-agreement-item">
-							<input type="checkbox" id="ypf_terms" name="ypf_terms" value="1"
-								class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" />
-							<label for="ypf_terms" class="ypf-agreement-label">
-								<?php esc_html_e( 'I agree to the', 'yourpropfirm' ); ?>
-								<a href="<?php echo $ypf_terms_link; ?>" class="terms-link" target="_blank"><?php esc_html_e( 'Terms & Conditions', 'yourpropfirm' ); ?></a>
-								<?php esc_html_e( 'and', 'yourpropfirm' ); ?>
-								<a href="<?php echo $ypf_privacy_policy_link; ?>" class="terms-link" target="_blank"><?php esc_html_e( 'Privacy Policy', 'yourpropfirm' ); ?></a>.
-							</label>
+						<div class="ypf-crypto-card">
+							<div class="ypf-we-accept__crypto">
+								<?php
+								$ypf_cryptos = array(
+									array( 'file' => 'Bitcoin (BTC).png',   'label' => 'Bitcoin' ),
+									array( 'file' => 'Ethereum (ETH).png',  'label' => 'Ethereum' ),
+									array( 'file' => 'Tether (USDT).png',   'label' => 'Tether' ),
+									array( 'file' => 'USD Coin (USDC).png', 'label' => 'USD Coin' ),
+									array( 'file' => 'Solana (SOL).png',    'label' => 'Solana' ),
+									array( 'file' => 'Litecoin (LTC).png',  'label' => 'Litecoin' ),
+									array( 'file' => 'TRON (TRX).png',      'label' => 'TRON' ),
+								);
+								foreach ( $ypf_cryptos as $crypto ) : ?>
+									<img src="<?php echo esc_url( YOURPROPFIRM_UI_ADDON_URL . 'assets/images/' . $crypto['file'] ); ?>"
+										alt="<?php echo esc_attr( $crypto['label'] ); ?>" class="ypf-crypto-icon" />
+								<?php endforeach; ?>
+								<span class="ypf-crypto-more">+</span>
+							</div>
 						</div>
 					</div>
 
@@ -225,10 +273,6 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 						<span><?php esc_html_e( 'Secure checkout — data is protected', 'yourpropfirm' ); ?></span>
 					</div>
 
-					<!-- Consent line — step 2 -->
-					<div class="agreement-text" data-sidebar-step="2" hidden>
-						<p><?php esc_html_e( 'By proceeding with your purchase you agree to our Terms and Conditions and Privacy Policy.', 'yourpropfirm' ); ?></p>
-					</div>
 				</div>
 			</div>
 		</div>
