@@ -147,6 +147,16 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 							</div>
 						<?php endif; ?>
 
+						<p class="ypf-consent-text ypf-field-hidden">
+							<?php esc_html_e( 'By placing your order, you agree to our', 'yourpropfirm' ); ?>
+							<a href="https://app.fundedbit.com/privacy?_gl=1*1jxnv9h*_ga*MTMxODM3NzI5NS4xNzc3Mjc1OTE1*_ga_LKRKCECBFF*czE3ODA1NTQ0MzkkbzckZzEkdDE3ODA1NTQ0MzkkajYwJGwwJGgyMTA1MTMzOTcw*_fplc*WE1iRGp0WWhFNVdTUHMyNk1kMk11MjduckIxdWducGxvYnhETlpjTDJGMSUyQlRNbzBuSVp3cTNuZCUyQmlXMHhXRkZWQmpZN1FVazZUZzNuRlFJRDJWZ2dtZlYybHkxNE5nRUdGMVI2T0Y2TVBCTEN5MEFoRnpXT3NmRGphbjNqUSUzRCUzRA.."
+							   class="ypf-consent-link" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Privacy Policy', 'yourpropfirm' ); ?></a>
+							<?php esc_html_e( 'and', 'yourpropfirm' ); ?>
+							<a href="https://app.fundedbit.com/terms?_gl=1*1jxnv9h*_ga*MTMxODM3NzI5NS4xNzc3Mjc1OTE1*_ga_LKRKCECBFF*czE3ODA1NTQ0MzkkbzckZzEkdDE3ODA1NTQ0MzkkajYwJGwwJGgyMTA1MTMzOTcw*_fplc*WE1iRGp0WWhFNVdTUHMyNk1kMk11MjduckIxdWducGxvYnhETlpjTDJGMSUyQlRNbzBuSVp3cTNuZCUyQmlXMHhXRkZWQmpZN1FVazZUZzNuRlFJRDJWZ2dtZlYybHkxNE5nRUdGMVI2T0Y2TVBCTEN5MEFoRnpXT3NmRGphbjNqUSUzRCUzRA.."
+							   class="ypf-consent-link" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Terms of Use', 'yourpropfirm' ); ?></a>
+							<?php esc_html_e( ', and consent to receive updates and marketing communications from FundedBit.', 'yourpropfirm' ); ?>
+						</p>
+
 						<!-- Shown on email-only sub-step; hidden after Continue -->
 						<div class="ypf-substep-nav ypf-field-hidden" id="ypf-substep-nav">
 							<button type="button" class="btn-outline ypf-substep-prev" id="ypf-email-prev">

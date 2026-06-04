@@ -152,9 +152,11 @@
       // "Secure checkout" assurance shows on screen 1 and the final (full-form)
       // screen only — hide it on the intermediate email sub-step.
       if (secureCheckout) secureCheckout.classList.add("ypf-field-hidden");
-      // Challenge Requirement is step-1 only; Payment/Coupon is full-form only.
+      // Challenge Requirement is step-1 only; Payment/Coupon and consent are full-form only.
       if (challengeReq) challengeReq.classList.add("ypf-field-hidden");
       if (paymentCoupon) paymentCoupon.classList.add("ypf-field-hidden");
+      var consentText = document.querySelector(".ypf-consent-text");
+      if (consentText) consentText.classList.add("ypf-field-hidden");
     }
 
     function enterFullForm() {
@@ -164,9 +166,11 @@
       substepNav.classList.remove("ypf-field-hidden");
       if (sidebarNav) sidebarNav.classList.remove("ypf-field-hidden");
       if (secureCheckout) secureCheckout.classList.remove("ypf-field-hidden");
-      // Challenge Requirement stays hidden on step 2; Payment/Coupon appears now.
+      // Challenge Requirement stays hidden on step 2; Payment/Coupon and consent appear now.
       if (challengeReq) challengeReq.classList.add("ypf-field-hidden");
       if (paymentCoupon) paymentCoupon.classList.remove("ypf-field-hidden");
+      var consentText = document.querySelector(".ypf-consent-text");
+      if (consentText) consentText.classList.remove("ypf-field-hidden");
     }
 
     // Activate email sub-step when step 2 section becomes visible.
