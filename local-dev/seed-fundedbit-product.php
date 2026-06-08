@@ -27,22 +27,25 @@ function ypf_seed_log( $m ) { echo $m . "\n"; }
  * ------------------------------------------------------------------------- */
 $attr_defs = array(
 	'evaluation'   => 'Evaluation Type',
-	'account_size' => 'Account Size',
+	'account_size' => 'Account Balance',
 );
 foreach ( $attr_defs as $slug => $label ) {
 	$tax = 'pa_' . $slug;
-	if ( ! wc_attribute_taxonomy_id_by_name( $tax ) ) {
-		$res = wc_create_attribute( array(
+	$attr_id = wc_attribute_taxonomy_id_by_name( $tax );
+	if ( ! $attr_id ) {
+		$attr_id = wc_create_attribute( array(
 			'name'         => $label,
 			'slug'         => $slug,
 			'type'         => 'select',
 			'order_by'     => 'menu_order',
 			'has_archives' => false,
 		) );
-		if ( is_wp_error( $res ) ) { ypf_seed_log( "ERR create attr $slug: " . $res->get_error_message() ); return; }
-		ypf_seed_log( "attribute created: $tax (id $res)" );
+		if ( is_wp_error( $attr_id ) ) { ypf_seed_log( "ERR create attr $slug: " . $attr_id->get_error_message() ); return; }
+		ypf_seed_log( "attribute created: $tax (id $attr_id)" );
 	} else {
-		ypf_seed_log( "attribute exists: $tax" );
+		// Keep the display label in sync on re-runs (e.g. Account Size -> Balance).
+		wc_update_attribute( $attr_id, array( 'name' => $label, 'slug' => $slug ) );
+		ypf_seed_log( "attribute exists: $tax (label synced to '$label')" );
 	}
 	// Register the taxonomy for THIS request so we can insert terms immediately.
 	if ( ! taxonomy_exists( $tax ) ) {
@@ -58,12 +61,13 @@ $eval_terms = array(
 	'2-step'     => array( 'name' => '2-Step',     'desc' => 'Standard Evaluation',     'badge' => 'Best Value' ),
 	'fast-track' => array( 'name' => 'Fast Track', 'desc' => 'Pay After You Pass',      'badge' => 'Most Popular' ),
 );
+// Descending so the pills read $100,000 → $5,000 like the design.
 $size_terms = array(
-	'5000'   => '$5,000',
-	'10000'  => '$10,000',
-	'25000'  => '$25,000',
-	'50000'  => '$50,000',
 	'100000' => '$100,000',
+	'50000'  => '$50,000',
+	'25000'  => '$25,000',
+	'10000'  => '$10,000',
+	'5000'   => '$5,000',
 );
 
 $eval_term_ids = array();
@@ -86,6 +90,7 @@ foreach ( $eval_terms as $slug => $def ) {
 ypf_seed_log( 'eval terms: ' . wp_json_encode( $eval_term_ids ) );
 
 $size_term_ids = array();
+$size_order = 1;
 foreach ( $size_terms as $slug => $name ) {
 	$term = get_term_by( 'slug', $slug, 'pa_account_size' );
 	if ( ! $term ) {
@@ -95,6 +100,8 @@ foreach ( $size_terms as $slug => $name ) {
 	} else {
 		$size_term_ids[ $slug ] = $term->term_id;
 	}
+	// WooCommerce orders attribute terms by this meta (menu_order). Descending.
+	update_term_meta( $size_term_ids[ $slug ], 'order_pa_account_size', $size_order++ );
 }
 ypf_seed_log( 'size terms: ' . wp_json_encode( $size_term_ids ) );
 

@@ -1447,6 +1447,13 @@
     @apply tw-text-sm tw-font-semibold tw-mb-4 tw-mt-0;
     color: var(--yourpropfirm-text);
   }
+  /* Design wording: "Select Evaluation Type" / "Select Account Balance" /
+     "Select Trading Platform". Prefixed via CSS so it survives the plugin
+     re-rendering the heading text from the attribute label. */
+  .woocommerce-product-variants .variant-attribute-group .section-subheading::before,
+  .woocommerce-trading-platform .section-subheading::before {
+    content: "Select ";
+  }
 
   /* Hide native radios; selection shown via card state + a radio dot. */
   .woocommerce-product-variants .variant-attribute-option {
