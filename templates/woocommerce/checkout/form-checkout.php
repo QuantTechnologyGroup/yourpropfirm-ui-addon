@@ -95,9 +95,22 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 			<div class="checkout-form-left">
 
 				<!-- ===================== STEP 1: CHOOSE YOUR CHALLENGE ===================== -->
+				<!--
+					Data-driven: form-product-selection.php emits the plugin's
+					.woocommerce-product-selection (category + product + variation attr
+					groups) and form-trading-platform.php emits .woocommerce-trading-platform.
+					yourpropfirm-public.js re-renders these via innerHTML on selection, so
+					the FUNDEDBIT look is applied purely by CSS targeting its classes — the
+					markup/JS hooks are preserved verbatim.
+				-->
 				<section data-checkout-step="1" class="checkout-step">
 					<div class="container-product-selection-group">
-						<?php wc_get_template( 'checkout/form-product-selection.php' ); ?>
+						<div class="container-product-selection hide-if-reset-product hide-if-renewal-subscription">
+							<?php wc_get_template( 'checkout/form-product-selection.php' ); ?>
+						</div>
+						<div class="container-trading-platform hide-if-reset-product hide-if-renewal-subscription">
+							<?php wc_get_template( 'checkout/form-trading-platform.php' ); ?>
+						</div>
 					</div>
 				</section>
 

@@ -347,24 +347,46 @@
 
   /* Trading Platform Options - Light Mode */
 
+  /* Trading platform → FUNDEDBIT card with platform option cards */
+  .woocommerce-trading-platform {
+    @apply tw-rounded-2xl tw-p-5;
+    border: 1px solid var(--yourpropfirm-border);
+    background: var(--yourpropfirm-card);
+  }
+  .woocommerce-trading-platform .section-subheading {
+    @apply tw-text-sm tw-font-semibold tw-mb-4 tw-mt-0;
+    color: var(--yourpropfirm-text);
+  }
   .woocommerce-trading-platform .trading-platform-options {
-    @apply radio-options;
+    @apply tw-flex tw-flex-wrap tw-gap-3;
   }
-
-  .woocommerce-trading-platform .trading-platform-options .platform-option {
-    @apply container-radio-option;
+  .woocommerce-trading-platform .platform-option {
+    @apply tw-relative tw-flex tw-flex-1 tw-items-center tw-justify-center tw-rounded-xl tw-py-4 tw-px-4 tw-pr-9 tw-m-0 tw-cursor-pointer tw-text-base tw-font-bold tw-transition-all tw-duration-200;
+    border: 1.5px solid var(--yourpropfirm-border);
+    background: var(--yourpropfirm-card);
+    color: var(--yourpropfirm-primary-text);
+    min-width: 9rem;
   }
-
-  .woocommerce-trading-platform .trading-platform-options .platform-option input[type="radio"] {
-    @apply box-radio-option;
+  .woocommerce-trading-platform .platform-option input[type="radio"] {
+    @apply tw-sr-only;
   }
-
-  .woocommerce-trading-platform .trading-platform-options .platform-option .platform-option-content {
-    @apply box-radio-label;
+  .woocommerce-trading-platform .platform-option .platform-option-content {
+    @apply tw-text-center;
   }
-
-  .woocommerce-trading-platform .trading-platform-options .platform-option input[type="radio"]:checked+.platform-option-content {
-    @apply box-radio-checked-label;
+  .woocommerce-trading-platform .platform-option:hover {
+    border-color: var(--yourpropfirm-primary-300);
+  }
+  .woocommerce-trading-platform .platform-option:has(input:checked) {
+    border-color: var(--yourpropfirm-primary);
+    background: var(--yourpropfirm-primary-light);
+  }
+  .woocommerce-trading-platform .platform-option:has(input:checked)::after {
+    content: "";
+    @apply tw-absolute tw-rounded-full tw-z-10;
+    width: 1.15rem; height: 1.15rem;
+    right: 0.85rem; top: 50%; transform: translateY(-50%);
+    border: 2px solid var(--yourpropfirm-primary);
+    background: radial-gradient(var(--yourpropfirm-primary) 0 38%, transparent 42%);
   }
 
   /* =====================================================
@@ -1341,6 +1363,21 @@
     @apply box-radio-checked-label;
   }
 
+  /* ---- FUNDEDBIT: one variable product drives the whole step, so the
+     category + single-product selectors are redundant. Hide them (kept in the
+     DOM so yourpropfirm-public.js still reads the checked defaults) and stack
+     the variation cards + the trading-platform card with even spacing. ---- */
+  .container-product-selection-group {
+    @apply tw-flex tw-flex-col tw-gap-4;
+  }
+  .woocommerce-product-selection {
+    @apply tw-flex tw-flex-col tw-gap-4;
+  }
+  .woocommerce-product-selection > .section-heading,
+  .woocommerce-product-selection .product-selection-content {
+    @apply !tw-hidden;
+  }
+
   /* =====================================================
 	 * 33b. PRODUCT RADIO OPTIONS
 	 * ===================================================== */
@@ -1394,89 +1431,107 @@
 	 * ===================================================== */
 
   .container-product-variants {
-    @apply tw-mt-4;
+    @apply tw-mt-0;
   }
 
+  /* Each attribute group = a bordered FUNDEDBIT card, stacked with gap. */
+  .woocommerce-product-variants {
+    @apply tw-flex tw-flex-col tw-gap-4;
+  }
   .woocommerce-product-variants .variant-attribute-group {
-    @apply tw-mb-4;
+    @apply tw-rounded-2xl tw-p-5 tw-mb-0;
+    border: 1px solid var(--yourpropfirm-border);
+    background: var(--yourpropfirm-card);
+  }
+  .woocommerce-product-variants .variant-attribute-group .section-subheading {
+    @apply tw-text-sm tw-font-semibold tw-mb-4 tw-mt-0;
+    color: var(--yourpropfirm-text);
   }
 
-  .woocommerce-product-variants .variant-attribute-group:last-child {
-    @apply tw-mb-0;
-  }
-
-  .woocommerce-product-variants .variant-attribute-options {
-    @apply tw-flex tw-flex-row tw-flex-wrap tw-gap-2;
-  }
-
+  /* Hide native radios; selection shown via card state + a radio dot. */
   .woocommerce-product-variants .variant-attribute-option {
-    @apply tw-cursor-pointer tw-block;
+    @apply tw-relative tw-m-0 tw-block tw-cursor-pointer;
   }
-
   .woocommerce-product-variants .variant-attribute-option input[type="radio"] {
     @apply tw-sr-only;
   }
-
-  /* --- Boxed style (default, no badge/description) --- */
-
-  .woocommerce-product-variants .variant-attribute-option .variant-attribute-label {
-    @apply tw-inline-block tw-rounded-lg tw-border tw-border-solid tw-border-gray-600 tw-bg-transparent tw-py-3 tw-px-4 tw-text-sm tw-font-semibold tw-text-gray-600 tw-transition-all tw-duration-200 tw-ease-in-out dark:tw-border-white dark:tw-text-white;
+  /* selected radio-dot (ring + inner dot) at right-center of the option */
+  .woocommerce-product-variants .variant-attribute-option:has(input:checked)::after {
+    content: "";
+    @apply tw-absolute tw-rounded-full tw-z-10;
+    width: 1.15rem; height: 1.15rem;
+    right: 0.85rem; top: 50%; transform: translateY(-50%);
+    border: 2px solid var(--yourpropfirm-primary);
+    background: radial-gradient(var(--yourpropfirm-primary) 0 38%, transparent 42%);
   }
 
-  .woocommerce-product-variants .variant-attribute-option .variant-attribute-label:hover {
-    @apply tw-border-yourpropfirm-primary dark:tw-border-yourpropfirm-primary;
+  /* ---- Evaluation type group → 3 badged cards ---- */
+  .variant-attribute-group[data-attribute="pa_evaluation"] .variant-attribute-options {
+    @apply tw-grid tw-gap-3;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .variant-attribute-group[data-attribute="pa_evaluation"] .variant-attribute-option--wide {
+    @apply tw-w-auto;
+  }
+  .variant-attribute-group[data-attribute="pa_evaluation"] .variant-attribute-content {
+    @apply tw-flex tw-flex-col tw-gap-1 tw-rounded-xl tw-p-4 tw-pr-9 tw-h-full tw-transition-all tw-duration-200;
+    border: 1.5px solid var(--yourpropfirm-border);
+    background: var(--yourpropfirm-card);
+  }
+  .variant-attribute-group[data-attribute="pa_evaluation"] .variant-attribute-option:hover .variant-attribute-content {
+    border-color: var(--yourpropfirm-primary-300);
+  }
+  .variant-attribute-group[data-attribute="pa_evaluation"] .variant-attribute-option:has(input:checked) .variant-attribute-content {
+    border-color: var(--yourpropfirm-primary);
+    background: var(--yourpropfirm-primary-light);
+  }
+  .variant-attribute-group[data-attribute="pa_evaluation"] .variant-attribute-header {
+    @apply tw-block;
+  }
+  .variant-attribute-group[data-attribute="pa_evaluation"] .variant-attribute-name {
+    @apply tw-text-base tw-font-bold;
+    color: var(--yourpropfirm-primary-text);
+  }
+  .variant-attribute-group[data-attribute="pa_evaluation"] .variant-attribute-description {
+    @apply tw-text-xs;
+    color: var(--yourpropfirm-secondary-text);
+  }
+  /* badge centered overhanging the top border of the card */
+  .variant-attribute-group[data-attribute="pa_evaluation"] .variant-attribute-badge {
+    @apply tw-absolute tw-left-1/2 tw--translate-x-1/2 tw-inline-flex tw-items-center tw-rounded-full tw-px-2.5 tw-py-0.5 tw-text-[10px] tw-font-bold tw-whitespace-nowrap tw-z-20;
+    top: -0.6rem;
+    background: var(--yourpropfirm-primary);
+    color: var(--yourpropfirm-button-text);
+  }
+  /* Best Value (2nd term) → amber; Most Popular (3rd) keeps primary green */
+  .variant-attribute-group[data-attribute="pa_evaluation"] .variant-attribute-option:nth-child(2) .variant-attribute-badge {
+    background: #f59e0b;
+    color: #1a1200;
   }
 
-  .woocommerce-product-variants .variant-attribute-option input[type="radio"]:checked + .variant-attribute-label {
-    @apply tw-border-yourpropfirm-primary tw-bg-yourpropfirm-primary tw-text-yourpropfirm-button-text;
+  /* ---- Account size group → pills grid ---- */
+  .variant-attribute-group[data-attribute="pa_account_size"] .variant-attribute-options {
+    @apply tw-grid tw-gap-3;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .variant-attribute-group[data-attribute="pa_account_size"] .variant-attribute-label {
+    @apply tw-flex tw-items-center tw-justify-center tw-rounded-lg tw-py-3.5 tw-px-3 tw-pr-8 tw-text-sm tw-font-semibold tw-transition-all tw-duration-200 tw-w-full;
+    border: 1.5px solid var(--yourpropfirm-border);
+    background: var(--yourpropfirm-card);
+    color: var(--yourpropfirm-text);
+  }
+  .variant-attribute-group[data-attribute="pa_account_size"] .variant-attribute-option:hover .variant-attribute-label {
+    border-color: var(--yourpropfirm-primary-300);
+  }
+  .variant-attribute-group[data-attribute="pa_account_size"] .variant-attribute-option:has(input:checked) .variant-attribute-label {
+    border-color: var(--yourpropfirm-primary);
+    background: var(--yourpropfirm-primary-light);
+    color: var(--yourpropfirm-primary);
   }
 
-  /* --- Wide style (with badge/description) --- */
-
-  .woocommerce-product-variants .variant-attribute-option--wide {
-    @apply tw-w-full;
-  }
-
-  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-content {
-    @apply tw-flex tw-flex-col tw-gap-1 tw-rounded-lg tw-border tw-border-solid tw-border-gray-600 tw-bg-transparent tw-py-3 tw-px-4 tw-transition-all tw-duration-200 tw-ease-in-out dark:tw-border-white;
-  }
-
-  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-content:hover {
-    @apply tw-border-yourpropfirm-primary dark:tw-border-yourpropfirm-primary;
-  }
-
-  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-header {
-    @apply tw-flex tw-items-center tw-gap-2 tw-justify-between;
-  }
-
-  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-name {
-    @apply tw-text-sm tw-font-semibold tw-text-gray-600 dark:tw-text-white;
-  }
-
-  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-badge {
-    @apply tw-inline-flex tw-items-center tw-rounded-full tw-bg-yourpropfirm-primary tw-text-yourpropfirm-button-text tw-px-2 tw-py-0.5 tw-text-xs tw-font-medium tw-text-center;
-  }
-
-  .woocommerce-product-variants .variant-attribute-option--wide .variant-attribute-description {
-    @apply tw-text-xs tw-text-gray-500 dark:tw-text-gray-600;
-  }
-
-  .woocommerce-product-variants .variant-attribute-option--wide input[type="radio"]:checked + .variant-attribute-content,
-  .woocommerce-product-variants .variant-attribute-option--wide:hover .variant-attribute-content {
-    @apply tw-border-yourpropfirm-primary;
-  }
-
-  .woocommerce-product-variants .variant-attribute-option--wide:hover .variant-attribute-content .variant-attribute-name {
-    @apply dark:tw-text-white tw-text-yourpropfirm-primary;
-  }
-
-  .woocommerce-product-variants .variant-attribute-option--wide input[type="radio"]:checked + .variant-attribute-content .variant-attribute-name {
-    @apply tw-text-yourpropfirm-primary dark:tw-text-yourpropfirm-primary;
-  }
-
-  .woocommerce-product-variants .variant-attribute-option--wide input[type="radio"]:checked + .variant-attribute-content .variant-attribute-description,
-  .woocommerce-product-variants .variant-attribute-option--wide:hover .variant-attribute-content .variant-attribute-description {
-    @apply dark:tw-text-white tw-text-gray-600;
+  @media (max-width: 640px) {
+    .variant-attribute-group[data-attribute="pa_evaluation"] .variant-attribute-options { grid-template-columns: 1fr; }
+    .variant-attribute-group[data-attribute="pa_account_size"] .variant-attribute-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   /* =====================================================
