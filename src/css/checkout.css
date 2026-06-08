@@ -1879,16 +1879,27 @@ body.thankyou-body.dark {
 }
 
 .dark .select2-dropdown {
-  @apply tw-border-white tw-bg-gray-900;
+  background: var(--yourpropfirm-card) !important;
+  border-color: var(--yourpropfirm-border) !important;
 }
 
-/* Search field inside dropdown */
+/* Search field — select2 puts an inline width on it that doesn't match the
+   dropdown, so the box floats narrower than its container. Force it to fill the
+   width (box-sizing so border/padding stay inside), give it a consistent height,
+   and use the neutral FUNDEDBIT input look (not bluish gray). */
 .select2-container--default .select2-search--dropdown .select2-search__field {
-  @apply !tw-h-9 tw-px-3 tw-py-2 tw-text-sm tw-border-gray-300 tw-rounded tw-bg-white tw-text-gray-700;
+  @apply !tw-h-10 tw-text-sm tw-rounded tw-bg-white tw-text-gray-700;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 0.75rem !important;
+  border: 1px solid var(--yourpropfirm-border);
 }
 
 .dark .select2-container--default .select2-search--dropdown .select2-search__field {
-  @apply tw-border-gray-600 tw-bg-gray-800 tw-text-white;
+  background: var(--yourpropfirm-input) !important;
+  border-color: var(--yourpropfirm-border) !important;
+  color: var(--yourpropfirm-text) !important;
 }
 
 /* Options */
@@ -1900,21 +1911,47 @@ body.thankyou-body.dark {
   @apply tw-text-gray-200;
 }
 
-/* Highlighted / hovered option */
-.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+/* Hover / keyboard focus — solid green, ALWAYS wins (even over the selected row).
+   selectWoo marks it --highlighted only (no --selectable), so target --highlighted. */
+.select2-container--default .select2-results__option--highlighted {
   background-color: var(--yourpropfirm-primary) !important;
   @apply tw-text-white;
 }
 
-/* Selected option */
-.select2-container--default .select2-results__option--selected {
-  background-color: var(--yourpropfirm-primary-50) !important;
-  @apply tw-text-gray-700;
+/* Selected row when NOT hovered — subtle green tint with readable text. (Was a
+   near-white --primary-50 bg + white text in dark mode = invisible.) selectWoo
+   marks the chosen option aria-selected; select2 4.1 uses --selected. The
+   :not(--highlighted) lets the green hover above take over on the selected row. */
+.select2-container--default .select2-results__option--selected:not(.select2-results__option--highlighted),
+.select2-container--default .select2-results__option[aria-selected="true"]:not(.select2-results__option--highlighted),
+.select2-container--default .select2-results__option[data-selected="true"]:not(.select2-results__option--highlighted) {
+  background-color: var(--yourpropfirm-primary-light) !important;
+  color: var(--yourpropfirm-primary) !important;
+}
+.dark .select2-container--default .select2-results__option--selected:not(.select2-results__option--highlighted),
+.dark .select2-container--default .select2-results__option[aria-selected="true"]:not(.select2-results__option--highlighted),
+.dark .select2-container--default .select2-results__option[data-selected="true"]:not(.select2-results__option--highlighted) {
+  color: var(--yourpropfirm-text) !important;
 }
 
-.dark .select2-container--default .select2-results__option--selected {
-  @apply tw-text-white;
+/* Upward-opening dropdown ("--above", when the field is near the viewport
+   bottom): select2 removes the joined edge, but our all-sides border + radius
+   re-added a seam over the select box → looked broken. Reconnect it (square the
+   bottom, drop the bottom border) and keep it dark + elevated. Downward is
+   already fine, so it's left untouched. */
+.select2-dropdown--above {
+  @apply tw-rounded-b-none;
+  border-bottom: 0;
 }
+.dark .select2-dropdown--above {
+  background: var(--yourpropfirm-card) !important;
+  border-color: var(--yourpropfirm-border) !important;
+  border-bottom: 0;
+}
+.select2-container--above.select2-container--open .select2-selection--single {
+  @apply tw-rounded-t-none;
+}
+
 /* =====================================================
  * AFFILIATE INFO CARD COMPONENT
  * ===================================================== */
