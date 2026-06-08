@@ -24,6 +24,7 @@
   var currency = cfg.currency || "USD";
   var continueLabel = cfg.continueLabel || "Continue";
   var payLabel = cfg.payLabel || "Proceed to Payment";
+  var lastBase = 0; // last store-computed price (pre-coupon), for discount math
 
   function fmtMoney(n) {
     return "$" + Number(n || 0).toLocaleString("en-US");
@@ -103,6 +104,7 @@
       ? (product.tradingPlatforms && product.tradingPlatforms[platRadio.value]) || platRadio.value
       : "";
 
+    lastBase = Number(price) || 0;
     setText("product", (sizeLabel ? sizeLabel + " — " : "") + evalLabel);
     setText("category", evalLabel);
     setText("account", sizeLabel);
@@ -111,6 +113,83 @@
     setText("base", fmtMoney(price));
     setText("subtotal", fmtMoney(price));
     setText("total", fmtMoney(price));
+  }
+
+  // ---- Coupon: real apply via the plugin's `apply_coupon_action` endpoint ----
+  // No nonce required (verified in the plugin); returns the discounted cart
+  // total. We reflect it in the static summary (Discount row + new Total).
+  function parseMoney(html) {
+    if (html == null) return null;
+    var n = parseFloat(String(html).replace(/<[^>]*>/g, " ").replace(/[^0-9.,]/g, "").replace(/,/g, ""));
+    return isNaN(n) ? null : n;
+  }
+
+  function showCouponMsg(text, ok) {
+    var el = document.getElementById("ypf-coupon-msg");
+    if (!el) return;
+    el.textContent = text;
+    el.classList.remove("ypf-field-hidden", "is-error", "is-ok");
+    el.classList.add(ok ? "is-ok" : "is-error");
+  }
+
+  function applyDiscount(totalNum, code) {
+    var row = document.getElementById("ypf-summary-discount-row");
+    if (totalNum == null) return;
+    var discount = lastBase - totalNum;
+    if (discount > 0.001) {
+      setText("discount", "-" + fmtMoney(discount));
+      setText("discount-code", code ? "(" + code + ")" : "");
+      if (row) row.classList.remove("ypf-field-hidden");
+    } else if (row) {
+      row.classList.add("ypf-field-hidden");
+    }
+    setText("total", fmtMoney(totalNum));
+  }
+
+  function initCoupon() {
+    var input = document.getElementById("ypf-coupon-input");
+    var btn = document.getElementById("ypf-coupon-apply");
+    if (!input || !btn) return;
+    var ajaxUrl =
+      cfg.ajaxUrl ||
+      (window.yourpropfirm_purchase && window.yourpropfirm_purchase.ajax_url) ||
+      "/wp-admin/admin-ajax.php";
+
+    btn.addEventListener("click", function () {
+      var code = (input.value || "").trim();
+      if (!code) { showCouponMsg("Please enter a coupon code.", false); return; }
+      var emailEl = document.getElementById("billing_email");
+      var email = emailEl ? emailEl.value || "" : "";
+      var orig = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Applying…";
+
+      fetch(ajaxUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        credentials: "same-origin",
+        body:
+          "action=apply_coupon_action&coupon_code=" +
+          encodeURIComponent(code) +
+          "&billing_email=" +
+          encodeURIComponent(email),
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res && res.success) {
+            showCouponMsg((res.data && res.data.message) || "Coupon applied.", true);
+            applyDiscount(parseMoney(res.data && res.data.total), code);
+            if (window.jQuery) window.jQuery(document.body).trigger("update_checkout");
+          } else {
+            showCouponMsg((res.data && res.data.message) || "Invalid coupon code.", false);
+          }
+        })
+        .catch(function () { showCouponMsg("Error applying coupon. Please try again.", false); })
+        .finally(function () {
+          btn.disabled = false;
+          btn.textContent = orig;
+        });
+    });
   }
 
   // Delegated: the plugin re-renders the selection markup via innerHTML on every
@@ -295,6 +374,7 @@
     bindDropdown();
     bindNavLabel();
     initEmailSubstep();
+    initCoupon();
     updateSummary();
     // Re-apply the label shortly after load in case multistep init runs later.
     setTimeout(applyNavLabel, 50);

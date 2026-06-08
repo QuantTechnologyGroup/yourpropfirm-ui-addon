@@ -52,8 +52,9 @@ class YPF_UI_Addon_Hooks {
 			true
 		);
 
-		// Static placeholder catalog (UI only — not wired to real products yet).
-		// Price = base price for each evaluation type × account balance.
+		// Config for the wizard controller. The order summary is driven by the
+		// real window.ypfCheckoutStore (no static price matrix); this just carries
+		// labels + the admin-ajax URL used for the real coupon endpoint.
 		wp_localize_script(
 			'yourpropfirm-ui-addon-wizard',
 			'ypfCheckoutWizard',
@@ -61,11 +62,7 @@ class YPF_UI_Addon_Hooks {
 				'currency'      => 'USD',
 				'continueLabel' => __( 'Continue', 'yourpropfirm' ),
 				'payLabel'      => __( 'Proceed to Payment', 'yourpropfirm' ),
-				'prices'        => [
-					'1-step'     => [ 5000 => 59, 10000 => 99, 25000 => 189, 50000 => 289, 100000 => 489 ],
-					'2-step'     => [ 5000 => 49, 10000 => 89, 25000 => 169, 50000 => 259, 100000 => 439 ],
-					'fast-track' => [ 5000 => 69, 10000 => 119, 25000 => 219, 50000 => 329, 100000 => 549 ],
-				],
+				'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
 			]
 		);
 

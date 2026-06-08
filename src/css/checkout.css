@@ -2409,6 +2409,16 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
   white-space: nowrap;
 }
 .ypf-coupon-apply:hover { border-color: var(--yourpropfirm-primary); }
+.ypf-coupon-apply:disabled { opacity: 0.6; cursor: default; }
+.ypf-coupon-msg {
+  @apply tw-mt-2 tw-mb-0 tw-text-xs;
+}
+.ypf-coupon-msg.is-ok { color: var(--yourpropfirm-primary); }
+.ypf-coupon-msg.is-error { color: #f87171; }
+.ypf-discount-code {
+  @apply tw-text-xs;
+  color: var(--yourpropfirm-secondary-text);
+}
 
 /* ---- Step nav buttons ---- */
 /* ---- Email sub-step nav (step 2a) ---- */
