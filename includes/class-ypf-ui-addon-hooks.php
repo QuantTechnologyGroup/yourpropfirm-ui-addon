@@ -59,7 +59,7 @@ class YPF_UI_Addon_Hooks {
 			'yourpropfirm-ui-addon-wizard',
 			'ypfCheckoutWizard',
 			[
-				'currency'      => 'USD',
+				'currency'      => function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : 'USD',
 				'continueLabel' => __( 'Continue', 'yourpropfirm' ),
 				'payLabel'      => __( 'Proceed to Payment', 'yourpropfirm' ),
 				'ajaxUrl'       => admin_url( 'admin-ajax.php' ),

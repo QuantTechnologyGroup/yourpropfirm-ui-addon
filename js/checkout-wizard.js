@@ -26,8 +26,25 @@
   var payLabel = cfg.payLabel || "Proceed to Payment";
   var lastBase = 0; // last store-computed price (pre-coupon), for discount math
 
+  function decodeEntities(s) {
+    if (!s || String(s).indexOf("&") === -1) return s || "";
+    var t = document.createElement("textarea");
+    t.innerHTML = s;
+    return t.value;
+  }
+
+  // Format using WooCommerce's currency format from the store (symbol / position /
+  // decimals / separators), so it follows the WC setting instead of a hardcoded $.
   function fmtMoney(n) {
-    return "$" + Number(n || 0).toLocaleString("en-US");
+    var store = getStore();
+    var cf = (store && store.currencyFormat) || {};
+    var symbol = decodeEntities(cf.symbol || "$");
+    var dec = cf.decimals != null ? cf.decimals : 0;
+    var s = (Number(n) || 0).toFixed(dec);
+    var parts = s.split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, cf.thousand_sep != null ? cf.thousand_sep : ",");
+    var out = parts.join(cf.decimal_sep != null ? cf.decimal_sep : ".");
+    return cf.position === "right" || cf.position === "right_space" ? out + symbol : symbol + out;
   }
 
   function setText(key, val) {
@@ -44,11 +61,15 @@
   function getStore() { return window.ypfCheckoutStore || null; }
 
   function currentProduct(store) {
-    var pid = (store.config && store.config.currentProductId) || null;
-    if (!pid) {
-      var sel = document.querySelector('input[name="selected_product"]:checked');
-      pid = sel ? sel.value : Object.keys(store.products || {})[0];
+    // Prefer the live selection (radio or dropdown) so changing the product on the
+    // production category-drill-down updates the summary; fall back to the store's
+    // initial product / the first product.
+    var sel = document.querySelector('input[name="selected_product"]:checked');
+    if (!sel) {
+      var dd = document.getElementById("selected_product");
+      if (dd && dd.tagName === "SELECT") sel = dd;
     }
+    var pid = sel && sel.value ? sel.value : (store.config && store.config.currentProductId) || Object.keys(store.products || {})[0];
     return store.products ? store.products[pid] : null;
   }
 
@@ -85,6 +106,45 @@
     return slug || "";
   }
 
+  function currencySymbol(store, variation, product) {
+    var cf = (store && store.currencyFormat) || {};
+    return decodeEntities(
+      (variation && variation.programCurrencySymbol) ||
+        (product && product.programCurrencySymbol) ||
+        cf.symbol ||
+        "$"
+    );
+  }
+
+  // Account size from REAL program data — production category-drill-down products
+  // have no pa_account_size variation attribute, so derive it from the program.
+  function accountSizeLabel(store, variation, product) {
+    if (product && product.accountSizeFormatted) return decodeEntities(product.accountSizeFormatted);
+    var raw = (variation && variation.programAccountSize) || (product && product.programAccountSize) || "";
+    if (!raw) return "";
+    raw = String(raw);
+    var sym = currencySymbol(store, variation, product);
+    return raw.indexOf(sym) === 0 ? raw : sym + raw;
+  }
+
+  // Leaf product category name — deepest checked category radio (live), falling
+  // back to the store's current category path.
+  function leafCategoryName(store) {
+    var radios = document.querySelectorAll('input[name^="product_category_"]:checked');
+    if (radios.length) {
+      var last = radios[radios.length - 1];
+      var opt = last.closest(".category-option");
+      var c = opt && opt.querySelector(".category-option-content");
+      if (c && c.textContent.trim()) return c.textContent.trim();
+    }
+    var path = store && store.config && store.config.currentCategoryPath;
+    if (path && path.length && store.categories) {
+      var leaf = store.categories[path[path.length - 1]];
+      if (leaf && leaf.name) return leaf.name;
+    }
+    return "";
+  }
+
   function updateSummary() {
     var store = getStore();
     if (!store || !store.products) return;
@@ -94,20 +154,33 @@
     var attrs = checkedVariantAttrs();
     var variation = product.isVariable ? matchVariation(store, product, attrs) : null;
     var price = variation ? variation.price : product.price;
-    var currency =
-      (variation && variation.programCurrency) || product.programCurrency || cfg.currency || "USD";
 
-    var evalLabel = attrName(product, "pa_evaluation", attrs["pa_evaluation"]);
-    var sizeLabel = attrName(product, "pa_account_size", attrs["pa_account_size"]);
+    // Variation-attribute labels (our local FUNDEDBIT seed). Empty on production's
+    // category-driven products → fall back to real program/category data so
+    // Product / Category / Account always show values.
+    var evalAttr = attrName(product, "pa_evaluation", attrs["pa_evaluation"]);
+    var sizeAttr = attrName(product, "pa_account_size", attrs["pa_account_size"]);
+    var account = sizeAttr || accountSizeLabel(store, variation, product);
+    var category = evalAttr || leafCategoryName(store);
+    var productLabel =
+      sizeAttr && evalAttr
+        ? sizeAttr + " — " + evalAttr
+        : account && category
+          ? account + " — " + category
+          : product.name || account || category || "";
+
+    // Currency follows WooCommerce (cfg.currency = get_woocommerce_currency()).
+    var currency = cfg.currency || (variation && variation.programCurrency) || product.programCurrency || "USD";
+
     var platRadio = document.querySelector('input[name="trading_platform"]:checked');
     var platLabel = platRadio
       ? (product.tradingPlatforms && product.tradingPlatforms[platRadio.value]) || platRadio.value
       : "";
 
     lastBase = Number(price) || 0;
-    setText("product", (sizeLabel ? sizeLabel + " — " : "") + evalLabel);
-    setText("category", evalLabel);
-    setText("account", sizeLabel);
+    setText("product", productLabel);
+    setText("category", category);
+    setText("account", account);
     setText("platform", platLabel);
     setText("currency", currency);
     setText("base", fmtMoney(price));
@@ -198,17 +271,29 @@
     document.addEventListener("change", function (e) {
       var t = e.target;
       if (!t) return;
-      var isVariantOrPlatform =
-        (t.classList &&
-          (t.classList.contains("variant-attribute-radio") ||
-            t.classList.contains("platform-radio"))) ||
+      var cls = t.classList;
+      var relevant =
+        (cls &&
+          (cls.contains("variant-attribute-radio") ||
+            cls.contains("platform-radio") ||
+            cls.contains("category-radio") ||
+            cls.contains("product-radio"))) ||
         t.name === "selected_product" ||
-        t.name === "trading_platform";
-      if (isVariantOrPlatform) {
+        t.name === "trading_platform" ||
+        (t.name && t.name.indexOf("product_category_") === 0);
+      if (relevant) {
         // Let the plugin's handler re-render/sync first, then recompute.
         setTimeout(updateSummary, 0);
       }
     });
+    // The plugin re-renders the selection (innerHTML) + syncs the cart, then fires
+    // updated_checkout — recompute the summary then too (covers the production
+    // category-drill-down where the product/variants re-render asynchronously).
+    if (window.jQuery) {
+      window.jQuery(document.body).on("updated_checkout", function () {
+        setTimeout(updateSummary, 0);
+      });
+    }
   }
 
   function bindDropdown() {
