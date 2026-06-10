@@ -2363,6 +2363,18 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
   color: var(--yourpropfirm-secondary-text);
   order: -1 !important;
 }
+.ypf-consent-text {
+  @apply tw-text-sm tw-mt-4;
+  font-weight: 400;
+  color: var(--yourpropfirm-secondary-text);
+}
+.ypf-consent-link {
+  @apply tw-font-bold;
+  color: #ffffff;
+  text-decoration: none;
+}
+.ypf-consent-link:hover { text-decoration: underline; }
+
 .ypf-substep-nav {
   @apply tw-flex tw-gap-3 tw-mt-5;
   justify-content: flex-start;
