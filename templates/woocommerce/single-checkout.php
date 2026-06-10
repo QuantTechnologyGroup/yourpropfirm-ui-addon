@@ -1,7 +1,18 @@
 <?php
 
-$dark_logo = yourpropfirm_get_dashboard_asset_url( 'logoUrl', 'dark' );
+$dark_logo  = yourpropfirm_get_dashboard_asset_url( 'logoUrl', 'dark' );
 $light_logo = yourpropfirm_get_dashboard_asset_url( 'logoUrl', 'light' );
+// Only treat the dashboard logo as usable when it's an actual image URL. When a
+// tenant has no logo configured, the helper returns the bare dashboard domain
+// (no image path) — guard against that so the FUNDEDBIT fallback logo shows
+// instead of a broken <img>. Production logos end in .png/.svg and still pass.
+$ypf_is_image_url = static function ( $url ) {
+	return is_string( $url ) && preg_match( '/\.(png|jpe?g|svg|webp|gif|avif)(\?.*)?$/i', $url );
+};
+if ( ! $ypf_is_image_url( $dark_logo ) || ! $ypf_is_image_url( $light_logo ) ) {
+	$dark_logo  = '';
+	$light_logo = '';
+}
 $theme_class = yourpropfirm_detect_theme_mode();
 ?>
 

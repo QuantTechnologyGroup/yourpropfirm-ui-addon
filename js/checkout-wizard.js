@@ -22,16 +22,12 @@
 
   var cfg = window.ypfCheckoutWizard || {};
   var currency = cfg.currency || "USD";
-  var prices = cfg.prices || {};
   var continueLabel = cfg.continueLabel || "Continue";
   var payLabel = cfg.payLabel || "Proceed to Payment";
+  var lastBase = 0; // last store-computed price (pre-coupon), for discount math
 
   function fmtMoney(n) {
     return "$" + Number(n || 0).toLocaleString("en-US");
-  }
-
-  function priceFor(evalId, balance) {
-    return (prices[evalId] && prices[evalId][balance]) || 0;
   }
 
   function setText(key, val) {
@@ -40,25 +36,78 @@
     });
   }
 
-  function getChecked(name) {
-    return document.querySelector('input[name="' + name + '"]:checked');
+  // ---- Order summary driven by the REAL store (window.ypfCheckoutStore) ----
+  // No static price matrix: product / category / account / platform / price all
+  // come from the selected variation in the store, matched against the checked
+  // variation-attribute radios + trading platform. Degrades gracefully if the
+  // store is absent (e.g. reset / competition products).
+  function getStore() { return window.ypfCheckoutStore || null; }
+
+  function currentProduct(store) {
+    var pid = (store.config && store.config.currentProductId) || null;
+    if (!pid) {
+      var sel = document.querySelector('input[name="selected_product"]:checked');
+      pid = sel ? sel.value : Object.keys(store.products || {})[0];
+    }
+    return store.products ? store.products[pid] : null;
+  }
+
+  function checkedVariantAttrs() {
+    var attrs = {};
+    document.querySelectorAll(".variant-attribute-radio:checked").forEach(function (r) {
+      var a = r.getAttribute("data-attribute");
+      if (a) attrs[a] = r.value;
+    });
+    return attrs;
+  }
+
+  function matchVariation(store, product, attrs) {
+    var ids = (product && product.variationIds) || [];
+    for (var i = 0; i < ids.length; i++) {
+      var v = store.variations[ids[i]];
+      if (!v) continue;
+      var ok = true;
+      for (var k in attrs) {
+        if (String(v.attributes[k]) !== String(attrs[k])) { ok = false; break; }
+      }
+      if (ok) return v;
+    }
+    return null;
+  }
+
+  function attrName(product, attr, slug) {
+    var a = product.attributes && product.attributes[attr];
+    if (a && a.options) {
+      for (var i = 0; i < a.options.length; i++) {
+        if (String(a.options[i].slug) === String(slug)) return a.options[i].name;
+      }
+    }
+    return slug || "";
   }
 
   function updateSummary() {
-    var ev = getChecked("ypf_eval_type");
-    var bal = getChecked("ypf_account_balance");
-    var plat = getChecked("ypf_platform");
-    if (!ev || !bal) return;
+    var store = getStore();
+    if (!store || !store.products) return;
+    var product = currentProduct(store);
+    if (!product) return;
 
-    var evalLabel = ev.getAttribute("data-category") || ev.getAttribute("data-label") || "";
-    var balance = parseInt(bal.value, 10);
-    var balLabel = bal.getAttribute("data-label") || fmtMoney(balance);
-    var platLabel = plat ? plat.getAttribute("data-label") || "" : "";
-    var price = priceFor(ev.value, balance);
+    var attrs = checkedVariantAttrs();
+    var variation = product.isVariable ? matchVariation(store, product, attrs) : null;
+    var price = variation ? variation.price : product.price;
+    var currency =
+      (variation && variation.programCurrency) || product.programCurrency || cfg.currency || "USD";
 
-    setText("product", balLabel + " — " + evalLabel);
+    var evalLabel = attrName(product, "pa_evaluation", attrs["pa_evaluation"]);
+    var sizeLabel = attrName(product, "pa_account_size", attrs["pa_account_size"]);
+    var platRadio = document.querySelector('input[name="trading_platform"]:checked');
+    var platLabel = platRadio
+      ? (product.tradingPlatforms && product.tradingPlatforms[platRadio.value]) || platRadio.value
+      : "";
+
+    lastBase = Number(price) || 0;
+    setText("product", (sizeLabel ? sizeLabel + " — " : "") + evalLabel);
     setText("category", evalLabel);
-    setText("account", balLabel);
+    setText("account", sizeLabel);
     setText("platform", platLabel);
     setText("currency", currency);
     setText("base", fmtMoney(price));
@@ -66,12 +115,99 @@
     setText("total", fmtMoney(price));
   }
 
+  // ---- Coupon: real apply via the plugin's `apply_coupon_action` endpoint ----
+  // No nonce required (verified in the plugin); returns the discounted cart
+  // total. We reflect it in the static summary (Discount row + new Total).
+  function parseMoney(html) {
+    if (html == null) return null;
+    var n = parseFloat(String(html).replace(/<[^>]*>/g, " ").replace(/[^0-9.,]/g, "").replace(/,/g, ""));
+    return isNaN(n) ? null : n;
+  }
+
+  function showCouponMsg(text, ok) {
+    var el = document.getElementById("ypf-coupon-msg");
+    if (!el) return;
+    el.textContent = text;
+    el.classList.remove("ypf-field-hidden", "is-error", "is-ok");
+    el.classList.add(ok ? "is-ok" : "is-error");
+  }
+
+  function applyDiscount(totalNum, code) {
+    var row = document.getElementById("ypf-summary-discount-row");
+    if (totalNum == null) return;
+    var discount = lastBase - totalNum;
+    if (discount > 0.001) {
+      setText("discount", "-" + fmtMoney(discount));
+      setText("discount-code", code ? "(" + code + ")" : "");
+      if (row) row.classList.remove("ypf-field-hidden");
+    } else if (row) {
+      row.classList.add("ypf-field-hidden");
+    }
+    setText("total", fmtMoney(totalNum));
+  }
+
+  function initCoupon() {
+    var input = document.getElementById("ypf-coupon-input");
+    var btn = document.getElementById("ypf-coupon-apply");
+    if (!input || !btn) return;
+    var ajaxUrl =
+      cfg.ajaxUrl ||
+      (window.yourpropfirm_purchase && window.yourpropfirm_purchase.ajax_url) ||
+      "/wp-admin/admin-ajax.php";
+
+    btn.addEventListener("click", function () {
+      var code = (input.value || "").trim();
+      if (!code) { showCouponMsg("Please enter a coupon code.", false); return; }
+      var emailEl = document.getElementById("billing_email");
+      var email = emailEl ? emailEl.value || "" : "";
+      var orig = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Applying…";
+
+      fetch(ajaxUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        credentials: "same-origin",
+        body:
+          "action=apply_coupon_action&coupon_code=" +
+          encodeURIComponent(code) +
+          "&billing_email=" +
+          encodeURIComponent(email),
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res && res.success) {
+            showCouponMsg((res.data && res.data.message) || "Coupon applied.", true);
+            applyDiscount(parseMoney(res.data && res.data.total), code);
+            if (window.jQuery) window.jQuery(document.body).trigger("update_checkout");
+          } else {
+            showCouponMsg((res.data && res.data.message) || "Invalid coupon code.", false);
+          }
+        })
+        .catch(function () { showCouponMsg("Error applying coupon. Please try again.", false); })
+        .finally(function () {
+          btn.disabled = false;
+          btn.textContent = orig;
+        });
+    });
+  }
+
+  // Delegated: the plugin re-renders the selection markup via innerHTML on every
+  // change, so we listen on document rather than binding to specific nodes.
   function bindSelections() {
-    var inputs = document.querySelectorAll(
-      'input[name="ypf_eval_type"], input[name="ypf_account_balance"], input[name="ypf_platform"]'
-    );
-    inputs.forEach(function (el) {
-      el.addEventListener("change", updateSummary);
+    document.addEventListener("change", function (e) {
+      var t = e.target;
+      if (!t) return;
+      var isVariantOrPlatform =
+        (t.classList &&
+          (t.classList.contains("variant-attribute-radio") ||
+            t.classList.contains("platform-radio"))) ||
+        t.name === "selected_product" ||
+        t.name === "trading_platform";
+      if (isVariantOrPlatform) {
+        // Let the plugin's handler re-render/sync first, then recompute.
+        setTimeout(updateSummary, 0);
+      }
     });
   }
 
@@ -242,6 +378,7 @@
     bindDropdown();
     bindNavLabel();
     initEmailSubstep();
+    initCoupon();
     updateSummary();
     // Re-apply the label shortly after load in case multistep init runs later.
     setTimeout(applyNavLabel, 50);

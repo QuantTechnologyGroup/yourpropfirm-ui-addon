@@ -95,9 +95,22 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 			<div class="checkout-form-left">
 
 				<!-- ===================== STEP 1: CHOOSE YOUR CHALLENGE ===================== -->
+				<!--
+					Data-driven: form-product-selection.php emits the plugin's
+					.woocommerce-product-selection (category + product + variation attr
+					groups) and form-trading-platform.php emits .woocommerce-trading-platform.
+					yourpropfirm-public.js re-renders these via innerHTML on selection, so
+					the FUNDEDBIT look is applied purely by CSS targeting its classes — the
+					markup/JS hooks are preserved verbatim.
+				-->
 				<section data-checkout-step="1" class="checkout-step">
 					<div class="container-product-selection-group">
-						<?php wc_get_template( 'checkout/form-product-selection.php' ); ?>
+						<div class="container-product-selection hide-if-reset-product hide-if-renewal-subscription">
+							<?php wc_get_template( 'checkout/form-product-selection.php' ); ?>
+						</div>
+						<div class="container-trading-platform hide-if-reset-product hide-if-renewal-subscription">
+							<?php wc_get_template( 'checkout/form-trading-platform.php' ); ?>
+						</div>
 					</div>
 				</section>
 
@@ -213,6 +226,7 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 									<input type="text" class="ypf-coupon-input" id="ypf-coupon-input" placeholder="<?php esc_attr_e( 'Insert coupon code', 'yourpropfirm' ); ?>" />
 									<button type="button" class="ypf-coupon-apply" id="ypf-coupon-apply"><?php esc_html_e( 'Apply', 'yourpropfirm' ); ?></button>
 								</div>
+								<p class="ypf-coupon-msg ypf-field-hidden" id="ypf-coupon-msg" role="status"></p>
 							</div>
 						</div>
 
@@ -224,6 +238,7 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 						<hr class="ypf-summary-divider" />
 						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Base Price', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="base">&mdash;</span></div>
 						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Sub Total', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="subtotal">&mdash;</span></div>
+						<div class="ypf-summary-row ypf-field-hidden" id="ypf-summary-discount-row"><span class="ypf-summary-label"><?php esc_html_e( 'Discount', 'yourpropfirm' ); ?> <span class="ypf-discount-code" data-ypf="discount-code"></span></span><span class="ypf-summary-value ypf-value--green" data-ypf="discount">&mdash;</span></div>
 						<hr class="ypf-summary-divider" />
 						<div class="ypf-summary-row ypf-summary-total"><span><?php esc_html_e( 'Total', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="total">&mdash;</span></div>
 					</div>

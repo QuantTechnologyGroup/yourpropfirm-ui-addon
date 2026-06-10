@@ -1,99 +1,218 @@
 <?php
-/**
- * "Choose Your Challenge" selection — STATIC, JS-driven UI (FUNDEDBIT redesign).
- *
- * Three independent cards: Evaluation Type, Account Balance, Trading Platform.
- * Rendered from a static placeholder array; the interactive behaviour (highlight,
- * radio dot, live Order Summary recompute) is handled by js/checkout-wizard.js,
- * which reads the checked radios' data-* attributes and the localized
- * `ypfCheckoutWizard` price catalog. No WooCommerce product/REST dependency.
- *
- * Wiring these controls to real product data is a follow-up once the design is
- * signed off.
- *
- * @package YourPropFirm UI Addon
- */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// --- Static placeholder data --------------------------------------------------
-$ypf_eval_types = array(
-	array( 'id' => '1-step', 'label' => __( '1-Step', 'yourpropfirm' ), 'desc' => __( 'Single Phase Evaluation', 'yourpropfirm' ), 'badge' => '', 'selected' => true ),
-	array( 'id' => '2-step', 'label' => __( '2-Step', 'yourpropfirm' ), 'desc' => __( 'Standard Evaluation', 'yourpropfirm' ), 'badge' => 'best-value', 'selected' => false ),
-	array( 'id' => 'fast-track', 'label' => __( 'Fast Track', 'yourpropfirm' ), 'desc' => __( 'Pay After You Pass', 'yourpropfirm' ), 'badge' => 'popular', 'selected' => false ),
-);
+$enabled = carbon_get_theme_option( 'yourpropfirm_checkout_enable_product_selection' );
 
-$ypf_balances = array( 100000, 50000, 25000, 10000, 5000 );
-$ypf_default_balance = 5000;
+if ( ! $enabled ) {
+	return;
+}
 
-$ypf_platforms = array(
-	array( 'id' => 'bybit', 'label' => 'Bybit', 'img' => 'bybit.png', 'selected' => true ),
-	array( 'id' => 'platform5', 'label' => __( 'Platform 5', 'yourpropfirm' ), 'img' => 'platform5.png', 'selected' => false ),
-);
+// has reset product
+if ( true === yourpropfirm_has_reset_product() ) {
+	return;
+}
+
+if ( true === yourpropfirm_is_competition_product() ) {
+	return;
+}
+
+// Get all product categories
+$categories = yourpropfirm_get_product_categories();
+
+if ( empty( $categories ) ) {
+	return;
+}
+
+// Get first product in cart as default selection
+$default_product = yourpropfirm_get_first_product_in_cart();
+
+// Disable product selection based on first product in cart
+if ( $default_product ) {
+	$disable_selection = get_post_meta( $default_product, '_yourpropfirm_disable_product_selection', true );
+	if ( 'yes' === $disable_selection ) {
+		return;
+	}
+}
+
+// Get cart categories to determine default selection
+$cart_categories = yourpropfirm_get_cart_product_categories();
+
+// Display settings
+$display_as_radio = carbon_get_theme_option( 'yourpropfirm_checkout_display_product_as_radio' );
+$display_account_size = carbon_get_theme_option( 'yourpropfirm_checkout_product_display_account_size' );
+
+
+$default_category = ! empty( $cart_categories ) ? $cart_categories[0] : array_key_first( $categories );
+
+// Get leaf category and path for initial load
+// If there's a product in cart, resolve the path based on its actual categories
+if ( $default_product ) {
+	$leaf_data = yourpropfirm_get_product_category_path( $default_product, $default_category );
+} else {
+	$leaf_data = yourpropfirm_get_leaf_category( $default_category );
+}
+
+$leaf_category_id = $leaf_data['category_id'];
+$category_path = $leaf_data['path'];
+
+// Get products for leaf category
+$default_products = yourpropfirm_get_products_by_category( $leaf_category_id );
+
+// Build subcategory levels data for initial render
+$subcategory_levels = array();
+foreach ( $category_path as $index => $path_category_id ) {
+	if ( $index === 0 ) {
+		continue; // Skip root category (already shown in main category section)
+	}
+	$parent_id = $category_path[ $index - 1 ];
+	$siblings = yourpropfirm_get_child_categories( $parent_id );
+	$subcategory_levels[] = array(
+		'level' => $index,
+		'parent_id' => $parent_id,
+		'selected_id' => $path_category_id,
+		'categories' => $siblings,
+	);
+}
+
+// Build category level labels from overwrite settings
+$overwrite_labels_raw = carbon_get_theme_option( 'yourpropfirm_checkout_overwrite_product_category_label' );
+$category_level_labels = array();
+if ( is_array( $overwrite_labels_raw ) ) {
+	foreach ( $overwrite_labels_raw as $index => $label_entry ) {
+		if ( ! empty( $label_entry['category'] ) ) {
+			$category_level_labels[ $index ] = $label_entry['category'];
+		}
+	}
+}
 ?>
-<div class="ypf-challenge-selection">
+<div class="woocommerce-product-selection product-details"
+	data-rest-url="<?php echo esc_url( rest_url( 'yourpropfirm/v1/' ) ); ?>"
+	data-rest-nonce="<?php echo esc_attr( wp_create_nonce( 'wp_rest' ) ); ?>"
+	data-category-level-labels="<?php echo esc_attr( wp_json_encode( $category_level_labels ) ); ?>"
+	data-display-as-radio="<?php echo $display_as_radio ? 'true' : 'false'; ?>"
+	data-display-account-size="<?php echo $display_account_size ? 'true' : 'false'; ?>">
+	<h4 class="section-heading">
+		<?php _e( 'Product selection', 'yourpropfirm' ); ?>
+	</h4>
 
-	<!-- Select Evaluation Type -->
-	<div class="ypf-select-card">
-		<h3 class="ypf-field-label"><?php esc_html_e( 'Select Evaluation Type', 'yourpropfirm' ); ?></h3>
-		<div class="ypf-eval-grid">
-			<?php foreach ( $ypf_eval_types as $type ) : ?>
-				<label class="ypf-eval-option">
-					<input type="radio" name="ypf_eval_type" value="<?php echo esc_attr( $type['id'] ); ?>"
-						class="ypf-eval-radio" data-label="<?php echo esc_attr( $type['label'] ); ?>"
-						data-category="<?php echo esc_attr( $type['label'] ); ?>" <?php checked( $type['selected'], true ); ?> />
-					<?php if ( 'best-value' === $type['badge'] ) : ?>
-						<span class="ypf-eval-badge ypf-badge--best-value"><?php esc_html_e( 'Best Value', 'yourpropfirm' ); ?></span>
-					<?php elseif ( 'popular' === $type['badge'] ) : ?>
-						<span class="ypf-eval-badge ypf-badge--popular">
-							<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="m13 2-3 7h6l-3 13"/></svg>
-							<?php esc_html_e( 'Most Popular', 'yourpropfirm' ); ?>
-						</span>
-					<?php endif; ?>
-					<span class="ypf-radio-dot" aria-hidden="true"></span>
-					<span class="ypf-eval-title"><?php echo esc_html( $type['label'] ); ?></span>
-					<span class="ypf-eval-desc"><?php echo esc_html( $type['desc'] ); ?></span>
-				</label>
+	<div class="product-selection-content">
+		<!-- Product Category Section -->
+		<div class="product-category-section" data-level="0">
+			<h5 class="section-subheading">
+				<?php echo esc_html( ! empty( $category_level_labels[0] ) ? $category_level_labels[0] : __( 'Product Category', 'yourpropfirm' ) ); ?>
+			</h5>
+			<div class="category-options">
+				<?php
+				foreach ( $categories as $category_id => $category_name ) :
+					$is_selected = $category_id == $default_category;
+					$has_children = yourpropfirm_category_has_children( $category_id );
+					?>
+					<label class="category-option">
+						<input type="radio" name="product_category_0" value="<?php echo esc_attr( $category_id ); ?>" <?php checked( $is_selected, true ); ?> class="category-radio"
+							data-has-children="<?php echo $has_children ? 'true' : 'false'; ?>" />
+						<div class="category-option-content">
+							<?php echo esc_html( $category_name ); ?>
+						</div>
+					</label>
+				<?php endforeach; ?>
+			</div>
+		</div>
+
+		<!-- Subcategory Sections Container -->
+		<div class="subcategory-sections-container">
+			<?php foreach ( $subcategory_levels as $level_data ) : ?>
+				<div class="subcategory-section product-category-section"
+					data-level="<?php echo esc_attr( $level_data['level'] ); ?>"
+					data-parent-id="<?php echo esc_attr( $level_data['parent_id'] ); ?>">
+					<h5 class="section-subheading">
+						<?php echo esc_html( ! empty( $category_level_labels[ $level_data['level'] ] ) ? $category_level_labels[ $level_data['level'] ] : __( 'Subcategory', 'yourpropfirm' ) ); ?>
+					</h5>
+					<div class="category-options">
+						<?php foreach ( $level_data['categories'] as $cat_id => $cat_name ) :
+							$is_selected = $cat_id == $level_data['selected_id'];
+							$has_children = yourpropfirm_category_has_children( $cat_id );
+							?>
+							<label class="category-option">
+								<input type="radio" name="product_category_<?php echo esc_attr( $level_data['level'] ); ?>"
+									value="<?php echo esc_attr( $cat_id ); ?>" <?php checked( $is_selected, true ); ?>
+									class="category-radio"
+									data-has-children="<?php echo $has_children ? 'true' : 'false'; ?>" />
+								<div class="category-option-content">
+									<?php echo esc_html( $cat_name ); ?>
+								</div>
+							</label>
+						<?php endforeach; ?>
+					</div>
+				</div>
 			<?php endforeach; ?>
 		</div>
-	</div>
 
-	<!-- Select Account Balance -->
-	<div class="ypf-select-card">
-		<h3 class="ypf-field-label"><?php esc_html_e( 'Select Account Balance', 'yourpropfirm' ); ?></h3>
-		<div class="ypf-balance-grid">
-			<?php foreach ( $ypf_balances as $balance ) :
-				$label = '$' . number_format( $balance ); ?>
-				<label class="ypf-balance-option">
-					<input type="radio" name="ypf_account_balance" value="<?php echo esc_attr( $balance ); ?>"
-						class="ypf-balance-radio" data-label="<?php echo esc_attr( $label ); ?>"
-						<?php checked( $balance, $ypf_default_balance ); ?> />
-					<span class="ypf-balance-amount"><?php echo esc_html( $label ); ?></span>
-					<span class="ypf-radio-dot" aria-hidden="true"></span>
-				</label>
-			<?php endforeach; ?>
+		<!-- Selected Product Section -->
+		<div class="selected-product-section">
+			<h5 class="section-subheading">
+				<?php echo $display_account_size ? esc_html__( 'Account Size', 'yourpropfirm' ) : esc_html__( 'Selected Product', 'yourpropfirm' ); ?>
+			</h5>
+			<?php if ( $display_as_radio ) : ?>
+				<div class="product-radio-options">
+					<?php
+					$last_product_id = ! empty( $default_products ) ? absint( end( $default_products )['id'] ) : 0;
+					foreach ( $default_products as $product_data ) :
+						$product_id = absint( $product_data['id'] );
+						$is_selected = ( $default_product ? $product_id === absint( $default_product ) : $product_id === $last_product_id );
+						$label_text = ( $display_account_size && ! empty( $product_data['account_size_formatted'] ) )
+							? $product_data['account_size_formatted']
+							: $product_data['name'];
+						?>
+						<label class="product-option">
+							<input type="radio" name="selected_product" value="<?php echo esc_attr( $product_id ); ?>"
+								class="product-radio" <?php checked( $is_selected, true ); ?>
+								data-price="<?php echo esc_attr( $product_data['price'] ); ?>"
+								data-currency="<?php echo esc_attr( $product_data['currency'] ?? '' ); ?>"
+								data-most-popular="<?php echo $product_data['most_popular'] ? 'true' : 'false'; ?>" />
+							<div class="product-option-content">
+								<?php if ( $product_data['most_popular'] ) : ?>
+									<span class="product-option-popular-badge">
+										<?php esc_html_e( 'Most Popular', 'yourpropfirm' ); ?>
+									</span>
+								<?php endif; ?>
+								<span class="product-option-name"><?php echo esc_html( $label_text ); ?></span>
+								<span
+									class="product-option-price-badge"><?php echo wp_kses_post( $product_data['formatted_price'] ); ?></span>
+							</div>
+						</label>
+					<?php endforeach; ?>
+				</div>
+			<?php else : ?>
+				<div class="product-dropdown-wrapper">
+					<select name="selected_product" id="selected_product" class="product-dropdown">
+						<?php
+						foreach ( $default_products as $product_data ) :
+							$product_id = absint( $product_data['id'] );
+							$is_selected = $product_id == $default_product;
+							$most_popular_text = $product_data['most_popular'] ? ' (' . __( 'Most Popular', 'yourpropfirm' ) . ')' : '';
+							?>
+							<option value="<?php echo esc_attr( $product_id ); ?>" <?php selected( $is_selected, true ); ?>
+								data-most-popular="<?php echo $product_data['most_popular'] ? 'true' : 'false'; ?>"
+								data-price="<?php echo esc_attr( $product_data['price'] ); ?>"
+								data-currency="<?php echo esc_attr( $product_data['currency'] ?? '' ); ?>">
+								<?php echo esc_html( $product_data['name'] . $most_popular_text ); ?>
+							</option>
+						<?php endforeach; ?>
+					</select>
+					<div class="dropdown-icon" style="display:none">
+						<svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1 1L7 7L13 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round" />
+						</svg>
+					</div>
+				</div>
+			<?php endif; ?>
 		</div>
 	</div>
-
-	<!-- Select Trading Platform -->
-	<div class="ypf-select-card">
-		<h3 class="ypf-field-label"><?php esc_html_e( 'Select Trading Platform', 'yourpropfirm' ); ?></h3>
-		<div class="ypf-platform-grid">
-			<?php foreach ( $ypf_platforms as $platform ) : ?>
-				<label class="ypf-platform-option">
-					<input type="radio" name="ypf_platform" value="<?php echo esc_attr( $platform['id'] ); ?>"
-						class="ypf-platform-radio" data-label="<?php echo esc_attr( $platform['label'] ); ?>"
-						<?php checked( $platform['selected'], true ); ?> />
-					<?php if ( ! empty( $platform['img'] ) ) : ?>
-						<img src="<?php echo esc_url( YOURPROPFIRM_UI_ADDON_URL . 'assets/images/' . $platform['img'] ); ?>"
-							alt="<?php echo esc_attr( $platform['label'] ); ?>" class="ypf-platform-img" />
-					<?php endif; ?>
-					<span class="ypf-radio-dot" aria-hidden="true"></span>
-				</label>
-			<?php endforeach; ?>
-		</div>
+	<div class="container-product-variants">
+		<?php wc_get_template( 'checkout/form-product-variants.php' ); ?>
 	</div>
-
 </div>
