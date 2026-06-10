@@ -4,8 +4,8 @@
  * Structured as Component-Based CSS dengan Light/Dark Mode Support
  */
 
-/* Import Google Fonts - Inter */
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+/* Import Google Fonts - Archivo */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import "components.css";
 /* Root Variables untuk YourPropFirm Theme Colors */
@@ -1676,7 +1676,7 @@ body.thankyou-body.dark {
   }
 
   .yourpropfirm-checkout {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       "Helvetica Neue", Arial, sans-serif;
     line-height: 1.6;
     @apply tw-text-gray-700;
@@ -1688,7 +1688,7 @@ body.thankyou-body.dark {
   }
 
   .yourpropfirm-thankyou {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
       "Helvetica Neue", Arial, sans-serif;
     line-height: 1.6;
     @apply tw-text-gray-700;
@@ -1882,7 +1882,7 @@ body.thankyou-body.dark {
 .affiliate-info-name {
   @apply tw-text-lg tw-font-semibold tw-leading-[1.4];
   color: var(--yourpropfirm-primary, #111827);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Archivo', sans-serif;
 }
 
 .dark .affiliate-info-card {
@@ -1902,7 +1902,7 @@ body.thankyou-body.dark {
 
 .dark .affiliate-info-name {
   @apply tw-text-white;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Archivo', sans-serif;
 }
 
 /* =====================================================================
