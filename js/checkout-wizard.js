@@ -1,13 +1,22 @@
 /**
- * FUNDEDBIT checkout wizard — static, JS-driven interactivity.
+ * FUNDEDBIT checkout wizard — owns the 2-step navigation + JS-driven summary.
  *
- * Reads the checked eval-type / account-balance / platform radios and the
- * localized `ypfCheckoutWizard` price catalog, and live-updates the static
- * #ypf-order-summary panel. Also toggles the "Challenge Requirement" dropdown
- * and relabels the multistep Next button to "Continue" / "Proceed to Payment".
+ * Plugin 1.15 removed the main plugin's checkout-multistep.js, so this file now
+ * OWNS the Challenge -> Information step engine (see initStepEngine below). It
+ * reproduces that engine's DOM contract — toggling [data-checkout-step]
+ * sections, driving the .checkout-step-indicator items, setting the #step=N
+ * hash and firing `hashchange` — so the label + email-substep logic here keeps
+ * working unchanged. The final "Proceed to Payment" rides WooCommerce's native
+ * place-order submit (the configured gateway, e.g. Confirmo) — no resurrected
+ * AJAX, no order-creation logic of our own.
+ *
+ * It also reads the checked eval-type / account-balance / platform radios and
+ * the real window.ypfCheckoutStore to live-update the #ypf-order-summary panel,
+ * toggles the "Challenge Requirement" dropdown, and applies the coupon via the
+ * plugin's apply_coupon_action endpoint.
  *
  * Selection highlight + radio dots are pure CSS (:has(:checked)); this file
- * only drives the summary numbers, the dropdown, and the button labels.
+ * drives the summary numbers, the dropdown, the button labels, and the steps.
  * It deliberately does NOT touch any WooCommerce review-order selectors.
  */
 (function () {
@@ -458,14 +467,130 @@
     }
   }
 
+  // ---- Step engine (Challenge <-> Information) ---------------------------
+  // Replaces the main plugin's removed checkout-multistep.js. Owns step
+  // visibility + the stepper; navigation goes through goToStep(), which also
+  // emits `hashchange` so applyNavLabel()/initEmailSubstep() react as before.
+  var TOTAL_STEPS = 2;
+
+  function stepFromHash() {
+    var m = location.hash.match(/step=(\d+)/);
+    var n = m ? parseInt(m[1], 10) : 1;
+    return n >= 1 && n <= TOTAL_STEPS ? n : 1;
+  }
+
+  function applyStepState(n) {
+    document.querySelectorAll("[data-checkout-step]").forEach(function (el) {
+      var s = parseInt(el.getAttribute("data-checkout-step"), 10);
+      if (s === n) el.removeAttribute("hidden");
+      else el.setAttribute("hidden", "");
+    });
+    document.querySelectorAll(".checkout-step-indicator__item").forEach(function (el) {
+      var s = parseInt(el.getAttribute("data-step"), 10);
+      var hint = el.querySelector(".checkout-step-indicator__hint");
+      el.classList.remove("is-active", "is-upcoming", "is-completed");
+      if (s === n) {
+        el.classList.add("is-active");
+        if (hint && el.dataset.hintActive) hint.textContent = el.dataset.hintActive;
+        el.removeAttribute("role"); el.removeAttribute("tabindex"); el.style.cursor = "";
+      } else if (s < n) {
+        el.classList.add("is-completed");
+        if (hint && el.dataset.hintCompleted) hint.textContent = el.dataset.hintCompleted;
+        el.setAttribute("role", "button"); el.setAttribute("tabindex", "0"); el.style.cursor = "pointer";
+      } else {
+        el.classList.add("is-upcoming");
+        if (hint && el.dataset.hintUpcoming) hint.textContent = el.dataset.hintUpcoming;
+        el.removeAttribute("role"); el.removeAttribute("tabindex"); el.style.cursor = "";
+      }
+    });
+    var prevBtn = document.querySelector("[data-checkout-step-prev]");
+    if (prevBtn) {
+      if (n > 1) prevBtn.removeAttribute("hidden");
+      else prevBtn.setAttribute("hidden", "");
+    }
+    var form = document.querySelector("form.checkout");
+    if (form) form.dataset.checkoutActiveStep = n;
+  }
+
+  function goToStep(n) {
+    n = Math.max(1, Math.min(TOTAL_STEPS, n));
+    applyStepState(n);
+    var hash = "#step=" + n;
+    if (location.hash !== hash) history.replaceState(null, "", hash);
+    // Notify the label + email-substep listeners (they key off `hashchange`).
+    try {
+      window.dispatchEvent(new HashChangeEvent("hashchange"));
+    } catch (e) {
+      var ev = document.createEvent("Event");
+      ev.initEvent("hashchange", true, true);
+      window.dispatchEvent(ev);
+    }
+    var indicator = document.querySelector(".checkout-step-indicator");
+    if (indicator) indicator.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  // Final step rides WooCommerce's native place-order (standard submit +
+  // configured gateway). Prefer the native #place_order button when present.
+  function submitNativeOrder() {
+    var placeOrder = document.getElementById("place_order");
+    if (placeOrder) { placeOrder.click(); return; }
+    var form = document.querySelector("form.checkout");
+    if (!form) return;
+    if (window.jQuery) window.jQuery(form).submit();
+    else if (form.requestSubmit) form.requestSubmit();
+    else form.submit();
+  }
+
+  function initStepEngine() {
+    var steps = document.querySelectorAll("[data-checkout-step]");
+    if (!steps.length) return;
+    var nextBtn = document.querySelector("[data-checkout-step-next]");
+    var prevBtn = document.querySelector("[data-checkout-step-prev]");
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (nextBtn.disabled) return;
+        var n = stepFromHash();
+        if (n >= TOTAL_STEPS) submitNativeOrder();
+        else goToStep(n + 1);
+      });
+    }
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        goToStep(stepFromHash() - 1);
+      });
+    }
+    document.querySelectorAll(".checkout-step-indicator__item").forEach(function (el) {
+      function navIfCompleted() {
+        if (el.classList.contains("is-completed")) {
+          goToStep(parseInt(el.getAttribute("data-step"), 10));
+        }
+      }
+      el.addEventListener("click", navIfCompleted);
+      el.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); navIfCompleted(); }
+      });
+    });
+    // Defensive: re-paint if the hash is changed by any other means.
+    window.addEventListener("hashchange", function () {
+      applyStepState(stepFromHash());
+    });
+
+    // Initial paint (step 1) — no dispatch; user navigation drives the rest.
+    applyStepState(stepFromHash());
+  }
+
   function init() {
     bindSelections();
     bindDropdown();
     bindNavLabel();
     initEmailSubstep();
+    initStepEngine();
     initCoupon();
     updateSummary();
-    // Re-apply the label shortly after load in case multistep init runs later.
+    // Re-apply the label shortly after load in case init order shifts.
     setTimeout(applyNavLabel, 50);
   }
 
