@@ -1373,8 +1373,13 @@
   .woocommerce-product-selection {
     @apply tw-flex tw-flex-col tw-gap-4;
   }
-  .woocommerce-product-selection > .section-heading,
-  .woocommerce-product-selection .product-selection-content {
+  /* Hide the native category/product picker ONLY for the variation model — i.e.
+     when variation cards (.variant-attribute-group) are present, we show those
+     instead. Category-drill-down products have NO variation cards, so the picker
+     IS their selection UI; hiding it unconditionally collapsed the left column
+     to zero height (blank checkout). Gate the hide on :has(.variant-attribute-group). */
+  .woocommerce-product-selection:has(.variant-attribute-group) > .section-heading,
+  .woocommerce-product-selection:has(.variant-attribute-group) .product-selection-content {
     @apply !tw-hidden;
   }
 
