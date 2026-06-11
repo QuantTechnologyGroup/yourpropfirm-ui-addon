@@ -143,7 +143,9 @@
     if (radios.length) {
       var last = radios[radios.length - 1];
       var opt = last.closest(".category-option");
-      var c = opt && opt.querySelector(".category-option-content");
+      // Prefer the explicit name node (our eval-card markup adds badge + desc to
+      // .category-option-content, so reading the whole block would include them).
+      var c = opt && (opt.querySelector(".category-option-name") || opt.querySelector(".category-option-content"));
       if (c && c.textContent.trim()) return c.textContent.trim();
     }
     var path = store && store.config && store.config.currentCategoryPath;

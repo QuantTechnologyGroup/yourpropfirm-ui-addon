@@ -109,12 +109,24 @@ if ( is_array( $overwrite_labels_raw ) ) {
 				foreach ( $categories as $category_id => $category_name ) :
 					$is_selected = $category_id == $default_category;
 					$has_children = yourpropfirm_category_has_children( $category_id );
+					// FUNDEDBIT: surface the category description + badge (term meta) so the
+					// eval-type cards match the design. Level-0 categories are server-rendered
+					// (the plugin JS only re-paints sub-levels/products), so this persists.
+					$cat_term  = get_term( $category_id, 'product_cat' );
+					$cat_desc  = ( $cat_term && ! is_wp_error( $cat_term ) ) ? $cat_term->description : '';
+					$cat_badge = get_term_meta( $category_id, '_ypf_term_badge', true );
 					?>
 					<label class="category-option">
 						<input type="radio" name="product_category_0" value="<?php echo esc_attr( $category_id ); ?>" <?php checked( $is_selected, true ); ?> class="category-radio"
 							data-has-children="<?php echo $has_children ? 'true' : 'false'; ?>" />
 						<div class="category-option-content">
-							<?php echo esc_html( $category_name ); ?>
+							<?php if ( $cat_badge ) : ?>
+								<span class="category-option-badge"><?php echo esc_html( $cat_badge ); ?></span>
+							<?php endif; ?>
+							<span class="category-option-name"><?php echo esc_html( $category_name ); ?></span>
+							<?php if ( $cat_desc ) : ?>
+								<span class="category-option-desc"><?php echo esc_html( $cat_desc ); ?></span>
+							<?php endif; ?>
 						</div>
 					</label>
 				<?php endforeach; ?>
@@ -153,7 +165,7 @@ if ( is_array( $overwrite_labels_raw ) ) {
 		<!-- Selected Product Section -->
 		<div class="selected-product-section">
 			<h5 class="section-subheading">
-				<?php echo $display_account_size ? esc_html__( 'Account Size', 'yourpropfirm' ) : esc_html__( 'Selected Product', 'yourpropfirm' ); ?>
+				<?php echo $display_account_size ? esc_html__( 'Select Account Balance', 'yourpropfirm' ) : esc_html__( 'Selected Product', 'yourpropfirm' ); ?>
 			</h5>
 			<?php if ( $display_as_radio ) : ?>
 				<div class="product-radio-options">
