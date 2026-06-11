@@ -211,14 +211,12 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 
 						<!-- Payment method + Coupon — full-form step only (JS shows it after email) -->
 						<div class="ypf-payment-coupon ypf-field-hidden" id="ypf-payment-coupon">
+							<!-- Native WC payment: payment.php renders #payment_method_select (a dropdown
+							     built dynamically from the merchant's ENABLED gateways) + the payment_method
+							     radios + the checkout nonce. The plugin JS syncs the dropdown -> radios.
+							     Styled to the design; the radios/notices are hidden via CSS. -->
 							<div class="ypf-pm-field">
-								<label class="ypf-pm-label" for="ypf-payment-select"><?php esc_html_e( 'Payment method', 'yourpropfirm' ); ?> <span class="ypf-required">*</span></label>
-								<div class="ypf-pm-select-wrap">
-									<select class="ypf-pm-select" id="ypf-payment-select" name="ypf_payment_method">
-										<option value="crypto-confirmo"><?php esc_html_e( 'Crypto (Confirmo)', 'yourpropfirm' ); ?></option>
-										<option value="card"><?php esc_html_e( 'Card', 'yourpropfirm' ); ?></option>
-									</select>
-								</div>
+								<?php wc_get_template( 'checkout/payment.php' ); ?>
 							</div>
 							<div class="ypf-coupon-field">
 								<label class="ypf-coupon-label" for="ypf-coupon-input"><?php esc_html_e( 'Coupon code', 'yourpropfirm' ); ?></label>
@@ -293,6 +291,18 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 					</div>
 
 					<!-- Secure checkout assurance — always visible -->
+					<!-- Native WC checkout machinery (hidden): review-order for update_checkout + the real #place_order. "Proceed to Payment" triggers it via the step engine submitNativeOrder(). -->
+					<div class="ypf-native-checkout ypf-field-hidden" aria-hidden="true">
+						<!-- Consent is given by placing the order (the consent text above states this);
+						     satisfy the plugin terms check without a checkbox the design intentionally omits. -->
+						<input type="hidden" name="terms" value="1" />
+						<input type="hidden" name="terms-field" value="1" />
+						<div class="woocommerce-checkout-review-order">
+							<?php wc_get_template( 'checkout/review-order.php' ); ?>
+						</div>
+						<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="<?php esc_attr_e( 'Proceed to Payment', 'yourpropfirm' ); ?>" data-value="<?php esc_attr_e( 'Proceed to Payment', 'yourpropfirm' ); ?>"><?php esc_html_e( 'Proceed to Payment', 'yourpropfirm' ); ?></button>
+					</div>
+
 					<div class="ypf-secure-checkout">
 						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
 						<span><?php esc_html_e( 'Secure checkout — data is protected', 'yourpropfirm' ); ?></span>

@@ -534,13 +534,15 @@
   // Final step rides WooCommerce's native place-order (standard submit +
   // configured gateway). Prefer the native #place_order button when present.
   function submitNativeOrder() {
+    var form = document.querySelector("form.checkout");
+    // WooCommerce binds its place-order AJAX to the form's submit event, so
+    // triggering the form submit runs the native flow (validation + the chosen
+    // gateway). Preferred over clicking #place_order, which is in a hidden block.
+    if (form && window.jQuery) { window.jQuery(form).submit(); return; }
     var placeOrder = document.getElementById("place_order");
     if (placeOrder) { placeOrder.click(); return; }
-    var form = document.querySelector("form.checkout");
-    if (!form) return;
-    if (window.jQuery) window.jQuery(form).submit();
-    else if (form.requestSubmit) form.requestSubmit();
-    else form.submit();
+    if (form && form.requestSubmit) { form.requestSubmit(); return; }
+    if (form) form.submit();
   }
 
   function initStepEngine() {
