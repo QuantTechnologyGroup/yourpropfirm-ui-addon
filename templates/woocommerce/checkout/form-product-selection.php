@@ -167,6 +167,19 @@ if ( is_array( $overwrite_labels_raw ) ) {
 			<h5 class="section-subheading">
 				<?php echo $display_account_size ? esc_html__( 'Select Account Balance', 'yourpropfirm' ) : esc_html__( 'Selected Product', 'yourpropfirm' ); ?>
 			</h5>
+			<?php
+			// The account BALANCE must follow the product's Account Currency
+			// (_yourpropfirm_account_currency). The plugin's account_size_formatted
+			// falls back to the STORE currency (get_woocommerce_currency()), which is
+			// the price currency, not the account currency — so re-format it here.
+			$ypf_account_label = function ( $pid, $account_size, $fallback ) {
+				if ( '' === (string) $account_size || ! is_numeric( $account_size ) ) {
+					return $fallback;
+				}
+				$cur = get_post_meta( $pid, '_yourpropfirm_account_currency', true );
+				return $cur ? yourpropfirm_get_currency_symbol( $cur ) . number_format( floatval( $account_size ) ) : $fallback;
+			};
+			?>
 			<?php if ( $display_as_radio ) : ?>
 				<div class="product-radio-options">
 					<?php
@@ -174,13 +187,15 @@ if ( is_array( $overwrite_labels_raw ) ) {
 					foreach ( $default_products as $product_data ) :
 						$product_id = absint( $product_data['id'] );
 						$is_selected = ( $default_product ? $product_id === absint( $default_product ) : $product_id === $last_product_id );
-						$label_text = ( $display_account_size && ! empty( $product_data['account_size_formatted'] ) )
-							? $product_data['account_size_formatted']
+						$ypf_fallback = ( ! empty( $product_data['account_size_formatted'] ) ? $product_data['account_size_formatted'] : $product_data['name'] );
+						$label_text   = $display_account_size
+							? $ypf_account_label( $product_id, $product_data['account_size'] ?? '', $ypf_fallback )
 							: $product_data['name'];
 						?>
 						<label class="product-option">
 							<input type="radio" name="selected_product" value="<?php echo esc_attr( $product_id ); ?>"
 								class="product-radio" <?php checked( $is_selected, true ); ?>
+								data-account-label="<?php echo esc_attr( $label_text ); ?>"
 								data-price="<?php echo esc_attr( $product_data['price'] ); ?>"
 								data-currency="<?php echo esc_attr( $product_data['currency'] ?? '' ); ?>"
 								data-most-popular="<?php echo $product_data['most_popular'] ? 'true' : 'false'; ?>" />

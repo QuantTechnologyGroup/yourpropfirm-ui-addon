@@ -156,6 +156,20 @@
     return "";
   }
 
+  // Account balance label in the product's Account Currency — read from the
+  // data-account-label attribute our form-product-selection.php override sets.
+  // (The store's accountSizeFormatted uses the WRONG/store currency for it.)
+  function selectedAccountLabel() {
+    var r = document.querySelector('input[name="selected_product"]:checked');
+    if (r && r.getAttribute("data-account-label")) return r.getAttribute("data-account-label");
+    var dd = document.getElementById("selected_product");
+    if (dd && dd.tagName === "SELECT" && dd.options[dd.selectedIndex]) {
+      var v = dd.options[dd.selectedIndex].getAttribute("data-account-label");
+      if (v) return v;
+    }
+    return "";
+  }
+
   function updateSummary() {
     var store = getStore();
     if (!store || !store.products) return;
@@ -171,7 +185,7 @@
     // Product / Category / Account always show values.
     var evalAttr = attrName(product, "pa_evaluation", attrs["pa_evaluation"]);
     var sizeAttr = attrName(product, "pa_account_size", attrs["pa_account_size"]);
-    var account = sizeAttr || accountSizeLabel(store, variation, product);
+    var account = sizeAttr || selectedAccountLabel() || accountSizeLabel(store, variation, product);
     var category = evalAttr || leafCategoryName(store);
     var productLabel =
       sizeAttr && evalAttr

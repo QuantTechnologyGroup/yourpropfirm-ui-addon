@@ -2519,9 +2519,28 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
   padding: 0 2.5rem 0 0.875rem !important;
   background: var(--yourpropfirm-card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 0.875rem center / 0.7rem !important;
 }
-.ypf-payment-coupon #payment .wc_payment_methods,
 .ypf-payment-coupon #payment .place-order,
 .ypf-payment-coupon #payment .no-payment-methods-notice {
+  @apply !tw-hidden;
+}
+/* The dropdown above selects the gateway, so hide the native radio LIST
+   (inputs + labels) — but KEEP each gateway's .payment_box so the provider's
+   OWN fields render when selected (e.g. Stripe's card form). WooCommerce shows
+   only the chosen gateway's payment_box. */
+.ypf-payment-coupon #payment .wc_payment_methods {
+  @apply tw-list-none tw-m-0 tw-p-0;
+}
+.ypf-payment-coupon #payment .wc_payment_methods > li > input[type="radio"],
+.ypf-payment-coupon #payment .wc_payment_methods > li > label {
+  @apply !tw-hidden;
+}
+.ypf-payment-coupon #payment .wc_payment_methods .payment_box {
+  @apply tw-mt-3 tw-p-3 tw-rounded-lg tw-text-sm;
+  background: var(--yourpropfirm-card);
+  border: 1px solid var(--yourpropfirm-border);
+  color: var(--yourpropfirm-text);
+}
+.ypf-payment-coupon #payment .wc_payment_methods .payment_box::before {
   @apply !tw-hidden;
 }
 
