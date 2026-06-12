@@ -1373,8 +1373,75 @@
   .woocommerce-product-selection {
     @apply tw-flex tw-flex-col tw-gap-4;
   }
-  .woocommerce-product-selection > .section-heading,
-  .woocommerce-product-selection .product-selection-content {
+  /* "Product selection" master heading is never shown — neither design uses it. */
+  .woocommerce-product-selection > .section-heading {
+    @apply !tw-hidden;
+  }
+  /* Hide the native category/product picker ONLY for the variation model — when
+     variation cards (.variant-attribute-group) are present we show those instead.
+     Category/drill-down products have NO variation cards, so the picker IS their
+     selection UI (hiding it unconditionally collapsed the column to a blank). */
+  .woocommerce-product-selection:has(.variant-attribute-group) .product-selection-content {
+    @apply !tw-hidden;
+  }
+
+  /* ---- FUNDEDBIT category model: render level-0 categories as the design's
+     "Select Evaluation Type" cards (name + description + badge + radio dot).
+     Description = term description, badge = _ypf_term_badge term meta — both
+     emitted by our form-product-selection.php override. Scoped to level 0 so
+     deeper category levels keep the compact pill style. ---- */
+  .product-category-section[data-level="0"] .category-options {
+    @apply tw-grid tw-grid-cols-1 sm:tw-grid-cols-3 tw-gap-3;
+  }
+  .product-category-section[data-level="0"] .category-option {
+    @apply tw-cursor-pointer tw-block;
+    flex: initial;
+  }
+  .product-category-section[data-level="0"] .category-option input[type="radio"] {
+    @apply tw-sr-only;
+  }
+  .product-category-section[data-level="0"] .category-option .category-option-content {
+    @apply tw-relative tw-flex tw-flex-col tw-items-start tw-gap-1 tw-h-full tw-border tw-border-solid tw-border-gray-600 dark:tw-border-gray-600 tw-rounded-xl tw-bg-transparent tw-px-4 tw-py-4 tw-pr-10 tw-transition-all tw-duration-200;
+  }
+  /* Hover: just a green border highlight — beat the plugin's solid-green hover
+     fill (high specificity + !important). The selected card's faint tint has
+     even higher specificity, so it stays tinted on hover. */
+  .woocommerce-product-selection .product-selection-content .product-category-section[data-level="0"] .category-option .category-option-content:hover {
+    border-color: var(--yourpropfirm-primary) !important;
+    background: transparent !important;
+  }
+  /* High specificity + !important to beat the plugin's box-radio-checked-label
+     (which paints a solid green fill) so the selected eval card gets a faint tint
+     and its white name/description stay readable. */
+  .woocommerce-product-selection .product-selection-content .product-category-section[data-level="0"] .category-option input[type="radio"]:checked + .category-option-content {
+    border-color: var(--yourpropfirm-primary) !important;
+    background: rgba(86, 162, 60, 0.12) !important;
+  }
+  .product-category-section[data-level="0"] .category-option .category-option-name {
+    @apply tw-text-base tw-font-semibold tw-text-gray-900 dark:tw-text-white;
+  }
+  .product-category-section[data-level="0"] .category-option .category-option-desc {
+    @apply tw-text-xs tw-text-gray-500 dark:tw-text-gray-400;
+  }
+  .product-category-section[data-level="0"] .category-option .category-option-badge {
+    @apply tw-absolute tw--top-2 tw-left-1/2 tw--translate-x-1/2 tw-whitespace-nowrap tw-rounded-full tw-px-2 tw-py-0.5 tw-text-[10px] tw-font-semibold tw-leading-none tw-text-white;
+    background: #f59e0b; /* Best Value → amber */
+  }
+  .product-category-section[data-level="0"] .category-option:nth-child(3) .category-option-badge {
+    background: var(--yourpropfirm-primary); /* Most Popular → green */
+  }
+  .product-category-section[data-level="0"] .category-option .category-option-content::after {
+    content: "";
+    @apply tw-absolute tw-right-3 tw-top-1/2 tw--translate-y-1/2 tw-w-4 tw-h-4 tw-rounded-full tw-border-2 tw-border-gray-500;
+  }
+  .product-category-section[data-level="0"] .category-option input:checked + .category-option-content::after {
+    @apply tw-border-yourpropfirm-primary;
+    background: radial-gradient(circle, var(--yourpropfirm-primary) 0 45%, transparent 50%);
+  }
+
+  /* Account-balance pills: the design shows the balance only — the price lives in
+     the Order Summary. Hide the per-product price badge in the balance picker. */
+  .woocommerce-product-selection .selected-product-section .product-option-price-badge {
     @apply !tw-hidden;
   }
 
@@ -2434,6 +2501,49 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
   pointer-events: none;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center / contain;
 }
+/* Native WC payment (payment.php) restyled to the design's selector.
+   #payment_method_select is the dynamic dropdown (from the merchant's ENABLED
+   gateways); the native radios / notices / hidden place-order are not shown —
+   the dropdown drives selection and the plugin JS syncs it to payment_method. */
+.ypf-payment-coupon .yourpropfirm-payment-method-section .form-label {
+  @apply tw-block tw-text-sm tw-mb-2 tw-mt-0 tw-pb-0 tw-font-normal;
+  color: var(--yourpropfirm-secondary-text);
+}
+.ypf-payment-coupon #payment_method_select {
+  @apply tw-w-full tw-rounded-lg tw-text-sm !tw-h-11;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid var(--yourpropfirm-border) !important;
+  color: var(--yourpropfirm-text) !important;
+  padding: 0 2.5rem 0 0.875rem !important;
+  background: var(--yourpropfirm-card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 0.875rem center / 0.7rem !important;
+}
+.ypf-payment-coupon #payment .place-order,
+.ypf-payment-coupon #payment .no-payment-methods-notice {
+  @apply !tw-hidden;
+}
+/* The dropdown above selects the gateway, so hide the native radio LIST
+   (inputs + labels) — but KEEP each gateway's .payment_box so the provider's
+   OWN fields render when selected (e.g. Stripe's card form). WooCommerce shows
+   only the chosen gateway's payment_box. */
+.ypf-payment-coupon #payment .wc_payment_methods {
+  @apply tw-list-none tw-m-0 tw-p-0;
+}
+.ypf-payment-coupon #payment .wc_payment_methods > li > input[type="radio"],
+.ypf-payment-coupon #payment .wc_payment_methods > li > label {
+  @apply !tw-hidden;
+}
+.ypf-payment-coupon #payment .wc_payment_methods .payment_box {
+  @apply tw-mt-3 tw-p-3 tw-rounded-lg tw-text-sm;
+  background: var(--yourpropfirm-card);
+  border: 1px solid var(--yourpropfirm-border);
+  color: var(--yourpropfirm-text);
+}
+.ypf-payment-coupon #payment .wc_payment_methods .payment_box::before {
+  @apply !tw-hidden;
+}
+
 .ypf-coupon-row {
   @apply tw-flex tw-items-center tw-gap-2;
 }
@@ -2512,7 +2622,11 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
 }
 /* No arrow during the loading/processing state. */
 .checkout-step-nav .ypf-nav-next:disabled::after { display: none; }
-.checkout-step-nav .ypf-nav-prev { @apply tw-flex-1; }
+/* The order-summary nav has no Back button in the design — the "Previous" under
+   the billing form is the back control. Keep .ypf-nav-prev in the DOM (the email
+   sub-step clicks it programmatically to return to step 1) but never show it, so
+   the summary shows only the full-width forward CTA (with the right arrow). */
+.checkout-step-nav .ypf-nav-prev { @apply !tw-hidden; }
 .ypf-secure-checkout {
   @apply tw-flex tw-items-center tw-justify-center tw-gap-1.5 tw-mt-3 tw-text-xs;
   color: var(--yourpropfirm-secondary-text);

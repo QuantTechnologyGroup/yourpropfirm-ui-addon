@@ -23,3 +23,8 @@ Thumbs.db
 local-dev/yourpropfirm-plugin/
 
 .env
+
+design
+
+# Session handoff notes (local context for AI sessions, not for the repo)
+SESSION-HANDOFF.md
