@@ -2622,7 +2622,11 @@ form.woocommerce-checkout.ypf-checkout-wizard > .ypf-trust-badges:not([hidden]) 
 }
 /* No arrow during the loading/processing state. */
 .checkout-step-nav .ypf-nav-next:disabled::after { display: none; }
-.checkout-step-nav .ypf-nav-prev { @apply tw-flex-1; }
+/* The order-summary nav has no Back button in the design — the "Previous" under
+   the billing form is the back control. Keep .ypf-nav-prev in the DOM (the email
+   sub-step clicks it programmatically to return to step 1) but never show it, so
+   the summary shows only the full-width forward CTA (with the right arrow). */
+.checkout-step-nav .ypf-nav-prev { @apply !tw-hidden; }
 .ypf-secure-checkout {
   @apply tw-flex tw-items-center tw-justify-center tw-gap-1.5 tw-mt-3 tw-text-xs;
   color: var(--yourpropfirm-secondary-text);
