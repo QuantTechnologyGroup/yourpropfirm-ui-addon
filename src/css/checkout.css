@@ -1385,58 +1385,163 @@
     @apply !tw-hidden;
   }
 
-  /* ---- FUNDEDBIT category model: render level-0 categories as the design's
-     "Select Evaluation Type" cards (name + description + badge + radio dot).
-     Description = term description, badge = _ypf_term_badge term meta — both
-     emitted by our form-product-selection.php override. Scoped to level 0 so
-     deeper category levels keep the compact pill style. ---- */
-  .product-category-section[data-level="0"] .category-options {
+  /* ============================================================
+   * FUNDEDBIT category (platform) model — Step 1 selectors:
+   *   level-0  (.product-category-section[data-level="0"]) = Trading Platform
+   *   sub-cat  (.subcategory-section)                      = Evaluation Type cards
+   *   .selected-product-section                            = Account Balance pills
+   * The plugin re-renders sub-levels/products via JS; checkout-wizard.js re-applies
+   * the eval badge/desc + account currency after each re-render. Selectors carry
+   * the full .woocommerce-product-selection .product-selection-content prefix so
+   * they out-specify the plugin's generic .category-option box rules.
+   * ============================================================ */
+
+  /* ---- Evaluation Type: cards with name + description + badge + radio dot.
+     Scoped to .subcategory-section so the level-0 Platform selector keeps its own
+     boxed-pill look (below). Description = term description, badge =
+     _ypf_term_badge term meta — both re-applied by checkout-wizard.js. ---- */
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-options {
     @apply tw-grid tw-grid-cols-1 sm:tw-grid-cols-3 tw-gap-3;
   }
-  .product-category-section[data-level="0"] .category-option {
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-option {
     @apply tw-cursor-pointer tw-block;
     flex: initial;
   }
-  .product-category-section[data-level="0"] .category-option input[type="radio"] {
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-option input[type="radio"] {
     @apply tw-sr-only;
   }
-  .product-category-section[data-level="0"] .category-option .category-option-content {
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-option .category-option-content {
     @apply tw-relative tw-flex tw-flex-col tw-items-start tw-gap-1 tw-h-full tw-border tw-border-solid tw-border-gray-600 dark:tw-border-gray-600 tw-rounded-xl tw-bg-transparent tw-px-4 tw-py-4 tw-pr-10 tw-transition-all tw-duration-200;
   }
-  /* Hover: just a green border highlight — beat the plugin's solid-green hover
-     fill (high specificity + !important). The selected card's faint tint has
-     even higher specificity, so it stays tinted on hover. */
-  .woocommerce-product-selection .product-selection-content .product-category-section[data-level="0"] .category-option .category-option-content:hover {
+  /* Hover: green border only — beat the plugin's solid-green hover fill. */
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-option .category-option-content:hover {
     border-color: var(--yourpropfirm-primary) !important;
     background: transparent !important;
   }
-  /* High specificity + !important to beat the plugin's box-radio-checked-label
-     (which paints a solid green fill) so the selected eval card gets a faint tint
-     and its white name/description stay readable. */
-  .woocommerce-product-selection .product-selection-content .product-category-section[data-level="0"] .category-option input[type="radio"]:checked + .category-option-content {
+  /* Selected: faint tint (beat box-radio-checked-label's solid green fill so the
+     white name/description stay readable). */
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-option input[type="radio"]:checked + .category-option-content {
     border-color: var(--yourpropfirm-primary) !important;
     background: rgba(86, 162, 60, 0.12) !important;
   }
-  .product-category-section[data-level="0"] .category-option .category-option-name {
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-option .category-option-name {
     @apply tw-text-base tw-font-semibold tw-text-gray-900 dark:tw-text-white;
   }
-  .product-category-section[data-level="0"] .category-option .category-option-desc {
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-option .category-option-desc {
     @apply tw-text-xs tw-text-gray-500 dark:tw-text-gray-400;
   }
-  .product-category-section[data-level="0"] .category-option .category-option-badge {
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-option .category-option-badge {
     @apply tw-absolute tw--top-2 tw-left-1/2 tw--translate-x-1/2 tw-whitespace-nowrap tw-rounded-full tw-px-2 tw-py-0.5 tw-text-[10px] tw-font-semibold tw-leading-none tw-text-white;
     background: #f59e0b; /* Best Value → amber */
   }
-  .product-category-section[data-level="0"] .category-option:nth-child(3) .category-option-badge {
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-option:nth-child(3) .category-option-badge {
     background: var(--yourpropfirm-primary); /* Most Popular → green */
   }
-  .product-category-section[data-level="0"] .category-option .category-option-content::after {
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-option .category-option-content::after {
     content: "";
     @apply tw-absolute tw-right-3 tw-top-1/2 tw--translate-y-1/2 tw-w-4 tw-h-4 tw-rounded-full tw-border-2 tw-border-gray-500;
   }
-  .product-category-section[data-level="0"] .category-option input:checked + .category-option-content::after {
+  .woocommerce-product-selection .product-selection-content .subcategory-section .category-option input:checked + .category-option-content::after {
     @apply tw-border-yourpropfirm-primary;
     background: radial-gradient(circle, var(--yourpropfirm-primary) 0 45%, transparent 50%);
+  }
+
+  /* ---- Trading Platform (level-0 category): the boxed card with horizontal
+     platform pills + a right-aligned radio dot (the design the user pointed at).
+     Replaces the old trading_options selector, hidden below. ---- */
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] {
+    @apply tw-rounded-2xl tw-p-5;
+    border: 1px solid var(--yourpropfirm-border);
+    /* Subtle panel (a faint lift over the page bg) — matches the design, where
+       the Step-1 cards barely separate from the dark page. */
+    background: var(--yourpropfirm-input);
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] > .section-subheading {
+    @apply tw-text-sm tw-font-semibold tw-mb-4 tw-mt-0;
+    /* Crisp near-white in dark mode (matches the option-label white), readable
+       dark-gray in light mode. Beats the base .section-subheading gray-600. */
+    color: var(--yourpropfirm-primary-text);
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-options {
+    @apply tw-flex tw-flex-wrap tw-gap-3;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option {
+    @apply tw-relative tw-flex-1 tw-m-0 tw-cursor-pointer tw-block;
+    min-width: 9rem;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option input[type="radio"] {
+    @apply tw-sr-only;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option .category-option-content {
+    @apply tw-relative tw-flex tw-flex-col tw-items-center tw-justify-center tw-rounded-xl tw-py-4 tw-px-4 tw-pr-9 tw-cursor-pointer tw-text-base tw-font-bold tw-transition-all tw-duration-200;
+    border: 1.5px solid var(--yourpropfirm-border);
+    /* Transparent like the eval/account options so the pill sits on the subtle
+       panel; the green tint only appears when selected. */
+    background: transparent;
+    color: var(--yourpropfirm-primary-text);
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option .category-option-content:hover {
+    border-color: var(--yourpropfirm-primary-300) !important;
+    background: transparent !important;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option input[type="radio"]:checked + .category-option-content {
+    border-color: var(--yourpropfirm-primary) !important;
+    background: var(--yourpropfirm-primary-light) !important;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option .category-option-name {
+    @apply tw-text-base tw-font-bold;
+    color: inherit;
+  }
+  /* Platform pills are name-only by design — suppress any badge/description a
+     parent category might carry so the pill stays clean. */
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option .category-option-badge,
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option .category-option-desc {
+    @apply !tw-hidden;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option .category-option-content::after {
+    content: "";
+    @apply tw-absolute tw-rounded-full;
+    width: 1.15rem; height: 1.15rem;
+    right: 0.85rem; top: 50%; transform: translateY(-50%);
+    border: 2px solid var(--yourpropfirm-border);
+    background: transparent;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option input[type="radio"]:checked + .category-option-content::after {
+    border-color: var(--yourpropfirm-primary);
+    background: radial-gradient(var(--yourpropfirm-primary) 0 38%, transparent 42%);
+  }
+
+  /* Reorder: data hierarchy is Platform -> Eval -> Account, but the design shows
+     Eval (top) -> Account (middle) -> Platform (bottom). */
+  .woocommerce-product-selection .product-selection-content {
+    @apply tw-flex tw-flex-col;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] { order: 3; }
+  .woocommerce-product-selection .product-selection-content > .subcategory-sections-container { order: 1; }
+  .woocommerce-product-selection .product-selection-content > .selected-product-section { order: 2; }
+
+  /* Each Step-1 group = a boxed card (matching the Trading Platform card), so
+     Eval / Account / Platform all read as the same boxed sections. Subtle panel
+     fill (--yourpropfirm-input) so the boxes don't read as bold gray blocks. */
+  .woocommerce-product-selection .product-selection-content .subcategory-section,
+  .woocommerce-product-selection .product-selection-content > .selected-product-section {
+    @apply tw-rounded-2xl tw-p-5;
+    border: 1px solid var(--yourpropfirm-border);
+    background: var(--yourpropfirm-input);
+  }
+  .woocommerce-product-selection .product-selection-content .subcategory-section > .section-subheading,
+  .woocommerce-product-selection .product-selection-content > .selected-product-section > .section-subheading {
+    @apply tw-text-sm tw-font-semibold tw-mb-4 tw-mt-0;
+    /* Crisp near-white in dark mode (matches the option-label white). */
+    color: var(--yourpropfirm-primary-text);
+  }
+
+  /* The old trading_options platform selector (.container-trading-platform ->
+     .woocommerce-trading-platform, "Platform 5 / Platform 4") is the WRONG source
+     for the platform model — the platform comes from the level-0 category above.
+     Hide it; its radio stays in the DOM so a default value still posts. */
+  .container-trading-platform {
+    @apply !tw-hidden;
   }
 
   /* Account-balance pills: the design shows the balance only — the price lives in

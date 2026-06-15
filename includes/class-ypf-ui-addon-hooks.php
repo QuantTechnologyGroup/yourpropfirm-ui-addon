@@ -55,6 +55,11 @@ class YPF_UI_Addon_Hooks {
 		// Config for the wizard controller. The order summary is driven by the
 		// real window.ypfCheckoutStore (no static price matrix); this just carries
 		// labels + the admin-ajax URL used for the real coupon endpoint.
+		//
+		// `maps` carries the data the main plugin's JS STRIPS when it re-renders the
+		// category-model selection: the eval sub-categories' description + badge, and
+		// every product's ACCOUNT currency/size (the store only knows the WC/store
+		// currency). checkout-wizard.js re-applies these after each re-render.
 		wp_localize_script(
 			'yourpropfirm-ui-addon-wizard',
 			'ypfCheckoutWizard',
@@ -63,12 +68,154 @@ class YPF_UI_Addon_Hooks {
 				'continueLabel' => __( 'Continue', 'yourpropfirm' ),
 				'payLabel'      => __( 'Proceed to Payment', 'yourpropfirm' ),
 				'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
+				'maps'          => self::build_selection_maps(),
 			]
 		);
 
 		// NOTE: plugin 1.15 removed checkout-multistep.js (and window.ypfMultistep).
 		// The add-on now owns the step engine + Next-button labels in
 		// js/checkout-wizard.js, so there is no plugin handle to prime here.
+	}
+
+	/**
+	 * Format an account BALANCE in the product's account currency.
+	 *
+	 * The platform model needs the balance shown in the account currency
+	 * (Bybit -> USDT, Platform 5 -> USD), not the WC/store currency the main
+	 * plugin uses. Known fiat currencies render with their symbol ($5,000);
+	 * crypto / unknown codes render as a suffix (5,000 USDT) so they are never
+	 * mislabelled with a "$" (USDT is absent from the plugin's symbol map).
+	 *
+	 * Single source of truth for BOTH the initial server render
+	 * (form-product-selection.php) and the JS re-render (checkout-wizard.js), so
+	 * the balance never changes shape between them.
+	 *
+	 * @param mixed  $size     Numeric account size.
+	 * @param string $currency Account currency code (e.g. USD, USDT).
+	 * @return string
+	 */
+	public static function account_label( $size, string $currency ): string {
+		if ( '' === (string) $size || ! is_numeric( $size ) ) {
+			return '';
+		}
+		$size = floatval( $size );
+		$code = strtoupper( trim( (string) $currency ) );
+
+		$known = [
+			'USD' => '$',
+			'EUR' => '€',
+			'GBP' => '£',
+			'JPY' => '¥',
+			'AUD' => 'A$',
+			'CAD' => 'C$',
+		];
+
+		if ( isset( $known[ $code ] ) ) {
+			return $known[ $code ] . number_format( $size );
+		}
+		if ( '' === $code ) {
+			return number_format( $size );
+		}
+		return number_format( $size ) . ' ' . $code;
+	}
+
+	/**
+	 * Build the category + product meta maps the wizard JS re-applies after the
+	 * main plugin re-renders the category-model selection.
+	 *
+	 * Sourced from the enabled "product selection" categories (the platform
+	 * parents) and all their descendant terms + products — so it is data-driven,
+	 * not tied to any specific seed.
+	 *
+	 * @return array{categories: array<string, array>, products: array<string, array>}
+	 */
+	private static function build_selection_maps(): array {
+		$out = [ 'categories' => [], 'products' => [] ];
+
+		if ( ! function_exists( 'carbon_get_theme_option' ) || ! taxonomy_exists( 'product_cat' ) ) {
+			return $out;
+		}
+
+		// Resolve the enabled selection categories to term IDs. Carbon's association
+		// field stores each entry as an array
+		// ( ['value'=>'term:product_cat:31','type'=>'term','subtype'=>'product_cat','id'=>'31'] );
+		// older/simpler configs may store a bare "term:product_cat:31" string or a
+		// numeric ID. Handle all three.
+		$raw        = carbon_get_theme_option( 'yourpropfirm_checkout_product_selection_categories' );
+		$parent_ids = [];
+		if ( is_array( $raw ) ) {
+			foreach ( $raw as $entry ) {
+				if ( is_array( $entry ) ) {
+					if ( isset( $entry['id'] ) && is_numeric( $entry['id'] ) ) {
+						$parent_ids[] = (int) $entry['id'];
+					} elseif ( ! empty( $entry['value'] ) && preg_match( '/(\d+)\s*$/', (string) $entry['value'], $m ) ) {
+						$parent_ids[] = (int) $m[1];
+					}
+				} elseif ( is_numeric( $entry ) ) {
+					$parent_ids[] = (int) $entry;
+				} elseif ( is_string( $entry ) && preg_match( '/(\d+)\s*$/', $entry, $m ) ) {
+					$parent_ids[] = (int) $m[1];
+				}
+			}
+		}
+		$parent_ids = array_values( array_unique( array_filter( $parent_ids ) ) );
+		if ( empty( $parent_ids ) ) {
+			return $out;
+		}
+
+		// Collect parents + all descendant terms.
+		$term_ids = $parent_ids;
+		foreach ( $parent_ids as $pid ) {
+			$kids = get_terms( [
+				'taxonomy'   => 'product_cat',
+				'hide_empty' => false,
+				'child_of'   => $pid,
+				'fields'     => 'ids',
+			] );
+			if ( is_array( $kids ) ) {
+				$term_ids = array_merge( $term_ids, array_map( 'intval', $kids ) );
+			}
+		}
+		$term_ids = array_values( array_unique( $term_ids ) );
+
+		foreach ( $term_ids as $tid ) {
+			$term = get_term( $tid, 'product_cat' );
+			if ( ! $term || is_wp_error( $term ) ) {
+				continue;
+			}
+			$out['categories'][ (string) $tid ] = [
+				'name'        => $term->name,
+				'description' => $term->description,
+				'badge'       => (string) get_term_meta( $tid, '_ypf_term_badge', true ),
+			];
+		}
+
+		// Products in any of those terms → account size + currency + formatted label.
+		$product_ids = get_posts( [
+			'post_type'      => 'product',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
+			'tax_query'      => [
+				[
+					'taxonomy' => 'product_cat',
+					'field'    => 'term_id',
+					'terms'    => $term_ids,
+				],
+			],
+		] );
+		foreach ( $product_ids as $product_id ) {
+			$size = get_post_meta( $product_id, '_yourpropfirm_account_size', true );
+			$cur  = get_post_meta( $product_id, '_yourpropfirm_account_currency', true );
+			$out['products'][ (string) $product_id ] = [
+				'accountSize'     => (string) $size,
+				'accountCurrency' => (string) $cur,
+				'accountLabel'    => self::account_label( $size, (string) $cur ),
+			];
+		}
+
+		return $out;
 	}
 
 	/**

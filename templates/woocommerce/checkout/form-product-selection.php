@@ -146,6 +146,12 @@ if ( is_array( $overwrite_labels_raw ) ) {
 						<?php foreach ( $level_data['categories'] as $cat_id => $cat_name ) :
 							$is_selected = $cat_id == $level_data['selected_id'];
 							$has_children = yourpropfirm_category_has_children( $cat_id );
+								// Eval cards live at the sub-category level now (platform is level 0): surface
+								// description + badge here too. checkout-wizard.js re-injects these after the
+								// plugin re-renders sub-levels (name only) on a platform change.
+								$sub_term  = get_term( $cat_id, 'product_cat' );
+								$sub_desc  = ( $sub_term && ! is_wp_error( $sub_term ) ) ? $sub_term->description : '';
+								$sub_badge = get_term_meta( $cat_id, '_ypf_term_badge', true );
 							?>
 							<label class="category-option">
 								<input type="radio" name="product_category_<?php echo esc_attr( $level_data['level'] ); ?>"
@@ -153,8 +159,10 @@ if ( is_array( $overwrite_labels_raw ) ) {
 									class="category-radio"
 									data-has-children="<?php echo $has_children ? 'true' : 'false'; ?>" />
 								<div class="category-option-content">
-									<?php echo esc_html( $cat_name ); ?>
-								</div>
+										<?php if ( $sub_badge ) : ?><span class="category-option-badge"><?php echo esc_html( $sub_badge ); ?></span><?php endif; ?>
+										<span class="category-option-name"><?php echo esc_html( $cat_name ); ?></span>
+										<?php if ( $sub_desc ) : ?><span class="category-option-desc"><?php echo esc_html( $sub_desc ); ?></span><?php endif; ?>
+									</div>
 							</label>
 						<?php endforeach; ?>
 					</div>
@@ -171,13 +179,15 @@ if ( is_array( $overwrite_labels_raw ) ) {
 			// The account BALANCE must follow the product's Account Currency
 			// (_yourpropfirm_account_currency). The plugin's account_size_formatted
 			// falls back to the STORE currency (get_woocommerce_currency()), which is
-			// the price currency, not the account currency — so re-format it here.
+			// the price currency, not the account currency — so re-format it here via
+			// the SAME helper the wizard JS mirrors (YPF_UI_Addon_Hooks::account_label),
+			// so the balance keeps its shape across the plugin's JS re-render.
 			$ypf_account_label = function ( $pid, $account_size, $fallback ) {
-				if ( '' === (string) $account_size || ! is_numeric( $account_size ) ) {
-					return $fallback;
-				}
-				$cur = get_post_meta( $pid, '_yourpropfirm_account_currency', true );
-				return $cur ? yourpropfirm_get_currency_symbol( $cur ) . number_format( floatval( $account_size ) ) : $fallback;
+				$cur   = get_post_meta( $pid, '_yourpropfirm_account_currency', true );
+				$label = class_exists( 'YPF_UI_Addon_Hooks' )
+					? YPF_UI_Addon_Hooks::account_label( $account_size, (string) $cur )
+					: '';
+				return '' !== $label ? $label : $fallback;
 			};
 			?>
 			<?php if ( $display_as_radio ) : ?>
@@ -196,6 +206,7 @@ if ( is_array( $overwrite_labels_raw ) ) {
 							<input type="radio" name="selected_product" value="<?php echo esc_attr( $product_id ); ?>"
 								class="product-radio" <?php checked( $is_selected, true ); ?>
 								data-account-label="<?php echo esc_attr( $label_text ); ?>"
+									data-account-currency="<?php echo esc_attr( get_post_meta( $product_id, '_yourpropfirm_account_currency', true ) ); ?>"
 								data-price="<?php echo esc_attr( $product_data['price'] ); ?>"
 								data-currency="<?php echo esc_attr( $product_data['currency'] ?? '' ); ?>"
 								data-most-popular="<?php echo $product_data['most_popular'] ? 'true' : 'false'; ?>" />
