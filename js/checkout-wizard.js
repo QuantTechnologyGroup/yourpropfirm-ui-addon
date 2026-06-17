@@ -49,6 +49,10 @@
   if (!maps.products) maps.products = {};
   var desired = { evalName: null, sizeKey: null };
   var restoring = false; // guard: suppress capture/restore re-entry during a restore
+  // Authoritative cart-sync state (fixes the selection-sync race — see below).
+  var syncTimer = null; // debounce handle for the authoritative cart sync
+  var syncChain = Promise.resolve(); // serialize sync-cart calls (never two in flight)
+  var submitting = false; // guard against a double place-order
 
   function decodeEntities(s) {
     if (!s || String(s).indexOf("&") === -1) return s || "";
@@ -543,8 +547,10 @@
         name === "trading_platform" ||
         name.indexOf("product_category_") === 0;
       if (relevant) {
-        // Let the plugin's handler re-render/sync first, then re-apply our meta
-        // (eval badge/desc + account currency) and recompute the summary.
+        // Selection changed: schedule the authoritative cart sync (debounced, so
+        // it lands AFTER the plugin's/restore's racing syncCart calls and makes
+        // the cart match the checked product), then re-apply our meta + summary.
+        scheduleAuthoritativeSync();
         setTimeout(function () {
           reapplySelectionMeta();
           updateSummary();
@@ -791,9 +797,53 @@
     if (indicator) indicator.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // Final step rides WooCommerce's native place-order (standard submit +
-  // configured gateway). Prefer the native #place_order button when present.
-  function submitNativeOrder() {
+  // ---- Authoritative cart sync (fixes the selection-sync race) --------------
+  // A selection change fires several racing syncCart calls (the plugin
+  // auto-selecting the last product + our restore re-selecting `desired` + the
+  // user's own pick). sync-cart is last-write-wins server-side, so the WC cart —
+  // and therefore the ORDER — can land on the wrong product while the summary
+  // (which reads the checked radio) shows the right one. We own an authoritative
+  // sync of the CURRENTLY checked product: debounced during interaction, and
+  // mandatorily awaited right before placing the order.
+  function selectionContainer() {
+    return document.querySelector(".woocommerce-product-selection");
+  }
+  function checkedProductId() {
+    var r = document.querySelector('input[name="selected_product"]:checked');
+    if (!r) {
+      var dd = document.getElementById("selected_product");
+      if (dd && dd.tagName === "SELECT") r = dd;
+    }
+    return r && r.value ? parseInt(r.value, 10) : 0;
+  }
+  // Sync the checked product to the cart. Serialized via syncChain so two never
+  // overlap; reads the product + REST nonce at execution time (always current).
+  function syncCheckedProduct() {
+    var c = selectionContainer();
+    var base = c && c.getAttribute("data-rest-url");
+    if (!base) return syncChain;
+    syncChain = syncChain.then(function () {
+      var pid = checkedProductId();
+      if (!pid) return;
+      var cc = selectionContainer();
+      var nonce = (cc && cc.getAttribute("data-rest-nonce")) || "";
+      return fetch(base + "product/sync-cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-WP-Nonce": nonce },
+        credentials: "same-origin",
+        body: JSON.stringify({ product_id: pid }),
+      }).then(function () {}, function () {});
+    });
+    return syncChain;
+  }
+  function scheduleAuthoritativeSync() {
+    if (syncTimer) clearTimeout(syncTimer);
+    // Fire after the plugin's/restore's own syncCart calls for this interaction
+    // have settled, so ours is the last write and the cart == the checked product.
+    syncTimer = setTimeout(function () { syncTimer = null; syncCheckedProduct(); }, 450);
+  }
+
+  function doNativeSubmit() {
     var form = document.querySelector("form.checkout");
     // WooCommerce binds its place-order AJAX to the form's submit event, so
     // triggering the form submit runs the native flow (validation + the chosen
@@ -803,6 +853,25 @@
     if (placeOrder) { placeOrder.click(); return; }
     if (form && form.requestSubmit) { form.requestSubmit(); return; }
     if (form) form.submit();
+  }
+
+  // Final step rides WooCommerce's native place-order. Before submitting, force
+  // one authoritative sync of the checked product and WAIT for it, so the order
+  // is always built from the product shown in the summary (never a race loser).
+  function submitNativeOrder() {
+    if (submitting) return;
+    submitting = true;
+    if (syncTimer) { clearTimeout(syncTimer); syncTimer = null; }
+    var done = false;
+    var go = function () {
+      if (done) return;
+      done = true;
+      submitting = false;
+      doNativeSubmit();
+    };
+    syncCheckedProduct().then(go, go);
+    // Safety: never block the order indefinitely on a hung/failed sync.
+    setTimeout(go, 2500);
   }
 
   function initStepEngine() {
