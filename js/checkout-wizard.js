@@ -518,9 +518,18 @@
       var cls = t.classList;
       var name = t.name || "";
 
-      // Trading-Platform switch: the plugin resets eval+account — restore them
-      // once the (synchronous, store-backed) cascade has settled.
-      if (name === "product_category_0" && !restoring) {
+      // Any category change makes the plugin re-render products and auto-select
+      // the LAST one ($5,000). Restore the user's remembered eval + account once
+      // the (synchronous, store-backed) cascade settles. restoreSelection is
+      // idempotent, so it serves BOTH flows:
+      //   - Platform switch (product_category_0): the plugin reset BOTH, so eval
+      //     AND account are restored (unchanged behavior — "just like now").
+      //   - Evaluation-type switch (product_category_1): desired.evalName is the
+      //     eval the user just picked (mousedown), so the eval-restore is a no-op
+      //     skip and only the account (desired.sizeKey) is restored.
+      // The `restoring` guard prevents the nested cascade changes from
+      // re-scheduling, and a redundant schedule is a harmless no-op.
+      if (name.indexOf("product_category_") === 0 && !restoring) {
         setTimeout(restoreSelection, 0);
       }
 
