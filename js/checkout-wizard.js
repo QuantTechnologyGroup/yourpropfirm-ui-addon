@@ -336,10 +336,14 @@
     return null;
   }
 
-  // After a platform change the plugin auto-selects the first eval + last
-  // product. Re-select the user's remembered eval + account (the platforms
-  // mirror, so the same eval/size exist). Each re-select drives the plugin's
-  // own synchronous (store-backed) re-render, so the cart/currency follow.
+  // After a platform/eval change the plugin auto-selects the first eval + last
+  // ($5,000) product. Re-select the user's remembered eval + account (the
+  // platforms mirror, so the same eval/size exist). Runs SYNCHRONOUSLY from
+  // onContainersRerendered (the plugin's pre-paint signal), so the corrected
+  // selection is applied in the SAME frame the plugin rendered — the user never
+  // sees the intermediate $5,000/first-eval state (no blink). Re-skin + summary
+  // are done by the caller. The `restoring` guard stops the nested re-renders
+  // (triggered by these re-selects) from recursing.
   function restoreSelection() {
     if (restoring) return;
     if (!desired.evalName && !desired.sizeKey) return;
@@ -362,6 +366,14 @@
     } finally {
       restoring = false;
     }
+  }
+
+  // Synchronous handler for the plugin's `ypf_containers_rerendered` signal
+  // (fired at the end of its re-render, BEFORE paint). Restore the user's
+  // selection + re-skin in the same frame, so there is no separate paint of the
+  // plugin's bare/auto-selected state (this is what kills the step-1 blink).
+  function onContainersRerendered() {
+    if (!restoring) restoreSelection();
     reapplySelectionMeta();
     updateSummary();
   }
@@ -522,21 +534,6 @@
       var cls = t.classList;
       var name = t.name || "";
 
-      // Any category change makes the plugin re-render products and auto-select
-      // the LAST one ($5,000). Restore the user's remembered eval + account once
-      // the (synchronous, store-backed) cascade settles. restoreSelection is
-      // idempotent, so it serves BOTH flows:
-      //   - Platform switch (product_category_0): the plugin reset BOTH, so eval
-      //     AND account are restored (unchanged behavior — "just like now").
-      //   - Evaluation-type switch (product_category_1): desired.evalName is the
-      //     eval the user just picked (mousedown), so the eval-restore is a no-op
-      //     skip and only the account (desired.sizeKey) is restored.
-      // The `restoring` guard prevents the nested cascade changes from
-      // re-scheduling, and a redundant schedule is a harmless no-op.
-      if (name.indexOf("product_category_") === 0 && !restoring) {
-        setTimeout(restoreSelection, 0);
-      }
-
       var relevant =
         (cls &&
           (cls.contains("variant-attribute-radio") ||
@@ -547,24 +544,24 @@
         name === "trading_platform" ||
         name.indexOf("product_category_") === 0;
       if (relevant) {
-        // Selection changed: schedule the authoritative cart sync (debounced, so
-        // it lands AFTER the plugin's/restore's racing syncCart calls and makes
-        // the cart match the checked product), then re-apply our meta + summary.
+        // Schedule the authoritative cart sync (debounced, so it lands after the
+        // plugin's/restore's racing syncCart calls and makes the cart match the
+        // checked product). The restore + re-skin + summary now run SYNCHRONOUSLY
+        // in onContainersRerendered (below) so there is no deferred extra paint.
         scheduleAuthoritativeSync();
-        setTimeout(function () {
-          reapplySelectionMeta();
-          updateSummary();
-        }, 0);
       }
     });
 
-    // The plugin signals a full container re-render (ypf_containers_rerendered)
-    // and WooCommerce fires updated_checkout after the cart sync — re-apply our
-    // meta + summary on both (covers the async product/variants re-render).
+    // The plugin fires `ypf_containers_rerendered` synchronously at the end of its
+    // re-render (before paint) — restore + re-skin there, in the same frame, so
+    // the bare/auto-selected state is never painted (no blink). WooCommerce's
+    // `updated_checkout` (async, after the cart sync) is a belt-and-suspenders
+    // re-skin for anything that re-renders out of band.
     if (window.jQuery) {
+      window.jQuery(document.body).on("ypf_containers_rerendered", onContainersRerendered);
       window
         .jQuery(document.body)
-        .on("updated_checkout ypf_containers_rerendered", function () {
+        .on("updated_checkout", function () {
           setTimeout(function () {
             reapplySelectionMeta();
             updateSummary();
