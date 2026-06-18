@@ -35,6 +35,25 @@
   var payLabel = cfg.payLabel || "Proceed to Payment";
   var lastBase = 0; // last store-computed price (pre-coupon), for discount math
 
+  // ---- Platform model (category-driven) state -------------------------------
+  // The main plugin's JS re-renders the eval sub-categories (name-only) and the
+  // account-balance products (store currency) on every selection change,
+  // stripping the eval description/badge and the account currency. `maps` carries
+  // those back (localized from PHP): categories{id:{name,description,badge}} and
+  // products{id:{accountSize,accountCurrency,accountLabel}}. We re-apply them
+  // after each re-render. `desired` remembers the user's chosen eval + account so
+  // a Trading-Platform switch (which the plugin resets) can restore them — the
+  // platforms mirror, so only currency/price should change, not the selection.
+  var maps = (cfg.maps && typeof cfg.maps === "object") ? cfg.maps : { categories: {}, products: {} };
+  if (!maps.categories) maps.categories = {};
+  if (!maps.products) maps.products = {};
+  var desired = { evalName: null, sizeKey: null };
+  var restoring = false; // guard: suppress capture/restore re-entry during a restore
+  // Authoritative cart-sync state (fixes the selection-sync race — see below).
+  var syncTimer = null; // debounce handle for the authoritative cart sync
+  var syncChain = Promise.resolve(); // serialize sync-cart calls (never two in flight)
+  var submitting = false; // guard against a double place-order
+
   function decodeEntities(s) {
     if (!s || String(s).indexOf("&") === -1) return s || "";
     var t = document.createElement("textarea");
@@ -170,6 +189,195 @@
     return "";
   }
 
+  // ---- Platform model: re-apply data the plugin's re-render strips ----------
+  var SEL = ".woocommerce-product-selection ";
+
+  function jq() { return window.jQuery; }
+
+  // Mirror fallback: eval sub-categories repeat under each platform, but the admin
+  // may have filled the description/badge under only ONE platform. Key the
+  // description/badge by eval NAME (preferring the first non-empty value) so every
+  // platform's eval cards stay consistent without duplicating data in admin.
+  var evalMetaByName = (function () {
+    var byName = {};
+    Object.keys(maps.categories).forEach(function (id) {
+      var c = maps.categories[id];
+      if (!c || !c.name) return;
+      var slot = byName[c.name] || (byName[c.name] = { description: "", badge: "" });
+      if (!slot.description && c.description) slot.description = c.description;
+      if (!slot.badge && c.badge) slot.badge = c.badge;
+    });
+    return byName;
+  })();
+
+  function resolveEvalMeta(id, name) {
+    var c = maps.categories[id] || {};
+    var fb = evalMetaByName[name || c.name] || {};
+    return {
+      name: c.name || name || "",
+      description: c.description || fb.description || "",
+      badge: c.badge || fb.badge || "",
+    };
+  }
+
+  // Eval sub-category cards: the plugin re-renders them as a flat name in
+  // .category-option-content. Rebuild the design structure (badge + name + desc)
+  // from the localized category map. Idempotent — safe to run on every change.
+  function reinjectEvalMeta() {
+    var labels = document.querySelectorAll(SEL + ".subcategory-section .category-option");
+    Array.prototype.forEach.call(labels, function (label) {
+      var radio = label.querySelector('input[type="radio"]');
+      var content = label.querySelector(".category-option-content");
+      if (!radio || !content) return;
+      var nameEl = content.querySelector(".category-option-name");
+      var name = nameEl ? nameEl.textContent.trim() : content.textContent.trim();
+      var meta = resolveEvalMeta(radio.value, name);
+      if (meta.name) name = meta.name;
+
+      content.textContent = "";
+      if (meta && meta.badge) {
+        var b = document.createElement("span");
+        b.className = "category-option-badge";
+        b.textContent = meta.badge;
+        content.appendChild(b);
+      }
+      var n = document.createElement("span");
+      n.className = "category-option-name";
+      n.textContent = name;
+      content.appendChild(n);
+      if (meta && meta.description) {
+        var d = document.createElement("span");
+        d.className = "category-option-desc";
+        d.textContent = meta.description;
+        content.appendChild(d);
+      }
+    });
+  }
+
+  // Account-balance pills: the plugin re-labels them in the store currency.
+  // Re-format to the account currency from the product map and re-add the
+  // data-account-* attributes the summary reads.
+  function reformatAccountPills() {
+    var labels = document.querySelectorAll(SEL + ".selected-product-section .product-option");
+    Array.prototype.forEach.call(labels, function (label) {
+      var radio = label.querySelector('input[type="radio"]');
+      if (!radio) return;
+      var meta = maps.products[radio.value];
+      if (!meta) return;
+      radio.setAttribute("data-account-label", meta.accountLabel || "");
+      radio.setAttribute("data-account-currency", meta.accountCurrency || "");
+      var nameEl = label.querySelector(".product-option-name");
+      if (nameEl && meta.accountLabel) nameEl.textContent = meta.accountLabel;
+    });
+  }
+
+  function reapplySelectionMeta() {
+    reinjectEvalMeta();
+    reformatAccountPills();
+  }
+
+  // Trading Platform = the checked level-0 category (Bybit / Platform 5).
+  function platformName() {
+    var r = document.querySelector('input[name="product_category_0"]:checked');
+    if (!r) return "";
+    var label = r.closest(".category-option");
+    var n = label && (label.querySelector(".category-option-name") || label.querySelector(".category-option-content"));
+    return n ? n.textContent.trim() : "";
+  }
+
+  // Currency follows the selected product's ACCOUNT currency (USDT / USD), not
+  // the store currency. Read the data attr (re-added above), then the map.
+  function accountCurrencyCode() {
+    var r = document.querySelector('input[name="selected_product"]:checked');
+    if (r) {
+      var c = r.getAttribute("data-account-currency");
+      if (c) return c;
+      var m = maps.products[r.value];
+      if (m && m.accountCurrency) return m.accountCurrency;
+    }
+    return cfg.currency || "USD";
+  }
+
+  // ---- Preserve eval + account across a Trading-Platform switch -------------
+  function readEvalName(label) {
+    var nameEl = label.querySelector(".category-option-name");
+    if (nameEl) return nameEl.textContent.trim();
+    var c = label.querySelector(".category-option-content");
+    return c ? c.textContent.trim() : "";
+  }
+
+  function captureDesired() {
+    var evalRadios = document.querySelectorAll(SEL + ".subcategory-section .category-radio:checked");
+    if (evalRadios.length) {
+      var label = evalRadios[evalRadios.length - 1].closest(".category-option");
+      if (label) desired.evalName = readEvalName(label);
+    }
+    var prod = document.querySelector('input[name="selected_product"]:checked');
+    if (prod) {
+      var m = maps.products[prod.value];
+      if (m) desired.sizeKey = String(m.accountSize);
+    }
+  }
+
+  function findEvalRadioByName(name) {
+    var labels = document.querySelectorAll(SEL + ".subcategory-section .category-option");
+    for (var i = 0; i < labels.length; i++) {
+      if (readEvalName(labels[i]) === name) return labels[i].querySelector('input[type="radio"]');
+    }
+    return null;
+  }
+
+  function findProductRadioBySize(sizeKey) {
+    var radios = document.querySelectorAll(SEL + '.selected-product-section input[name="selected_product"]');
+    for (var i = 0; i < radios.length; i++) {
+      var m = maps.products[radios[i].value];
+      if (m && String(m.accountSize) === String(sizeKey)) return radios[i];
+    }
+    return null;
+  }
+
+  // After a platform/eval change the plugin auto-selects the first eval + last
+  // ($5,000) product. Re-select the user's remembered eval + account (the
+  // platforms mirror, so the same eval/size exist). Runs SYNCHRONOUSLY from
+  // onContainersRerendered (the plugin's pre-paint signal), so the corrected
+  // selection is applied in the SAME frame the plugin rendered — the user never
+  // sees the intermediate $5,000/first-eval state (no blink). Re-skin + summary
+  // are done by the caller. The `restoring` guard stops the nested re-renders
+  // (triggered by these re-selects) from recursing.
+  function restoreSelection() {
+    if (restoring) return;
+    if (!desired.evalName && !desired.sizeKey) return;
+    restoring = true;
+    try {
+      if (desired.evalName) {
+        var evalRadio = findEvalRadioByName(desired.evalName);
+        if (evalRadio && !evalRadio.checked && jq()) {
+          evalRadio.checked = true;
+          jq()(evalRadio).trigger("change");
+        }
+      }
+      if (desired.sizeKey) {
+        var prodRadio = findProductRadioBySize(desired.sizeKey);
+        if (prodRadio && !prodRadio.checked && jq()) {
+          prodRadio.checked = true;
+          jq()(prodRadio).trigger("change");
+        }
+      }
+    } finally {
+      restoring = false;
+    }
+  }
+
+  // Synchronous handler for the plugin's `ypf_containers_rerendered` signal
+  // (fired at the end of its re-render, BEFORE paint). Restore the user's
+  // selection + re-skin in the same frame, so there is no separate paint of the
+  // plugin's bare/auto-selected state (this is what kills the step-1 blink).
+  function onContainersRerendered() {
+    if (!restoring) restoreSelection();
+    reapplySelectionMeta();
+    updateSummary();
+  }
+
   function updateSummary() {
     var store = getStore();
     if (!store || !store.products) return;
@@ -194,13 +402,22 @@
           ? account + " — " + category
           : product.name || account || category || "";
 
-    // Currency follows WooCommerce (cfg.currency = get_woocommerce_currency()).
-    var currency = cfg.currency || (variation && variation.programCurrency) || product.programCurrency || "USD";
+    // Currency follows the selected product's ACCOUNT currency (platform model:
+    // Bybit -> USDT, Platform 5 -> USD). Falls back to the store currency when no
+    // account currency is set (non-platform products). NOTE: Base/Sub/Total below
+    // intentionally stay in the STORE currency via fmtMoney — only this Currency
+    // row + the account balance follow the account currency.
+    var currency = accountCurrencyCode();
 
-    var platRadio = document.querySelector('input[name="trading_platform"]:checked');
-    var platLabel = platRadio
-      ? (product.tradingPlatforms && product.tradingPlatforms[platRadio.value]) || platRadio.value
-      : "";
+    // Trading Platform = the checked level-0 category (Bybit / Platform 5). Falls
+    // back to the legacy trading_platform radio for the non-platform/variation model.
+    var platLabel = platformName();
+    if (!platLabel) {
+      var platRadio = document.querySelector('input[name="trading_platform"]:checked');
+      platLabel = platRadio
+        ? (product.tradingPlatforms && product.tradingPlatforms[platRadio.value]) || platRadio.value
+        : "";
+    }
 
     lastBase = Number(price) || 0;
     setText("product", productLabel);
@@ -293,31 +510,63 @@
   // Delegated: the plugin re-renders the selection markup via innerHTML on every
   // change, so we listen on document rather than binding to specific nodes.
   function bindSelections() {
+    // Capture the user's INTENT before the plugin reacts. mousedown fires before
+    // the radio's change (and before the platform-switch cascade auto-selects the
+    // first eval / last product), so we record exactly the eval/account the user
+    // pressed — never the plugin's programmatic auto-selection.
+    document.addEventListener("mousedown", function (e) {
+      if (restoring || !e.target.closest) return;
+      var label = e.target.closest("label.category-option, label.product-option");
+      if (!label) return;
+      if (label.closest(".subcategory-section")) {
+        desired.evalName = readEvalName(label); // eval sub-category
+      } else if (label.classList.contains("product-option")) {
+        var radio = label.querySelector('input[type="radio"]');
+        var m = radio && maps.products[radio.value];
+        if (m) desired.sizeKey = String(m.accountSize); // account balance
+      }
+      // Platform (level-0) presses are handled by the change -> restore path.
+    });
+
     document.addEventListener("change", function (e) {
       var t = e.target;
       if (!t) return;
       var cls = t.classList;
+      var name = t.name || "";
+
       var relevant =
         (cls &&
           (cls.contains("variant-attribute-radio") ||
             cls.contains("platform-radio") ||
             cls.contains("category-radio") ||
             cls.contains("product-radio"))) ||
-        t.name === "selected_product" ||
-        t.name === "trading_platform" ||
-        (t.name && t.name.indexOf("product_category_") === 0);
+        name === "selected_product" ||
+        name === "trading_platform" ||
+        name.indexOf("product_category_") === 0;
       if (relevant) {
-        // Let the plugin's handler re-render/sync first, then recompute.
-        setTimeout(updateSummary, 0);
+        // Schedule the authoritative cart sync (debounced, so it lands after the
+        // plugin's/restore's racing syncCart calls and makes the cart match the
+        // checked product). The restore + re-skin + summary now run SYNCHRONOUSLY
+        // in onContainersRerendered (below) so there is no deferred extra paint.
+        scheduleAuthoritativeSync();
       }
     });
-    // The plugin re-renders the selection (innerHTML) + syncs the cart, then fires
-    // updated_checkout — recompute the summary then too (covers the production
-    // category-drill-down where the product/variants re-render asynchronously).
+
+    // The plugin fires `ypf_containers_rerendered` synchronously at the end of its
+    // re-render (before paint) — restore + re-skin there, in the same frame, so
+    // the bare/auto-selected state is never painted (no blink). WooCommerce's
+    // `updated_checkout` (async, after the cart sync) is a belt-and-suspenders
+    // re-skin for anything that re-renders out of band.
     if (window.jQuery) {
-      window.jQuery(document.body).on("updated_checkout", function () {
-        setTimeout(updateSummary, 0);
-      });
+      window.jQuery(document.body).on("ypf_containers_rerendered", onContainersRerendered);
+      window
+        .jQuery(document.body)
+        .on("updated_checkout", function () {
+          setTimeout(function () {
+            reapplySelectionMeta();
+            updateSummary();
+          }, 0);
+        });
     }
   }
 
@@ -545,9 +794,53 @@
     if (indicator) indicator.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // Final step rides WooCommerce's native place-order (standard submit +
-  // configured gateway). Prefer the native #place_order button when present.
-  function submitNativeOrder() {
+  // ---- Authoritative cart sync (fixes the selection-sync race) --------------
+  // A selection change fires several racing syncCart calls (the plugin
+  // auto-selecting the last product + our restore re-selecting `desired` + the
+  // user's own pick). sync-cart is last-write-wins server-side, so the WC cart —
+  // and therefore the ORDER — can land on the wrong product while the summary
+  // (which reads the checked radio) shows the right one. We own an authoritative
+  // sync of the CURRENTLY checked product: debounced during interaction, and
+  // mandatorily awaited right before placing the order.
+  function selectionContainer() {
+    return document.querySelector(".woocommerce-product-selection");
+  }
+  function checkedProductId() {
+    var r = document.querySelector('input[name="selected_product"]:checked');
+    if (!r) {
+      var dd = document.getElementById("selected_product");
+      if (dd && dd.tagName === "SELECT") r = dd;
+    }
+    return r && r.value ? parseInt(r.value, 10) : 0;
+  }
+  // Sync the checked product to the cart. Serialized via syncChain so two never
+  // overlap; reads the product + REST nonce at execution time (always current).
+  function syncCheckedProduct() {
+    var c = selectionContainer();
+    var base = c && c.getAttribute("data-rest-url");
+    if (!base) return syncChain;
+    syncChain = syncChain.then(function () {
+      var pid = checkedProductId();
+      if (!pid) return;
+      var cc = selectionContainer();
+      var nonce = (cc && cc.getAttribute("data-rest-nonce")) || "";
+      return fetch(base + "product/sync-cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-WP-Nonce": nonce },
+        credentials: "same-origin",
+        body: JSON.stringify({ product_id: pid }),
+      }).then(function () {}, function () {});
+    });
+    return syncChain;
+  }
+  function scheduleAuthoritativeSync() {
+    if (syncTimer) clearTimeout(syncTimer);
+    // Fire after the plugin's/restore's own syncCart calls for this interaction
+    // have settled, so ours is the last write and the cart == the checked product.
+    syncTimer = setTimeout(function () { syncTimer = null; syncCheckedProduct(); }, 450);
+  }
+
+  function doNativeSubmit() {
     var form = document.querySelector("form.checkout");
     // WooCommerce binds its place-order AJAX to the form's submit event, so
     // triggering the form submit runs the native flow (validation + the chosen
@@ -557,6 +850,25 @@
     if (placeOrder) { placeOrder.click(); return; }
     if (form && form.requestSubmit) { form.requestSubmit(); return; }
     if (form) form.submit();
+  }
+
+  // Final step rides WooCommerce's native place-order. Before submitting, force
+  // one authoritative sync of the checked product and WAIT for it, so the order
+  // is always built from the product shown in the summary (never a race loser).
+  function submitNativeOrder() {
+    if (submitting) return;
+    submitting = true;
+    if (syncTimer) { clearTimeout(syncTimer); syncTimer = null; }
+    var done = false;
+    var go = function () {
+      if (done) return;
+      done = true;
+      submitting = false;
+      doNativeSubmit();
+    };
+    syncCheckedProduct().then(go, go);
+    // Safety: never block the order indefinitely on a hung/failed sync.
+    setTimeout(go, 2500);
   }
 
   function initStepEngine() {
@@ -607,6 +919,10 @@
     initEmailSubstep();
     initStepEngine();
     initCoupon();
+    // Platform model: apply the eval badge/desc + account currency to the initial
+    // server render, remember the starting eval+account, then compute the summary.
+    reapplySelectionMeta();
+    captureDesired();
     updateSummary();
     // Re-apply the label shortly after load in case init order shifts.
     setTimeout(applyNavLabel, 50);

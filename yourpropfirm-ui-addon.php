@@ -21,6 +21,7 @@ define( 'YOURPROPFIRM_UI_ADDON_DIR', plugin_dir_path( __FILE__ ) );
 define( 'YOURPROPFIRM_UI_ADDON_URL', plugin_dir_url( __FILE__ ) );
 
 require_once YOURPROPFIRM_UI_ADDON_DIR . 'includes/class-ypf-ui-addon-hooks.php';
+require_once YOURPROPFIRM_UI_ADDON_DIR . 'includes/class-ypf-ui-addon-category-badge.php';
 
 /**
  * Boot the add-on after all plugins are loaded.
@@ -36,4 +37,5 @@ add_action( 'plugins_loaded', function () {
 	}
 
 	YPF_UI_Addon_Hooks::init();
+	YPF_UI_Addon_Category_Badge::init();
 }, 1000 );
