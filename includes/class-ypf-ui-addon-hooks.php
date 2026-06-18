@@ -64,11 +64,21 @@ class YPF_UI_Addon_Hooks {
 			'yourpropfirm-ui-addon-wizard',
 			'ypfCheckoutWizard',
 			[
-				'currency'      => function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : 'USD',
-				'continueLabel' => __( 'Continue', 'yourpropfirm' ),
-				'payLabel'      => __( 'Proceed to Payment', 'yourpropfirm' ),
-				'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
-				'maps'          => self::build_selection_maps(),
+				'currency'          => function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : 'USD',
+				'continueLabel'     => __( 'Continue', 'yourpropfirm' ),
+				'payLabel'          => __( 'Proceed to Payment', 'yourpropfirm' ),
+				'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
+				'maps'              => self::build_selection_maps(),
+				'applyLabel'        => __( 'Apply', 'yourpropfirm' ),
+				'applyingLabel'     => __( 'Applying…', 'yourpropfirm' ),
+				'enterCouponMsg'    => __( 'Please enter a coupon code.', 'yourpropfirm' ),
+				'couponApplied'     => __( 'Coupon applied.', 'yourpropfirm' ),
+				'couponAppliedMsg'  => __( 'Coupon applied successfully!', 'yourpropfirm' ),
+				'invalidCoupon'     => __( 'Invalid coupon code.', 'yourpropfirm' ),
+				'couponError'       => __( 'Error applying coupon. Please try again.', 'yourpropfirm' ),
+				'couponErrorPrefix' => __( 'Error applying coupon: ', 'yourpropfirm' ),
+				'pasteNotAllowed'   => __( 'Paste is not allowed in Email Confirmation field for security.', 'yourpropfirm' ),
+				'emailMismatch'     => __( 'Email does not match', 'yourpropfirm' ),
 			]
 		);
 

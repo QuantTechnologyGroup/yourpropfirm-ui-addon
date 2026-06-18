@@ -472,12 +472,12 @@
 
     btn.addEventListener("click", function () {
       var code = (input.value || "").trim();
-      if (!code) { showCouponMsg("Please enter a coupon code.", false); return; }
+      if (!code) { showCouponMsg(cfg.enterCouponMsg || "Please enter a coupon code.", false); return; }
       var emailEl = document.getElementById("billing_email");
       var email = emailEl ? emailEl.value || "" : "";
       var orig = btn.textContent;
       btn.disabled = true;
-      btn.textContent = "Applying…";
+      btn.textContent = cfg.applyingLabel || "Applying…";
 
       fetch(ajaxUrl, {
         method: "POST",
@@ -492,14 +492,14 @@
         .then(function (r) { return r.json(); })
         .then(function (res) {
           if (res && res.success) {
-            showCouponMsg((res.data && res.data.message) || "Coupon applied.", true);
+            showCouponMsg((res.data && res.data.message) || cfg.couponApplied || "Coupon applied.", true);
             applyDiscount(parseMoney(res.data && res.data.total), code);
             if (window.jQuery) window.jQuery(document.body).trigger("update_checkout");
           } else {
-            showCouponMsg((res.data && res.data.message) || "Invalid coupon code.", false);
+            showCouponMsg((res.data && res.data.message) || cfg.invalidCoupon || "Invalid coupon code.", false);
           }
         })
-        .catch(function () { showCouponMsg("Error applying coupon. Please try again.", false); })
+        .catch(function () { showCouponMsg(cfg.couponError || "Error applying coupon. Please try again.", false); })
         .finally(function () {
           btn.disabled = false;
           btn.textContent = orig;

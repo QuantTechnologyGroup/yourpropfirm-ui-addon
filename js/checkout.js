@@ -2,6 +2,8 @@
 // All initialization and event bindings are handled in a single $(document).ready block for clarity and maintainability
 console.log("[YPF] checkout.js parsed — bundle debug build");
 (function ($) {
+  var i18n = window.ypfCheckoutWizard || {};
+
   /**
    * Get cookie value by name
    * @param {string} name - Cookie name
@@ -87,7 +89,7 @@ console.log("[YPF] checkout.js parsed — bundle debug build");
         },
         beforeSend: function () {
           // Show loading state
-          $(".coupon-apply-btn").text("Applying...");
+          $(".coupon-apply-btn").text(i18n.applyingLabel || "Applying...");
         },
         success: function (response) {
           // Clear input and show success/error message
@@ -95,16 +97,16 @@ console.log("[YPF] checkout.js parsed — bundle debug build");
           $(document.body).trigger("update_checkout");
           var msg =
             (response.data && response.data.message) ||
-            "Coupon applied successfully!";
+            (i18n.couponAppliedMsg || "Coupon applied successfully!");
           showCouponMessage(msg, response.success);
         },
         error: function (jqXHR, textStatus, errorThrown) {
           // Show error message
-          showCouponMessage("Error applying coupon: " + errorThrown, false);
+          showCouponMessage((i18n.couponErrorPrefix || "Error applying coupon: ") + errorThrown, false);
         },
         complete: function () {
           // Reset button text
-          $(".coupon-apply-btn").text("Apply");
+          $(".coupon-apply-btn").text(i18n.applyLabel || "Apply");
         },
       });
     }
@@ -317,7 +319,7 @@ console.log("[YPF] checkout.js parsed — bundle debug build");
         emailConfirmField.addEventListener("paste", function (e) {
           e.preventDefault();
           showNoticeMessage(
-            "Paste is not allowed in Email Confirmation field for security.",
+            i18n.pasteNotAllowed || "Paste is not allowed in Email Confirmation field for security.",
           );
           return false;
         });
@@ -361,7 +363,7 @@ console.log("[YPF] checkout.js parsed — bundle debug build");
     );
     if (emailField && emailConfirmField && emailConfirmField.value !== "") {
       if (emailField.value !== emailConfirmField.value) {
-        emailConfirmField.setCustomValidity("Email does not match");
+        emailConfirmField.setCustomValidity(i18n.emailMismatch || "Email does not match");
         emailConfirmField.style.borderColor = "#dc3545";
       } else {
         emailConfirmField.setCustomValidity("");
@@ -610,6 +612,8 @@ console.log("[YPF] checkout.js parsed — bundle debug build");
 (function () {
   "use strict";
 
+  var i18n = window.ypfCheckoutWizard || {};
+
   function applyCoupon() {
     // apply coupon with jQuery ajax
     var coupon_code = $("#coupon_code").val();
@@ -626,7 +630,7 @@ console.log("[YPF] checkout.js parsed — bundle debug build");
         },
         beforeSend: function () {
           // Show loading state
-          $(".coupon-apply-btn").text("Applying...");
+          $(".coupon-apply-btn").text(i18n.applyingLabel || "Applying...");
         },
         success: function (response) {
           // Clear input and show success/error message
@@ -634,16 +638,16 @@ console.log("[YPF] checkout.js parsed — bundle debug build");
           jQuery(document.body).trigger("update_checkout");
           var msg =
             (response.data && response.data.message) ||
-            "Coupon applied successfully!";
+            (i18n.couponAppliedMsg || "Coupon applied successfully!");
           showCouponMessage(msg, response.success);
         },
         error: function (jqXHR, textStatus, errorThrown) {
           // Show error message
-          showCouponMessage("Error applying coupon: " + errorThrown, false);
+          showCouponMessage((i18n.couponErrorPrefix || "Error applying coupon: ") + errorThrown, false);
         },
         complete: function () {
           // Reset button text
-          $(".coupon-apply-btn").text("Apply");
+          $(".coupon-apply-btn").text(i18n.applyLabel || "Apply");
         },
       });
     }
@@ -703,7 +707,7 @@ console.log("[YPF] checkout.js parsed — bundle debug build");
         emailConfirmField.addEventListener("paste", function (e) {
           e.preventDefault();
           showNoticeMessage(
-            "Paste tidak diizinkan pada field Email Konfirmasi untuk keamanan.",
+            i18n.pasteNotAllowed || "Paste is not allowed in Email Confirmation field for security.",
           );
           return false;
         });
@@ -756,7 +760,7 @@ console.log("[YPF] checkout.js parsed — bundle debug build");
 
     if (emailField && emailConfirmField && emailConfirmField.value !== "") {
       if (emailField.value !== emailConfirmField.value) {
-        emailConfirmField.setCustomValidity("Email tidak cocok");
+        emailConfirmField.setCustomValidity(i18n.emailMismatch || "Email does not match");
         emailConfirmField.style.borderColor = "#dc3545";
       } else {
         emailConfirmField.setCustomValidity("");
