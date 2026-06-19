@@ -114,7 +114,7 @@ if ( $default_product_id ) {
 		foreach ( $category_path as $level => $cat_id ) {
 			$term = get_term( $cat_id, 'product_cat' );
 			if ( $term && ! is_wp_error( $term ) ) {
-				$label = ! empty( $category_level_labels[ $level ] ) ? $category_level_labels[ $level ] : __( 'Product Category', 'yourpropfirm' );
+				$label = ! empty( $category_level_labels[ $level ] ) ? $category_level_labels[ $level ] : __( 'Product Category', 'yourpropfirm-ui-addon' );
 				$review_category_levels[] = array(
 					'label' => $label,
 					'value' => $term->name,
@@ -137,7 +137,7 @@ $is_renewal = isset( $first_cart_item['subscription_renewal'] );
 			<?php if ( $first_item ) : ?>
 				<!-- Product Name Row -->
 				<div class="order-row hide-if-reset-product hide-if-renewal-subscription">
-					<span class="order-label"><?php _e( 'Product Name', 'yourpropfirm' ); ?></span>
+					<span class="order-label"><?php _e( 'Product Name', 'yourpropfirm-ui-addon' ); ?></span>
 					<span class="order-value">
 						<?php
 						if ( $cart_item_data && $cart_item_data['is_variable'] && $cart_item_data['variation'] ) {
@@ -168,14 +168,14 @@ $is_renewal = isset( $first_cart_item['subscription_renewal'] );
 
 			<?php if ( $program_data && ! empty( $program_data->data ) ) : ?>
 				<div class="order-row hide-if-reset-product hide-if-renewal-subscription hide-if-competition">
-					<span class="order-label"><?php _e( 'Account Size', 'yourpropfirm' ); ?></span>
+					<span class="order-label"><?php _e( 'Account Size', 'yourpropfirm-ui-addon' ); ?></span>
 					<span class="order-value">
 						<?php echo yourpropfirm_get_currency_symbol( $program_data->data['currency'] ) . number_format( $program_data->data['initialBalance'] ); ?>
 					</span>
 				</div>
 			<?php endif; ?>
 			<div class="order-row selected-platform hide-if-reset-product hide-if-renewal-subscription hide-if-competition">
-				<span class="order-label"><?php _e( 'Trading Platform', 'yourpropfirm' ); ?></span>
+				<span class="order-label"><?php _e( 'Trading Platform', 'yourpropfirm-ui-addon' ); ?></span>
 				<span class="order-value" id="selected-platform">
 					<?php echo esc_html( $trading_platform ); ?>
 				</span>
@@ -184,7 +184,7 @@ $is_renewal = isset( $first_cart_item['subscription_renewal'] );
 
 		<!-- Currency Row -->
 		<div class="order-row">
-			<span class="order-label"><?php _e( 'Currency', 'yourpropfirm' ); ?></span>
+			<span class="order-label"><?php _e( 'Currency', 'yourpropfirm-ui-addon' ); ?></span>
 			<span class="order-value"><?php echo get_woocommerce_currency(); ?></span>
 		</div>
 
@@ -273,7 +273,7 @@ $is_renewal = isset( $first_cart_item['subscription_renewal'] );
 		<div class="order-row hide-if-trial-product">
 			<span class="order-label">
 				<?php
-				_e( 'Base Price', 'yourpropfirm' );
+				_e( 'Base Price', 'yourpropfirm-ui-addon' );
 				echo esc_html( yourpropfirm_get_subscription_period_suffix( $product ) );
 				?>
 			</span>
@@ -338,7 +338,7 @@ $is_renewal = isset( $first_cart_item['subscription_renewal'] );
 		<div class="order-row hide-if-trial-product">
 			<span class="order-label">
 				<?php
-				_e( 'Sub Total', 'yourpropfirm' );
+				_e( 'Sub Total', 'yourpropfirm-ui-addon' );
 				echo esc_html( yourpropfirm_get_subscription_period_suffix( $product ) );
 				?>
 			</span>
@@ -392,7 +392,7 @@ $is_renewal = isset( $first_cart_item['subscription_renewal'] );
 				<!-- Discount Row -->
 				<div class="order-row hide-if-trial-product">
 					<span class="order-label">
-						<?php _e( 'Discount', 'yourpropfirm' ); ?>
+						<?php _e( 'Discount', 'yourpropfirm-ui-addon' ); ?>
 						<span class="coupon-code">(<?php echo esc_html( $coupon->get_code() ); ?>)</span>
 					</span>
 					<span class="order-discount-value">
@@ -402,7 +402,7 @@ $is_renewal = isset( $first_cart_item['subscription_renewal'] );
 
 			<!-- Total discount -->
 			<div class="order-row hide-if-trial-product">
-				<span class="order-label"><?php _e( 'Total Discount', 'yourpropfirm' );
+				<span class="order-label"><?php _e( 'Total Discount', 'yourpropfirm-ui-addon' );
 				?></span>
 				<span class="order-discount-value">
 					<?php echo wc_price( WC()->cart->get_discount_total() ); ?>
@@ -484,7 +484,7 @@ $is_renewal = isset( $first_cart_item['subscription_renewal'] );
 			data-order='<?php echo json_encode( $data_order_array ); ?>'>
 			<span class="order-label">
 				<?php
-				_e( 'Total', 'yourpropfirm' );
+				_e( 'Total', 'yourpropfirm-ui-addon' );
 				echo esc_html( yourpropfirm_get_subscription_period_suffix( $product ) );
 				?>
 			</span>

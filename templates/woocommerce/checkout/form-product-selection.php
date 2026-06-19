@@ -95,14 +95,14 @@ if ( is_array( $overwrite_labels_raw ) ) {
 	data-display-as-radio="<?php echo $display_as_radio ? 'true' : 'false'; ?>"
 	data-display-account-size="<?php echo $display_account_size ? 'true' : 'false'; ?>">
 	<h4 class="section-heading">
-		<?php _e( 'Product selection', 'yourpropfirm' ); ?>
+		<?php _e( 'Product selection', 'yourpropfirm-ui-addon' ); ?>
 	</h4>
 
 	<div class="product-selection-content">
 		<!-- Product Category Section -->
 		<div class="product-category-section" data-level="0">
 			<h5 class="section-subheading">
-				<?php echo esc_html( ! empty( $category_level_labels[0] ) ? $category_level_labels[0] : __( 'Product Category', 'yourpropfirm' ) ); ?>
+				<?php echo esc_html( ! empty( $category_level_labels[0] ) ? $category_level_labels[0] : __( 'Product Category', 'yourpropfirm-ui-addon' ) ); ?>
 			</h5>
 			<div class="category-options">
 				<?php
@@ -140,7 +140,7 @@ if ( is_array( $overwrite_labels_raw ) ) {
 					data-level="<?php echo esc_attr( $level_data['level'] ); ?>"
 					data-parent-id="<?php echo esc_attr( $level_data['parent_id'] ); ?>">
 					<h5 class="section-subheading">
-						<?php echo esc_html( ! empty( $category_level_labels[ $level_data['level'] ] ) ? $category_level_labels[ $level_data['level'] ] : __( 'Subcategory', 'yourpropfirm' ) ); ?>
+						<?php echo esc_html( ! empty( $category_level_labels[ $level_data['level'] ] ) ? $category_level_labels[ $level_data['level'] ] : __( 'Subcategory', 'yourpropfirm-ui-addon' ) ); ?>
 					</h5>
 					<div class="category-options">
 						<?php foreach ( $level_data['categories'] as $cat_id => $cat_name ) :
@@ -173,7 +173,7 @@ if ( is_array( $overwrite_labels_raw ) ) {
 		<!-- Selected Product Section -->
 		<div class="selected-product-section">
 			<h5 class="section-subheading">
-				<?php echo $display_account_size ? esc_html__( 'Select Account Balance', 'yourpropfirm' ) : esc_html__( 'Selected Product', 'yourpropfirm' ); ?>
+				<?php echo $display_account_size ? esc_html__( 'Select Account Balance', 'yourpropfirm-ui-addon' ) : esc_html__( 'Selected Product', 'yourpropfirm-ui-addon' ); ?>
 			</h5>
 			<?php
 			// The account BALANCE must follow the product's Account Currency
@@ -213,7 +213,7 @@ if ( is_array( $overwrite_labels_raw ) ) {
 							<div class="product-option-content">
 								<?php if ( $product_data['most_popular'] ) : ?>
 									<span class="product-option-popular-badge">
-										<?php esc_html_e( 'Most Popular', 'yourpropfirm' ); ?>
+										<?php esc_html_e( 'Most Popular', 'yourpropfirm-ui-addon' ); ?>
 									</span>
 								<?php endif; ?>
 								<span class="product-option-name"><?php echo esc_html( $label_text ); ?></span>
@@ -230,7 +230,7 @@ if ( is_array( $overwrite_labels_raw ) ) {
 						foreach ( $default_products as $product_data ) :
 							$product_id = absint( $product_data['id'] );
 							$is_selected = $product_id == $default_product;
-							$most_popular_text = $product_data['most_popular'] ? ' (' . __( 'Most Popular', 'yourpropfirm' ) . ')' : '';
+							$most_popular_text = $product_data['most_popular'] ? ' (' . __( 'Most Popular', 'yourpropfirm-ui-addon' ) . ')' : '';
 							?>
 							<option value="<?php echo esc_attr( $product_id ); ?>" <?php selected( $is_selected, true ); ?>
 								data-most-popular="<?php echo $product_data['most_popular'] ? 'true' : 'false'; ?>"

@@ -34,7 +34,7 @@ add_action( 'woocommerce_before_checkout_form', 'woocommerce_output_all_notices'
 
 // If checkout registration is disabled and not logged in, the user cannot checkout.
 if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_required() && ! is_user_logged_in() ) {
-	echo esc_html( apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'yourpropfirm' ) ) );
+	echo esc_html( apply_filters( 'woocommerce_checkout_must_be_logged_in_message', __( 'You must be logged in to checkout.', 'yourpropfirm-ui-addon' ) ) );
 	return;
 }
 
@@ -44,36 +44,36 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 
 <form name="checkout" method="post" class="checkout woocommerce-checkout ypf-checkout-wizard"
 	action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data"
-	aria-label="<?php echo esc_attr__( 'Checkout', 'yourpropfirm' ); ?>">
+	aria-label="<?php echo esc_attr__( 'Checkout', 'yourpropfirm-ui-addon' ); ?>">
 
 	<?php if ( $checkout->get_checkout_fields() ) : ?>
 
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
 
 		<!-- ===================== STEPPER (Challenge → Information) ===================== -->
-		<nav class="checkout-step-indicator ypf-stepper" aria-label="<?php esc_attr_e( 'Checkout progress', 'yourpropfirm' ); ?>">
+		<nav class="checkout-step-indicator ypf-stepper" aria-label="<?php esc_attr_e( 'Checkout progress', 'yourpropfirm-ui-addon' ); ?>">
 			<ol class="checkout-step-indicator__list">
 				<li class="checkout-step-indicator__item is-active" data-step="1"
-					data-hint-active="<?php esc_attr_e( 'You are here', 'yourpropfirm' ); ?>"
-					data-hint-completed="<?php esc_attr_e( 'Completed', 'yourpropfirm' ); ?>"
-					data-hint-upcoming="<?php esc_attr_e( 'Next step', 'yourpropfirm' ); ?>">
+					data-hint-active="<?php esc_attr_e( 'You are here', 'yourpropfirm-ui-addon' ); ?>"
+					data-hint-completed="<?php esc_attr_e( 'Completed', 'yourpropfirm-ui-addon' ); ?>"
+					data-hint-upcoming="<?php esc_attr_e( 'Next step', 'yourpropfirm-ui-addon' ); ?>">
 					<span class="checkout-step-indicator__number">
 							<span class="checkout-step-indicator__num-text">1</span>
 							<img src="<?php echo esc_url( YOURPROPFIRM_UI_ADDON_URL . 'assets/images/check.png' ); ?>" alt="" class="checkout-step-indicator__check" aria-hidden="true" />
 						</span>
 					<span class="checkout-step-indicator__text">
-						<span class="checkout-step-indicator__hint"><?php esc_html_e( 'You are here', 'yourpropfirm' ); ?></span>
-						<span class="checkout-step-indicator__label"><?php esc_html_e( 'Challenge', 'yourpropfirm' ); ?></span>
+						<span class="checkout-step-indicator__hint"><?php esc_html_e( 'You are here', 'yourpropfirm-ui-addon' ); ?></span>
+						<span class="checkout-step-indicator__label"><?php esc_html_e( 'Challenge', 'yourpropfirm-ui-addon' ); ?></span>
 					</span>
 				</li>
 				<li class="checkout-step-indicator__item is-upcoming" data-step="2"
-					data-hint-active="<?php esc_attr_e( 'You are here', 'yourpropfirm' ); ?>"
-					data-hint-completed="<?php esc_attr_e( 'Completed', 'yourpropfirm' ); ?>"
-					data-hint-upcoming="<?php esc_attr_e( 'Next step', 'yourpropfirm' ); ?>">
+					data-hint-active="<?php esc_attr_e( 'You are here', 'yourpropfirm-ui-addon' ); ?>"
+					data-hint-completed="<?php esc_attr_e( 'Completed', 'yourpropfirm-ui-addon' ); ?>"
+					data-hint-upcoming="<?php esc_attr_e( 'Next step', 'yourpropfirm-ui-addon' ); ?>">
 					<span class="checkout-step-indicator__number">2</span>
 					<span class="checkout-step-indicator__text">
-						<span class="checkout-step-indicator__hint"><?php esc_html_e( 'Next step', 'yourpropfirm' ); ?></span>
-						<span class="checkout-step-indicator__label"><?php esc_html_e( 'Information', 'yourpropfirm' ); ?></span>
+						<span class="checkout-step-indicator__hint"><?php esc_html_e( 'Next step', 'yourpropfirm-ui-addon' ); ?></span>
+						<span class="checkout-step-indicator__label"><?php esc_html_e( 'Information', 'yourpropfirm-ui-addon' ); ?></span>
 					</span>
 				</li>
 			</ol>
@@ -82,12 +82,12 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 		<!-- Step titles — centered above BOTH columns; multistep JS toggles per step -->
 		<div class="ypf-step-titles">
 			<header class="ypf-step-header" data-checkout-step="1">
-				<h2 class="ypf-step-title"><?php esc_html_e( 'Choose Your Challenge', 'yourpropfirm' ); ?></h2>
-				<p class="ypf-step-subtitle"><?php esc_html_e( 'Select evaluation type and account size to get started', 'yourpropfirm' ); ?></p>
+				<h2 class="ypf-step-title"><?php esc_html_e( 'Choose Your Challenge', 'yourpropfirm-ui-addon' ); ?></h2>
+				<p class="ypf-step-subtitle"><?php esc_html_e( 'Select evaluation type and account size to get started', 'yourpropfirm-ui-addon' ); ?></p>
 			</header>
 			<header class="ypf-step-header" data-checkout-step="2" hidden>
-				<h2 class="ypf-step-title"><?php esc_html_e( 'Your Information', 'yourpropfirm' ); ?></h2>
-				<p class="ypf-step-subtitle"><?php esc_html_e( 'Fill in your billing details to proceed', 'yourpropfirm' ); ?></p>
+				<h2 class="ypf-step-title"><?php esc_html_e( 'Your Information', 'yourpropfirm-ui-addon' ); ?></h2>
+				<p class="ypf-step-subtitle"><?php esc_html_e( 'Fill in your billing details to proceed', 'yourpropfirm-ui-addon' ); ?></p>
 			</header>
 		</div>
 
@@ -117,7 +117,7 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 				<!-- ===================== STEP 2: YOUR INFORMATION ===================== -->
 				<section data-checkout-step="2" class="checkout-step" hidden>
 					<div class="checkout-card">
-						<p class="ypf-substep-label"><?php esc_html_e( 'Information', 'yourpropfirm' ); ?></p>
+						<p class="ypf-substep-label"><?php esc_html_e( 'Information', 'yourpropfirm-ui-addon' ); ?></p>
 						<div class="woocommerce-billing-fields">
 							<?php do_action( 'woocommerce_before_checkout_billing_form', $checkout ); ?>
 
@@ -140,7 +140,7 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 										<label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
 											<input class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox"
 												id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true ); ?> type="checkbox" name="createaccount" value="1" />
-											<span><?php esc_html_e( 'Create an account?', 'yourpropfirm' ); ?></span>
+											<span><?php esc_html_e( 'Create an account?', 'yourpropfirm-ui-addon' ); ?></span>
 										</label>
 									</p>
 								<?php endif; ?>
@@ -161,23 +161,23 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 						<?php endif; ?>
 
 						<p class="ypf-consent-text ypf-field-hidden">
-							<?php esc_html_e( 'By placing your order, you agree to our', 'yourpropfirm' ); ?>
+							<?php esc_html_e( 'By placing your order, you agree to our', 'yourpropfirm-ui-addon' ); ?>
 							<a href="https://app.fundedbit.com/privacy?_gl=1*1jxnv9h*_ga*MTMxODM3NzI5NS4xNzc3Mjc1OTE1*_ga_LKRKCECBFF*czE3ODA1NTQ0MzkkbzckZzEkdDE3ODA1NTQ0MzkkajYwJGwwJGgyMTA1MTMzOTcw*_fplc*WE1iRGp0WWhFNVdTUHMyNk1kMk11MjduckIxdWducGxvYnhETlpjTDJGMSUyQlRNbzBuSVp3cTNuZCUyQmlXMHhXRkZWQmpZN1FVazZUZzNuRlFJRDJWZ2dtZlYybHkxNE5nRUdGMVI2T0Y2TVBCTEN5MEFoRnpXT3NmRGphbjNqUSUzRCUzRA.."
-							   class="ypf-consent-link" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Privacy Policy', 'yourpropfirm' ); ?></a>
-							<?php esc_html_e( 'and', 'yourpropfirm' ); ?>
+							   class="ypf-consent-link" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Privacy Policy', 'yourpropfirm-ui-addon' ); ?></a>
+							<?php esc_html_e( 'and', 'yourpropfirm-ui-addon' ); ?>
 							<a href="https://app.fundedbit.com/terms?_gl=1*1jxnv9h*_ga*MTMxODM3NzI5NS4xNzc3Mjc1OTE1*_ga_LKRKCECBFF*czE3ODA1NTQ0MzkkbzckZzEkdDE3ODA1NTQ0MzkkajYwJGwwJGgyMTA1MTMzOTcw*_fplc*WE1iRGp0WWhFNVdTUHMyNk1kMk11MjduckIxdWducGxvYnhETlpjTDJGMSUyQlRNbzBuSVp3cTNuZCUyQmlXMHhXRkZWQmpZN1FVazZUZzNuRlFJRDJWZ2dtZlYybHkxNE5nRUdGMVI2T0Y2TVBCTEN5MEFoRnpXT3NmRGphbjNqUSUzRCUzRA.."
-							   class="ypf-consent-link" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Terms of Use', 'yourpropfirm' ); ?></a>
-							<?php esc_html_e( ', and consent to receive updates and marketing communications from FundedBit.', 'yourpropfirm' ); ?>
+							   class="ypf-consent-link" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Terms of Use', 'yourpropfirm-ui-addon' ); ?></a>
+							<?php esc_html_e( ', and consent to receive updates and marketing communications from FundedBit.', 'yourpropfirm-ui-addon' ); ?>
 						</p>
 
 						<!-- Shown on email-only sub-step; hidden after Continue -->
 						<div class="ypf-substep-nav ypf-field-hidden" id="ypf-substep-nav">
 							<button type="button" class="btn-outline ypf-substep-prev" id="ypf-email-prev">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
-								<span><?php esc_html_e( 'Previous', 'yourpropfirm' ); ?></span>
+								<span><?php esc_html_e( 'Previous', 'yourpropfirm-ui-addon' ); ?></span>
 							</button>
 							<button type="button" class="btn-primary ypf-substep-next" id="ypf-email-next">
-								<span><?php esc_html_e( 'Continue', 'yourpropfirm' ); ?></span>
+								<span><?php esc_html_e( 'Continue', 'yourpropfirm-ui-addon' ); ?></span>
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
 							</button>
 						</div>
@@ -190,7 +190,7 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 			<div class="checkout-form-right">
 				<div class="order-summary checkout-card">
 					<h3 class="section-heading tw-pb-0">
-						<?php esc_html_e( 'Order Summary', 'yourpropfirm' ); ?>
+						<?php esc_html_e( 'Order Summary', 'yourpropfirm-ui-addon' ); ?>
 					</h3>
 
 					<!-- Static, JS-driven order summary (updated by js/checkout-wizard.js) -->
@@ -209,31 +209,31 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 								<?php wc_get_template( 'checkout/payment.php' ); ?>
 							</div>
 							<div class="ypf-coupon-field">
-								<label class="ypf-coupon-label" for="ypf-coupon-input"><?php esc_html_e( 'Coupon code', 'yourpropfirm' ); ?></label>
+								<label class="ypf-coupon-label" for="ypf-coupon-input"><?php esc_html_e( 'Coupon code', 'yourpropfirm-ui-addon' ); ?></label>
 								<div class="ypf-coupon-row">
-									<input type="text" class="ypf-coupon-input" id="ypf-coupon-input" placeholder="<?php esc_attr_e( 'Insert coupon code', 'yourpropfirm' ); ?>" />
-									<button type="button" class="ypf-coupon-apply" id="ypf-coupon-apply"><?php esc_html_e( 'Apply', 'yourpropfirm' ); ?></button>
+									<input type="text" class="ypf-coupon-input" id="ypf-coupon-input" placeholder="<?php esc_attr_e( 'Insert coupon code', 'yourpropfirm-ui-addon' ); ?>" />
+									<button type="button" class="ypf-coupon-apply" id="ypf-coupon-apply"><?php esc_html_e( 'Apply', 'yourpropfirm-ui-addon' ); ?></button>
 								</div>
 								<p class="ypf-coupon-msg ypf-field-hidden" id="ypf-coupon-msg" role="status"></p>
 							</div>
 						</div>
 
-						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Product', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="product">&mdash;</span></div>
-						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Category', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="category">&mdash;</span></div>
-						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Account', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="account">&mdash;</span></div>
-						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Platform', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="platform">&mdash;</span></div>
-						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Currency', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="currency">USD</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Product', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value" data-ypf="product">&mdash;</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Category', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value" data-ypf="category">&mdash;</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Account', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value" data-ypf="account">&mdash;</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Platform', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value" data-ypf="platform">&mdash;</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Currency', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value" data-ypf="currency">USD</span></div>
 						<hr class="ypf-summary-divider" />
-						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Base Price', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="base">&mdash;</span></div>
-						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Sub Total', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="subtotal">&mdash;</span></div>
-						<div class="ypf-summary-row ypf-field-hidden" id="ypf-summary-discount-row"><span class="ypf-summary-label"><?php esc_html_e( 'Discount', 'yourpropfirm' ); ?> <span class="ypf-discount-code" data-ypf="discount-code"></span></span><span class="ypf-summary-value ypf-value--green" data-ypf="discount">&mdash;</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Base Price', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value" data-ypf="base">&mdash;</span></div>
+						<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Sub Total', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value" data-ypf="subtotal">&mdash;</span></div>
+						<div class="ypf-summary-row ypf-field-hidden" id="ypf-summary-discount-row"><span class="ypf-summary-label"><?php esc_html_e( 'Discount', 'yourpropfirm-ui-addon' ); ?> <span class="ypf-discount-code" data-ypf="discount-code"></span></span><span class="ypf-summary-value ypf-value--green" data-ypf="discount">&mdash;</span></div>
 						<hr class="ypf-summary-divider" />
-						<div class="ypf-summary-row ypf-summary-total"><span><?php esc_html_e( 'Total', 'yourpropfirm' ); ?></span><span class="ypf-summary-value" data-ypf="total">&mdash;</span></div>
+						<div class="ypf-summary-row ypf-summary-total"><span><?php esc_html_e( 'Total', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value" data-ypf="total">&mdash;</span></div>
 					</div>
 
 					<!-- We Accept payment methods -->
 					<div class="ypf-we-accept">
-						<span class="ypf-we-accept__label"><?php esc_html_e( 'We Accept', 'yourpropfirm' ); ?></span>
+						<span class="ypf-we-accept__label"><?php esc_html_e( 'We Accept', 'yourpropfirm-ui-addon' ); ?></span>
 						<div class="ypf-we-accept__cards">
 							<?php
 							$ypf_cards = array(
@@ -272,11 +272,11 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 					<!-- Back / Next nav — JS controls visibility + label per step -->
 					<div class="checkout-step-nav">
 						<button type="button" class="btn-outline ypf-nav-prev" data-checkout-step-prev hidden>
-							<?php esc_html_e( 'Back', 'yourpropfirm' ); ?>
+							<?php esc_html_e( 'Back', 'yourpropfirm-ui-addon' ); ?>
 						</button>
 						<button type="button" class="btn-primary ypf-nav-next" data-checkout-step-next
-							data-loading-text="<?php esc_attr_e( 'Processing…', 'yourpropfirm' ); ?>">
-							<?php esc_html_e( 'Continue', 'yourpropfirm' ); ?>
+							data-loading-text="<?php esc_attr_e( 'Processing…', 'yourpropfirm-ui-addon' ); ?>">
+							<?php esc_html_e( 'Continue', 'yourpropfirm-ui-addon' ); ?>
 						</button>
 					</div>
 
@@ -290,12 +290,12 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 						<div class="woocommerce-checkout-review-order">
 							<?php wc_get_template( 'checkout/review-order.php' ); ?>
 						</div>
-						<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="<?php esc_attr_e( 'Proceed to Payment', 'yourpropfirm' ); ?>" data-value="<?php esc_attr_e( 'Proceed to Payment', 'yourpropfirm' ); ?>"><?php esc_html_e( 'Proceed to Payment', 'yourpropfirm' ); ?></button>
+						<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="<?php esc_attr_e( 'Proceed to Payment', 'yourpropfirm-ui-addon' ); ?>" data-value="<?php esc_attr_e( 'Proceed to Payment', 'yourpropfirm-ui-addon' ); ?>"><?php esc_html_e( 'Proceed to Payment', 'yourpropfirm-ui-addon' ); ?></button>
 					</div>
 
 					<div class="ypf-secure-checkout">
 						<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
-						<span><?php esc_html_e( 'Secure checkout — data is protected', 'yourpropfirm' ); ?></span>
+						<span><?php esc_html_e( 'Secure checkout — data is protected', 'yourpropfirm-ui-addon' ); ?></span>
 					</div>
 
 				</div>
@@ -309,22 +309,22 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 				<span class="ypf-trust-badge__icon" aria-hidden="true">
 					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
 				</span>
-				<span class="ypf-trust-badge__title"><?php esc_html_e( 'Secure Payments', 'yourpropfirm' ); ?></span>
-				<span class="ypf-trust-badge__sub"><?php esc_html_e( 'SSL encrypted', 'yourpropfirm' ); ?></span>
+				<span class="ypf-trust-badge__title"><?php esc_html_e( 'Secure Payments', 'yourpropfirm-ui-addon' ); ?></span>
+				<span class="ypf-trust-badge__sub"><?php esc_html_e( 'SSL encrypted', 'yourpropfirm-ui-addon' ); ?></span>
 			</div>
 			<div class="ypf-trust-badge">
 				<span class="ypf-trust-badge__icon" aria-hidden="true">
 					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-3 7h6l-3 13"/></svg>
 				</span>
-				<span class="ypf-trust-badge__title"><?php esc_html_e( 'Instant Activation', 'yourpropfirm' ); ?></span>
-				<span class="ypf-trust-badge__sub"><?php esc_html_e( 'Start trading immediately', 'yourpropfirm' ); ?></span>
+				<span class="ypf-trust-badge__title"><?php esc_html_e( 'Instant Activation', 'yourpropfirm-ui-addon' ); ?></span>
+				<span class="ypf-trust-badge__sub"><?php esc_html_e( 'Start trading immediately', 'yourpropfirm-ui-addon' ); ?></span>
 			</div>
 			<div class="ypf-trust-badge">
 				<span class="ypf-trust-badge__icon" aria-hidden="true">
 					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
 				</span>
-				<span class="ypf-trust-badge__title"><?php esc_html_e( 'Excellent Support', 'yourpropfirm' ); ?></span>
-				<span class="ypf-trust-badge__sub"><?php esc_html_e( '24/7 customer service', 'yourpropfirm' ); ?></span>
+				<span class="ypf-trust-badge__title"><?php esc_html_e( 'Excellent Support', 'yourpropfirm-ui-addon' ); ?></span>
+				<span class="ypf-trust-badge__sub"><?php esc_html_e( '24/7 customer service', 'yourpropfirm-ui-addon' ); ?></span>
 			</div>
 			</div>
 		</div>

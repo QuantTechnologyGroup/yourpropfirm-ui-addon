@@ -1,18 +1,7 @@
-# Copyright (C) 2026 YourPropFirm
-# This file is distributed under the GPL-2.0+.
+# Translation for YourPropFirm UI Addon - sr_RS
 msgid ""
 msgstr ""
-"Project-Id-Version: YourPropFirm UI Addon 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/yourpropfirm-ui-addon\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-18T04:45:43+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: yourpropfirm\n"
 
 #. Plugin Name of the plugin
 #: yourpropfirm-ui-addon.php
@@ -32,78 +21,78 @@ msgstr ""
 #. Author of the plugin
 #: yourpropfirm-ui-addon.php
 msgid "YourPropFirm"
-msgstr ""
+msgstr "YourPropFirm"
 
 #: includes/class-ypf-ui-addon-category-badge.php:32
-msgid "Optional. Shown as a badge on this category's checkout card, e.g. \"Best Value\" or \"Most Popular\". Leave empty for no badge."
+msgid "Optional. Shown as a badge on this category's checkout card, e.g. \\\"Best Value\\\" or \\\"Most Popular\\\". Leave empty for no badge."
 msgstr ""
 
 #: includes/class-ypf-ui-addon-category-badge.php:41
 #: includes/class-ypf-ui-addon-category-badge.php:58
 msgid "Checkout Badge"
-msgstr ""
+msgstr "Значка при плаћању"
 
 #: includes/class-ypf-ui-addon-category-badge.php:42
 #: includes/class-ypf-ui-addon-category-badge.php:60
 msgid "e.g. Best Value"
-msgstr ""
+msgstr "нпр. Најбоља вредност"
 
 #: includes/class-ypf-ui-addon-hooks.php:68
 #: templates/woocommerce/checkout/form-checkout.php:180
 #: templates/woocommerce/checkout/form-checkout.php:289
 msgid "Continue"
-msgstr ""
+msgstr "Настави"
 
 #: includes/class-ypf-ui-addon-hooks.php:69
 #: templates/woocommerce/checkout/form-checkout.php:303
 msgid "Proceed to Payment"
-msgstr ""
+msgstr "Nastavi sa plaćanjem"
 
 #: templates/partials/checkout/trading-platform.php:13
 msgid "Select Trading Platform"
-msgstr ""
+msgstr "Izaberite platformu za trgovanje"
 
 #: templates/partials/checkout/trading-platform.php:15
 msgid "MT4"
-msgstr ""
+msgstr "MT4"
 
 #: templates/partials/checkout/trading-platform.php:18
 msgid "MT5"
-msgstr ""
+msgstr "MT5"
 
 #: templates/partials/checkout/trading-platform.php:22
 msgid "cTrader"
-msgstr ""
+msgstr "cTrader"
 
 #: templates/partials/checkout/trading-platform.php:25
 msgid "Sirix"
-msgstr ""
+msgstr "Sirix"
 
 #: templates/partials/checkout/trading-platform.php:28
 msgid "DX Trade"
-msgstr ""
+msgstr "DX Trade"
 
 #: templates/partials/checkout/trading-platform.php:31
 msgid "MatchTrade"
-msgstr ""
+msgstr "MatchTrade"
 
 #: templates/partials/checkout/trading-platform.php:34
 msgid "TradeLocker"
-msgstr ""
+msgstr "TradeLocker"
 
 #: templates/partials/checkout/trading-platform.php:38
 msgid "Rithmic"
-msgstr ""
+msgstr "Rithmic"
 
 #: templates/partials/checkout/trading-platform.php:44
 #: templates/woocommerce/checkout/form-trading-platform.php:54
 #: templates/woocommerce/checkout/review-order.php:178
 msgid "Trading Platform"
-msgstr ""
+msgstr "Platforma za trgovanje"
 
 #: templates/partials/checkout/trading-platform.php:50
 msgid "Trading Platforms"
-msgstr ""
+msgstr "Platforme za trgovanje"
 
 #: templates/woocommerce/checkout/cart-errors.php:21
 msgid "There are some issues with the items in your cart. Please go back to the cart page and resolve these issues before checking out."
@@ -111,243 +100,243 @@ msgstr ""
 
 #: templates/woocommerce/checkout/cart-errors.php:27
 msgid "Return to cart"
-msgstr ""
+msgstr "Vrati se u korpu"
 
 #: templates/woocommerce/checkout/form-available-addons.php:53
 msgid "Available Add-ons"
-msgstr ""
+msgstr "Dostupni dodaci"
 
 #: templates/woocommerce/checkout/form-available-addons.php:92
 #: templates/woocommerce/checkout/form-available-addons.php:116
 #, php-format
 msgid "Add %s to your total"
-msgstr ""
+msgstr "Dodajte %s u ukupan iznos"
 
 #: templates/woocommerce/checkout/form-available-bundles.php:29
 msgid "Bundle Packages"
-msgstr ""
+msgstr "Пакет понуде"
 
 #: templates/woocommerce/checkout/form-billing.php:24
 msgid "Billing & Shipping details"
-msgstr ""
+msgstr "Podaci za naplatu i dostavu"
 
 #: templates/woocommerce/checkout/form-billing.php:30
 msgid "Billing details"
-msgstr ""
+msgstr "Podaci za naplatu"
 
 #: templates/woocommerce/checkout/form-billing.php:62
 #: templates/woocommerce/checkout/form-checkout.php:143
 msgid "Create an account?"
-msgstr ""
+msgstr "Kreirajte nalog?"
 
 #: templates/woocommerce/checkout/form-checkout.php:37
 msgid "You must be logged in to checkout."
-msgstr ""
+msgstr "Morate biti prijavljeni da biste završili kupovinu."
 
 #: templates/woocommerce/checkout/form-checkout.php:47
 msgid "Checkout"
-msgstr ""
+msgstr "Završetak kupovine"
 
 #: templates/woocommerce/checkout/form-checkout.php:54
 msgid "Checkout progress"
-msgstr ""
+msgstr "Напредак плаћања"
 
 #: templates/woocommerce/checkout/form-checkout.php:57
 #: templates/woocommerce/checkout/form-checkout.php:65
 #: templates/woocommerce/checkout/form-checkout.php:70
 msgid "You are here"
-msgstr ""
+msgstr "Тренутно сте овде"
 
 #: templates/woocommerce/checkout/form-checkout.php:58
 #: templates/woocommerce/checkout/form-checkout.php:71
 #: templates/woocommerce/checkout/thankyou.php:147
 msgid "Completed"
-msgstr ""
+msgstr "Završeno"
 
 #: templates/woocommerce/checkout/form-checkout.php:59
 #: templates/woocommerce/checkout/form-checkout.php:72
 #: templates/woocommerce/checkout/form-checkout.php:75
 msgid "Next step"
-msgstr ""
+msgstr "Следећи корак"
 
 #: templates/woocommerce/checkout/form-checkout.php:66
 msgid "Challenge"
-msgstr ""
+msgstr "Челинџ"
 
 #: templates/woocommerce/checkout/form-checkout.php:76
 #: templates/woocommerce/checkout/form-checkout.php:120
 msgid "Information"
-msgstr ""
+msgstr "Информације"
 
 #: templates/woocommerce/checkout/form-checkout.php:85
 msgid "Choose Your Challenge"
-msgstr ""
+msgstr "Изаберите свој челинџ"
 
 #: templates/woocommerce/checkout/form-checkout.php:86
 msgid "Select evaluation type and account size to get started"
-msgstr ""
+msgstr "Изаберите тип евалуације и величину рачуна за почетак"
 
 #: templates/woocommerce/checkout/form-checkout.php:89
 msgid "Your Information"
-msgstr ""
+msgstr "Ваши подаци"
 
 #: templates/woocommerce/checkout/form-checkout.php:90
 msgid "Fill in your billing details to proceed"
-msgstr ""
+msgstr "Попуните податке за наплату да бисте наставили"
 
 #: templates/woocommerce/checkout/form-checkout.php:164
 msgid "By placing your order, you agree to our"
-msgstr ""
+msgstr "Постављањем поруџбине, прихватате наше"
 
 #: templates/woocommerce/checkout/form-checkout.php:166
 #: templates/woocommerce/checkout/terms.php:40
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Politika privatnosti"
 
 #: templates/woocommerce/checkout/form-checkout.php:167
 #: templates/woocommerce/checkout/terms.php:38
 msgid "and"
-msgstr ""
+msgstr "i"
 
 #: templates/woocommerce/checkout/form-checkout.php:169
 msgid "Terms of Use"
-msgstr ""
+msgstr "Услове коришћења"
 
 #: templates/woocommerce/checkout/form-checkout.php:170
 msgid ", and consent to receive updates and marketing communications from FundedBit."
-msgstr ""
+msgstr ", и пристајете на примање ажурирања и маркетиншких порука од FundedBit."
 
 #: templates/woocommerce/checkout/form-checkout.php:177
 msgid "Previous"
-msgstr ""
+msgstr "Претходно"
 
 #: templates/woocommerce/checkout/form-checkout.php:193
 msgid "Order Summary"
-msgstr ""
+msgstr "Преглед поруџбине"
 
 #: templates/woocommerce/checkout/form-checkout.php:201
 msgid "Challenge Requirement"
-msgstr ""
+msgstr "Услов челинџа"
 
 #: templates/woocommerce/checkout/form-checkout.php:205
 msgid "Phase 1 Target"
-msgstr ""
+msgstr "Циљ фазе 1"
 
 #: templates/woocommerce/checkout/form-checkout.php:206
 msgid "Phase 2 Target"
-msgstr ""
+msgstr "Циљ фазе 2"
 
 #: templates/woocommerce/checkout/form-checkout.php:207
 msgid "Max. Loss"
-msgstr ""
+msgstr "Макс. губитак"
 
 #: templates/woocommerce/checkout/form-checkout.php:208
 msgid "Max. Daily Loss"
-msgstr ""
+msgstr "Макс. дневни губитак"
 
 #: templates/woocommerce/checkout/form-checkout.php:222
 msgid "Coupon code"
-msgstr ""
+msgstr "Код купона"
 
 #: templates/woocommerce/checkout/form-checkout.php:224
 msgid "Insert coupon code"
-msgstr ""
+msgstr "Unesite kod kupona"
 
 #: templates/woocommerce/checkout/form-checkout.php:225
 msgid "Apply"
-msgstr ""
+msgstr "Primeni"
 
 #: templates/woocommerce/checkout/form-checkout.php:231
 #: templates/woocommerce/checkout/form-pay.php:27
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #: templates/woocommerce/checkout/form-checkout.php:232
 msgid "Category"
-msgstr ""
+msgstr "Категорија"
 
 #: templates/woocommerce/checkout/form-checkout.php:233
 msgid "Account"
-msgstr ""
+msgstr "Налог"
 
 #: templates/woocommerce/checkout/form-checkout.php:234
 msgid "Platform"
-msgstr ""
+msgstr "Платформа"
 
 #: templates/woocommerce/checkout/form-checkout.php:235
 #: templates/woocommerce/checkout/review-order.php:187
 msgid "Currency"
-msgstr ""
+msgstr "Valuta"
 
 #: templates/woocommerce/checkout/form-checkout.php:237
 #: templates/woocommerce/checkout/review-order.php:276
 #: templates/woocommerce/checkout/thankyou.php:255
 msgid "Base Price"
-msgstr ""
+msgstr "Osnovna cena"
 
 #: templates/woocommerce/checkout/form-checkout.php:238
 #: templates/woocommerce/checkout/review-order.php:341
 msgid "Sub Total"
-msgstr ""
+msgstr "Međuzbir"
 
 #: templates/woocommerce/checkout/form-checkout.php:239
 #: templates/woocommerce/checkout/review-order.php:395
 msgid "Discount"
-msgstr ""
+msgstr "Popust"
 
 #: templates/woocommerce/checkout/form-checkout.php:241
 #: templates/woocommerce/checkout/review-order.php:487
 #: templates/woocommerce/checkout/thankyou.php:357
 msgid "Total"
-msgstr ""
+msgstr "Ukupno"
 
 #: templates/woocommerce/checkout/form-checkout.php:246
 msgid "We Accept"
-msgstr ""
+msgstr "Прихватамо"
 
 #: templates/woocommerce/checkout/form-checkout.php:285
 msgid "Back"
-msgstr ""
+msgstr "Назад"
 
 #: templates/woocommerce/checkout/form-checkout.php:288
 msgid "Processing…"
-msgstr ""
+msgstr "Обрађује се…"
 
 #: templates/woocommerce/checkout/form-checkout.php:308
 msgid "Secure checkout — data is protected"
-msgstr ""
+msgstr "Безбедно плаћање — подаци су заштићени"
 
 #: templates/woocommerce/checkout/form-checkout.php:322
 msgid "Secure Payments"
-msgstr ""
+msgstr "Безбедна плаћања"
 
 #: templates/woocommerce/checkout/form-checkout.php:323
 msgid "SSL encrypted"
-msgstr ""
+msgstr "SSL шифровано"
 
 #: templates/woocommerce/checkout/form-checkout.php:329
 msgid "Instant Activation"
-msgstr ""
+msgstr "Тренутна активација"
 
 #: templates/woocommerce/checkout/form-checkout.php:330
 msgid "Start trading immediately"
-msgstr ""
+msgstr "Одмах почните са трговањем"
 
 #: templates/woocommerce/checkout/form-checkout.php:336
 msgid "Excellent Support"
-msgstr ""
+msgstr "Одлична подршка"
 
 #: templates/woocommerce/checkout/form-checkout.php:337
 msgid "24/7 customer service"
-msgstr ""
+msgstr "Корисничка служба 24/7"
 
 #: templates/woocommerce/checkout/form-login.php:26
 msgid "Returning customer?"
-msgstr ""
+msgstr "Postojeći kupac?"
 
 #: templates/woocommerce/checkout/form-login.php:26
 msgid "Click here to login"
-msgstr ""
+msgstr "Kliknite ovde za prijavu"
 
 #: templates/woocommerce/checkout/form-login.php:32
 msgid "If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section."
@@ -355,11 +344,11 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-pay.php:28
 msgid "Qty"
-msgstr ""
+msgstr "Kol."
 
 #: templates/woocommerce/checkout/form-pay.php:29
 msgid "Totals"
-msgstr ""
+msgstr "Ukupno"
 
 #: templates/woocommerce/checkout/form-pay.php:94
 msgid "Sorry, it seems that there are no available payment methods for your location. Please contact us if you require assistance or wish to make alternate arrangements."
@@ -367,24 +356,24 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-product-selection.php:98
 msgid "Product selection"
-msgstr ""
+msgstr "Izbor proizvoda"
 
 #: templates/woocommerce/checkout/form-product-selection.php:105
 #: templates/woocommerce/checkout/review-order.php:117
 msgid "Product Category"
-msgstr ""
+msgstr "Kategorija proizvoda"
 
 #: templates/woocommerce/checkout/form-product-selection.php:143
 msgid "Subcategory"
-msgstr ""
+msgstr "Поткатегорија"
 
 #: templates/woocommerce/checkout/form-product-selection.php:176
 msgid "Select Account Balance"
-msgstr ""
+msgstr "Изаберите стање рачуна"
 
 #: templates/woocommerce/checkout/form-product-selection.php:176
 msgid "Selected Product"
-msgstr ""
+msgstr "Izabrani proizvod"
 
 #: templates/woocommerce/checkout/form-product-selection.php:216
 #: templates/woocommerce/checkout/form-product-selection.php:233
@@ -393,11 +382,11 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-shipping.php:30
 msgid "Ship to a different address?"
-msgstr ""
+msgstr "Pošaljite na drugu adresu?"
 
 #: templates/woocommerce/checkout/form-shipping.php:63
 msgid "Additional information"
-msgstr ""
+msgstr "Dodatne informacije"
 
 #: templates/woocommerce/checkout/form-verify-email.php:30
 msgid "We were unable to verify the email address you provided. Please try again."
@@ -411,27 +400,27 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-verify-email.php:45
 msgid "Email address"
-msgstr ""
+msgstr "Email adresa"
 
 #: templates/woocommerce/checkout/form-verify-email.php:54
 msgid "Verify"
-msgstr ""
+msgstr "Verifikuj"
 
 #: templates/woocommerce/checkout/order-receipt.php:25
 msgid "Order number:"
-msgstr ""
+msgstr "Broj narudžbe:"
 
 #: templates/woocommerce/checkout/order-receipt.php:29
 msgid "Date:"
-msgstr ""
+msgstr "Datum:"
 
 #: templates/woocommerce/checkout/order-receipt.php:33
 msgid "Total:"
-msgstr ""
+msgstr "Ukupno:"
 
 #: templates/woocommerce/checkout/order-receipt.php:38
 msgid "Payment method:"
-msgstr ""
+msgstr "Način plaćanja:"
 
 #: templates/woocommerce/checkout/order-received.php:31
 #: templates/woocommerce/checkout/thankyou.php:66
@@ -446,26 +435,26 @@ msgstr ""
 #: templates/woocommerce/checkout/order-received.php:36
 #: templates/woocommerce/checkout/thankyou.php:71
 #, php-format
-msgid "If you believe this was a mistake, please contact <a href=\"mailto:%s\">%s</a>"
+msgid "If you believe this was a mistake, please contact <a href=\\\"mailto:%s\\\">%s</a>"
 msgstr ""
 
 #: templates/woocommerce/checkout/order-received.php:44
 #: templates/woocommerce/checkout/thankyou.php:81
 msgid "Thank you!"
-msgstr ""
+msgstr "Hvala vam!"
 
 #: templates/woocommerce/checkout/order-received.php:45
 #: templates/woocommerce/checkout/thankyou.php:82
 msgid "Your order has been received."
-msgstr ""
+msgstr "Vaša narudžba je primljena."
 
 #: templates/woocommerce/checkout/payment.php:25
 msgid "Place order"
-msgstr ""
+msgstr "Potvrdi narudžbu"
 
 #: templates/woocommerce/checkout/payment.php:40
 msgid "Payment Method"
-msgstr ""
+msgstr "Način plaćanja"
 
 #: templates/woocommerce/checkout/payment.php:55
 msgid "Sorry, it seems that there are no available payment methods. Please contact us if you require assistance or wish to make alternate arrangements."
@@ -473,153 +462,149 @@ msgstr ""
 
 #: templates/woocommerce/checkout/payment.php:55
 msgid "Please fill in your details above to see available payment methods."
-msgstr ""
+msgstr "Molimo popunite svoje podatke iznad da biste videli dostupne načine plaćanja."
 
 #: templates/woocommerce/checkout/repurchase-detail.php:18
 msgid "Purchase details"
-msgstr ""
+msgstr "Detalji kupovine"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:22
 #: templates/woocommerce/checkout/review-order.php:140
 msgid "Product Name"
-msgstr ""
+msgstr "Naziv proizvoda"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:32
 #: templates/woocommerce/checkout/review-order.php:171
 msgid "Account Size"
-msgstr ""
+msgstr "Veličina računa"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:43
 msgid "Prize Pool"
-msgstr ""
+msgstr "Наградни фонд"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:53
 msgid "Product Description"
-msgstr ""
+msgstr "Opis proizvoda"
 
 #: templates/woocommerce/checkout/review-order.php:405
 msgid "Total Discount"
-msgstr ""
+msgstr "Ukupan popust"
 
 #: templates/woocommerce/checkout/terms.php:35
 msgid "I agree to the"
-msgstr ""
+msgstr "Slažem se sa"
 
 #: templates/woocommerce/checkout/terms.php:37
 msgid "Terms & Conditions"
-msgstr ""
+msgstr "Uslovi korišćenja"
 
 #: templates/woocommerce/checkout/thankyou.php:86
 msgid "What's next?"
-msgstr ""
+msgstr "Šta je sledeće?"
 
 #: templates/woocommerce/checkout/thankyou.php:89
 msgid "Head to your accounts page to see your new trading account."
-msgstr ""
+msgstr "Idite na stranicu svog naloga da vidite svoj novi trgovački račun."
 
 #: templates/woocommerce/checkout/thankyou.php:92
 msgid "Head to your dashboard to access your account and begin trading."
-msgstr ""
+msgstr "Idite na svoju kontrolnu tablu da pristupite vašem nalogu i počnete sa trgovanjem."
 
 #: templates/woocommerce/checkout/thankyou.php:99
 #, php-format
-msgid "A credentials for your trading platform will be available in the selected account dashboard. If you experience any issues, please contact <a style=\"text-decoration: underline;\" href=\"mailto:%s\">%s</a>."
+msgid "A credentials for your trading platform will be available in the selected account dashboard. If you experience any issues, please contact <a style=\\\"text-decoration: underline;\\\" href=\\\"mailto:%s\\\">%s</a>."
 msgstr ""
 
 #: templates/woocommerce/checkout/thankyou.php:109
 #, php-format
-msgid "A credentials for your trading platform will be available in your dashboard. If you experience any issues, please contact <a style=\"text-decoration: underline;\" href=\"mailto:%s\">%s</a>."
+msgid "A credentials for your trading platform will be available in your dashboard. If you experience any issues, please contact <a style=\\\"text-decoration: underline;\\\" href=\\\"mailto:%s\\\">%s</a>."
 msgstr ""
 
 #: templates/woocommerce/checkout/thankyou.php:119
 msgid "Continue to Dashboard"
-msgstr ""
+msgstr "Nastavi u kontrolnu tablu"
 
 #: templates/woocommerce/checkout/thankyou.php:123
 msgid "or visit"
-msgstr ""
+msgstr "ili posetite"
 
 #: templates/woocommerce/checkout/thankyou.php:136
 msgid "Order summary"
-msgstr ""
+msgstr "Pregled narudžbe"
 
 #: templates/woocommerce/checkout/thankyou.php:139
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: templates/woocommerce/checkout/thankyou.php:143
 msgid "Pending"
-msgstr ""
+msgstr "Na čekanju"
 
 #: templates/woocommerce/checkout/thankyou.php:151
 msgid "Failed"
-msgstr ""
+msgstr "Neuspešno"
 
 #: templates/woocommerce/checkout/thankyou.php:160
 msgid "Order number"
-msgstr ""
+msgstr "Broj narudžbe"
 
 #: templates/woocommerce/checkout/thankyou.php:166
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: templates/woocommerce/checkout/thankyou.php:172
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: templates/woocommerce/checkout/thankyou.php:184
 msgid "Order details"
-msgstr ""
+msgstr "Detalji narudžbe"
 
 #: templates/woocommerce/checkout/thankyou.php:290
 msgid "Subtotal"
-msgstr ""
+msgstr "Međuzbir"
 
 #: templates/woocommerce/checkout/thankyou.php:317
 msgid "Payment method"
-msgstr ""
+msgstr "Način plaćanja"
 
 #: templates/woocommerce/checkout/thankyou.php:337
 msgid "Coupon"
-msgstr ""
+msgstr "Купон"
 
 #: templates/woocommerce/checkout/thankyou.php:375
 msgid "Billing address"
-msgstr ""
-
-
-#: includes/class-ypf-ui-addon-category-badge.php:32
-msgid "Optional. Shown as a badge on this category's checkout card, e.g. \"Best Value\" or \"Most Popular\". Leave empty for no badge."
-msgstr ""
+msgstr "Adresa za naplatu"
 
 #: includes/class-ypf-ui-addon-hooks.php:73
 msgid "Applying…"
-msgstr ""
+msgstr "Примењује се…"
 
 #: includes/class-ypf-ui-addon-hooks.php:75
 msgid "Coupon applied."
-msgstr ""
+msgstr "Купон примењен."
 
 #: includes/class-ypf-ui-addon-hooks.php:76
 msgid "Coupon applied successfully!"
-msgstr ""
+msgstr "Купон је успешно примењен!"
 
 #: includes/class-ypf-ui-addon-hooks.php:77
 msgid "Invalid coupon code."
-msgstr ""
+msgstr "Неважећи код купона."
 
 #: includes/class-ypf-ui-addon-hooks.php:78
 msgid "Error applying coupon. Please try again."
-msgstr ""
+msgstr "Грешка при примени купона. Молимо покушајте поново."
 
 #: includes/class-ypf-ui-addon-hooks.php:79
 msgid "Error applying coupon: "
-msgstr ""
+msgstr "Грешка при примени купона: "
 
 #: includes/class-ypf-ui-addon-hooks.php:80
 msgid "Paste is not allowed in Email Confirmation field for security."
-msgstr ""
+msgstr "Лепљење није дозвољено у пољу за потврду email-а из безбедносних разлога."
 
 #: includes/class-ypf-ui-addon-hooks.php:81
 msgid "Email does not match"
-msgstr ""
+msgstr "Email адресе се не подударају"
+

@@ -21,13 +21,13 @@ defined('ABSPATH') || exit;
 <div class="checkout-card">
     <?php if (wc_ship_to_billing_address_only() && WC()->cart->needs_shipping()): ?>
         <h3 class="section-heading">
-            <?php esc_html_e('Billing & Shipping details', 'yourpropfirm'); ?>
+            <?php esc_html_e('Billing & Shipping details', 'yourpropfirm-ui-addon' ); ?>
         </h3>
 
     <?php else: ?>
 
         <h3 class="section-heading">
-            <?php esc_html_e('Billing details', 'yourpropfirm'); ?>
+            <?php esc_html_e('Billing details', 'yourpropfirm-ui-addon' ); ?>
         </h3>
 
     <?php endif; ?>
@@ -59,7 +59,7 @@ defined('ABSPATH') || exit;
                         <input class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox"
                             id="createaccount" <?php checked((true === $checkout->get_value('createaccount') || (true === apply_filters('woocommerce_create_account_default_checked', false))), true); ?>
                             type="checkbox" name="createaccount" value="1" />
-                        <span><?php esc_html_e('Create an account?', 'yourpropfirm'); ?></span>
+                        <span><?php esc_html_e('Create an account?', 'yourpropfirm-ui-addon' ); ?></span>
                     </label>
                 </p>
 

@@ -27,14 +27,14 @@ defined('ABSPATH') || exit;
     wp_nonce_field('wc_verify_email', 'check_submission');
 
     if ($failed_submission) {
-        wc_print_notice(esc_html__('We were unable to verify the email address you provided. Please try again.', 'yourpropfirm'), 'error');
+        wc_print_notice(esc_html__('We were unable to verify the email address you provided. Please try again.', 'yourpropfirm-ui-addon' ), 'error');
     }
     ?>
     <p>
         <?php
         printf(
             /* translators: 1: opening login link 2: closing login link */
-            esc_html__('To view this page, you must either %1$slogin%2$s or verify the email address associated with the order.', 'yourpropfirm'),
+            esc_html__('To view this page, you must either %1$slogin%2$s or verify the email address associated with the order.', 'yourpropfirm-ui-addon' ),
             '<a href="' . esc_url(wc_get_page_permalink('myaccount')) . '">',
             '</a>'
         );
@@ -42,7 +42,7 @@ defined('ABSPATH') || exit;
     </p>
 
     <p class="form-row">
-        <label for="email"><?php esc_html_e('Email address', 'yourpropfirm'); ?>&nbsp;<span
+        <label for="email"><?php esc_html_e('Email address', 'yourpropfirm-ui-addon' ); ?>&nbsp;<span
                 class="required">*</span></label>
         <input type="email" class="input-text" name="email" id="email" autocomplete="email" />
     </p>
@@ -51,7 +51,7 @@ defined('ABSPATH') || exit;
         <button type="submit"
             class="woocommerce-button button <?php echo esc_attr(wc_wp_theme_get_element_class_name('button')); ?>"
             name="verify" value="1">
-            <?php esc_html_e('Verify', 'yourpropfirm'); ?>
+            <?php esc_html_e('Verify', 'yourpropfirm-ui-addon' ); ?>
         </button>
     </p>
 </form>

@@ -27,7 +27,7 @@ defined('ABSPATH') || exit;
                     <input id="ship-to-different-address-checkbox"
                         class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" <?php checked(apply_filters('woocommerce_ship_to_different_address_checked', 'shipping' === get_option('woocommerce_ship_to_destination') ? 1 : 0), 1); ?> type="checkbox"
                         name="ship_to_different_address" value="1" />
-                    <span><?php esc_html_e('Ship to a different address?', 'yourpropfirm'); ?></span>
+                    <span><?php esc_html_e('Ship to a different address?', 'yourpropfirm-ui-addon' ); ?></span>
                 </label>
             </h3>
 
@@ -60,7 +60,7 @@ defined('ABSPATH') || exit;
             <?php if (!WC()->cart->needs_shipping() || wc_ship_to_billing_address_only()): ?>
 
                 <h3 class="additional-fields-heading">
-                    <?php esc_html_e('Additional information', 'yourpropfirm'); ?>
+                    <?php esc_html_e('Additional information', 'yourpropfirm-ui-addon' ); ?>
                 </h3>
 
             <?php endif; ?>

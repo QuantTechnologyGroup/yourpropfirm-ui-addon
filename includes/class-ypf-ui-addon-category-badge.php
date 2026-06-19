@@ -29,7 +29,7 @@ class YPF_UI_Addon_Category_Badge {
 	 * Help text shared by both screens.
 	 */
 	private static function description(): string {
-		return __( 'Optional. Shown as a badge on this category\'s checkout card, e.g. "Best Value" or "Most Popular". Leave empty for no badge.', 'yourpropfirm' );
+		return __( 'Optional. Shown as a badge on this category\'s checkout card, e.g. "Best Value" or "Most Popular". Leave empty for no badge.', 'yourpropfirm-ui-addon' );
 	}
 
 	/**
@@ -38,8 +38,8 @@ class YPF_UI_Addon_Category_Badge {
 	public static function render_add_field(): void {
 		?>
 		<div class="form-field term-ypf-badge-wrap">
-			<label for="ypf_term_badge"><?php esc_html_e( 'Checkout Badge', 'yourpropfirm' ); ?></label>
-			<input type="text" name="ypf_term_badge" id="ypf_term_badge" value="" placeholder="<?php esc_attr_e( 'e.g. Best Value', 'yourpropfirm' ); ?>" />
+			<label for="ypf_term_badge"><?php esc_html_e( 'Checkout Badge', 'yourpropfirm-ui-addon' ); ?></label>
+			<input type="text" name="ypf_term_badge" id="ypf_term_badge" value="" placeholder="<?php esc_attr_e( 'e.g. Best Value', 'yourpropfirm-ui-addon' ); ?>" />
 			<p><?php echo esc_html( self::description() ); ?></p>
 		</div>
 		<?php
@@ -55,9 +55,9 @@ class YPF_UI_Addon_Category_Badge {
 		$value = get_term_meta( $term->term_id, self::META_KEY, true );
 		?>
 		<tr class="form-field term-ypf-badge-wrap">
-			<th scope="row"><label for="ypf_term_badge"><?php esc_html_e( 'Checkout Badge', 'yourpropfirm' ); ?></label></th>
+			<th scope="row"><label for="ypf_term_badge"><?php esc_html_e( 'Checkout Badge', 'yourpropfirm-ui-addon' ); ?></label></th>
 			<td>
-				<input type="text" name="ypf_term_badge" id="ypf_term_badge" value="<?php echo esc_attr( $value ); ?>" placeholder="<?php esc_attr_e( 'e.g. Best Value', 'yourpropfirm' ); ?>" />
+				<input type="text" name="ypf_term_badge" id="ypf_term_badge" value="<?php echo esc_attr( $value ); ?>" placeholder="<?php esc_attr_e( 'e.g. Best Value', 'yourpropfirm-ui-addon' ); ?>" />
 				<p class="description"><?php echo esc_html( self::description() ); ?></p>
 			</td>
 		</tr>

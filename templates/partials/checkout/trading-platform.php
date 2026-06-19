@@ -10,44 +10,44 @@ if ( $plugin_enabled !== 'enable' || $enable_mtversion_field !== 'enable' ) {
 }
 
 
-$options = [ '' => __( 'Select Trading Platform', 'yourpropfirm' ) ];
+$options = [ '' => __( 'Select Trading Platform', 'yourpropfirm-ui-addon' ) ];
 if ( ! empty( $trading_platforms_options['enable_mt4'] ) ) {
-	$options['MT4'] = __( 'MT4', 'yourpropfirm' );
+	$options['MT4'] = __( 'MT4', 'yourpropfirm-ui-addon' );
 }
 if ( ! empty( $trading_platforms_options['enable_mt5'] ) ) {
-	$options['MT5'] = __( 'MT5', 'yourpropfirm' );
+	$options['MT5'] = __( 'MT5', 'yourpropfirm-ui-addon' );
 }
 
 if ( ! empty( $trading_platforms_options['enable_ctrader'] ) ) {
-	$options['CTrader'] = __( 'cTrader', 'yourpropfirm' );
+	$options['CTrader'] = __( 'cTrader', 'yourpropfirm-ui-addon' );
 }
 if ( ! empty( $trading_platforms_options['enable_sirix'] ) ) {
-	$options['Sirix'] = __( 'Sirix', 'yourpropfirm' );
+	$options['Sirix'] = __( 'Sirix', 'yourpropfirm-ui-addon' );
 }
 if ( ! empty( $trading_platforms_options['enable_dx_trade'] ) ) {
-	$options['DXTrade'] = __( 'DX Trade', 'yourpropfirm' );
+	$options['DXTrade'] = __( 'DX Trade', 'yourpropfirm-ui-addon' );
 }
 if ( ! empty( $trading_platforms_options['enable_match_trader'] ) ) {
-	$options['MatchTrade'] = __( 'MatchTrade', 'yourpropfirm' );
+	$options['MatchTrade'] = __( 'MatchTrade', 'yourpropfirm-ui-addon' );
 }
 if ( ! empty( $trading_platforms_options['enable_tradelocker'] ) ) {
-	$options['tradeLocker'] = __( 'TradeLocker', 'yourpropfirm' );
+	$options['tradeLocker'] = __( 'TradeLocker', 'yourpropfirm-ui-addon' );
 }
 
 if ( ! empty( $trading_platforms_options['enable_rithmic'] ) ) {
-	$options['Rithmic'] = __( 'Rithmic', 'yourpropfirm' );
+	$options['Rithmic'] = __( 'Rithmic', 'yourpropfirm-ui-addon' );
 }
 
 ?>
 <div class="trading-platform-section">
 	<h3>
-		<?php esc_html_e( 'Trading Platform', 'yourpropfirm' ); ?>
+		<?php esc_html_e( 'Trading Platform', 'yourpropfirm-ui-addon' ); ?>
 	</h3>
 	<?php
 	woocommerce_form_field( 'yourpropfirm_mt_version', array(
 		'type' => 'select',
 		'class' => array( 'form-row-wide ypf_mt_version_field' ),
-		'label' => __( 'Trading Platforms', 'yourpropfirm' ),
+		'label' => __( 'Trading Platforms', 'yourpropfirm-ui-addon' ),
 		'required' => true,
 		'options' => $options, // Use the conditional options here
 		'input_class' => array( 'form-select' )

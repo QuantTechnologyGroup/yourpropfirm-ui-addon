@@ -50,7 +50,7 @@ if ( empty( $current_platform ) ) {
 
 <div class="woocommerce-available-add-ons">
 	<h4 class="section-subheading">
-		<?php esc_html_e( 'Available Add-ons', 'yourpropfirm' ); ?>
+		<?php esc_html_e( 'Available Add-ons', 'yourpropfirm-ui-addon' ); ?>
 	</h4>
 	<div class="available-addons">
 		<?php
@@ -89,7 +89,7 @@ if ( empty( $current_platform ) ) {
 						</div>
 						<div class="addon-pricing tw-w-full">
 							<div class="addon-price-desc tw-w-full">
-								<?php echo sprintf( __( 'Add %s to your total', 'yourpropfirm' ), $fee_text ); ?>
+								<?php echo sprintf( __( 'Add %s to your total', 'yourpropfirm-ui-addon' ), $fee_text ); ?>
 							</div>
 						</div>
 					</div>
@@ -113,7 +113,7 @@ if ( empty( $current_platform ) ) {
 					<div class="addon-pricing">
 						<div class="addon-price">+<?php echo $addon['addons_fee']; ?>%</div>
 						<div class="addon-price-desc">
-							<?php echo sprintf( __( 'Add %s to your total', 'yourpropfirm' ), $fee_text ); ?>
+							<?php echo sprintf( __( 'Add %s to your total', 'yourpropfirm-ui-addon' ), $fee_text ); ?>
 						</div>
 					</div>
 				</div>

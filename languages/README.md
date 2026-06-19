@@ -16,8 +16,10 @@ only the new strings stay English.
 
 ## Files
 
-- **`yourpropfirm-ui-addon-missing.pot`** — the **42 strings missing** from the
+- **`yourpropfirm-ui-addon-missing.pot`** — the **50 strings missing** from the
   catalog (the actionable handoff). Each entry keeps its `#:` source reference.
+  Includes 8 new JS strings added in the i18n fix (`Applying…`, coupon messages,
+  email validation, paste protection).
 - `yourpropfirm-ui-addon.pot` — the full add-on string set (132), for reference.
 
 ## To fix (main-plugin side — no add-on code change needed)

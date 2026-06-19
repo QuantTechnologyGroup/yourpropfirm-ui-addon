@@ -25,6 +25,38 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
+#: includes/class-ypf-ui-addon-hooks.php:73
+msgid "Applying…"
+msgstr ""
+
+#: includes/class-ypf-ui-addon-hooks.php:75
+msgid "Coupon applied."
+msgstr ""
+
+#: includes/class-ypf-ui-addon-hooks.php:76
+msgid "Coupon applied successfully!"
+msgstr ""
+
+#: includes/class-ypf-ui-addon-hooks.php:77
+msgid "Invalid coupon code."
+msgstr ""
+
+#: includes/class-ypf-ui-addon-hooks.php:78
+msgid "Error applying coupon. Please try again."
+msgstr ""
+
+#: includes/class-ypf-ui-addon-hooks.php:79
+msgid "Error applying coupon: "
+msgstr ""
+
+#: includes/class-ypf-ui-addon-hooks.php:80
+msgid "Paste is not allowed in Email Confirmation field for security."
+msgstr ""
+
+#: includes/class-ypf-ui-addon-hooks.php:81
+msgid "Email does not match"
+msgstr ""
+
 #: templates/woocommerce/checkout/form-available-bundles.php:29
 msgid "Bundle Packages"
 msgstr ""

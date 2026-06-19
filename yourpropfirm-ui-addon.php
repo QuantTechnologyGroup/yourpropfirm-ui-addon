@@ -9,7 +9,7 @@
  * Author:            YourPropFirm
  * License:           GPL-2.0+
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       yourpropfirm
+ * Text Domain:       yourpropfirm-ui-addon
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -35,6 +35,11 @@ add_action( 'plugins_loaded', function () {
 		} );
 		return;
 	}
+
+	// Load at priority 1000 — after the main plugin's locale filter (priority 1) has already
+	// overridden get_locale() with the ?lang= / ypf_lang-cookie value, so WordPress resolves
+	// the correct yourpropfirm-ui-addon-{locale}.mo automatically.
+	load_plugin_textdomain( 'yourpropfirm-ui-addon', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 	YPF_UI_Addon_Hooks::init();
 	YPF_UI_Addon_Category_Badge::init();
