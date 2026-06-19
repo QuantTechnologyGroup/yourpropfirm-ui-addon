@@ -1468,6 +1468,11 @@
   .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option {
     @apply tw-relative tw-flex-1 tw-m-0 tw-cursor-pointer tw-block;
     min-width: 9rem;
+    /* Safety net: on some environments site-custom JS (e.g. a WPCode snippet)
+       sets an inline display:none on the non-selected platform, collapsing it to
+       0 width. The platform selector must always show EVERY platform, so force
+       them visible — !important beats the inline style. */
+    display: block !important;
   }
   .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option input[type="radio"] {
     @apply tw-sr-only;
