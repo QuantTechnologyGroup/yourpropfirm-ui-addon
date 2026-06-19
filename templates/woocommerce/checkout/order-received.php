@@ -28,12 +28,12 @@ if ( ! $order ) {
 	<?php
 	if ( $order->has_status( 'failed' ) ) {
 		?>
-		<h1 class="thank-you-title"><?php esc_html_e( 'Order failed', 'yourpropfirm' ); ?></h1>
-		<p><?php esc_html_e( "We weren't able to complete your order.", 'yourpropfirm' ); ?></p>
+		<h1 class="thank-you-title"><?php esc_html_e( 'Order failed', 'yourpropfirm-ui-addon' ); ?></h1>
+		<p><?php esc_html_e( "We weren't able to complete your order.", 'yourpropfirm-ui-addon' ); ?></p>
 		<p class="information">
 			<?php
 			printf(
-				__( 'If you believe this was a mistake, please contact <a href="mailto:%s">%s</a>', 'yourpropfirm' ),
+				__( 'If you believe this was a mistake, please contact <a href="mailto:%s">%s</a>', 'yourpropfirm-ui-addon' ),
 				get_option( 'admin_email' ),
 				get_option( 'admin_email' )
 			); ?>
@@ -41,8 +41,8 @@ if ( ! $order ) {
 		<?php
 	} else {
 		?>
-		<h1 class="thank-you-title"><?php esc_html_e( 'Thank you!', 'yourpropfirm' ); ?></h1>
-		<p><?php esc_html_e( 'Your order has been received.', 'yourpropfirm' ); ?></p>
+		<h1 class="thank-you-title"><?php esc_html_e( 'Thank you!', 'yourpropfirm-ui-addon' ); ?></h1>
+		<p><?php esc_html_e( 'Your order has been received.', 'yourpropfirm-ui-addon' ); ?></p>
 		<?php
 	}
 	?>

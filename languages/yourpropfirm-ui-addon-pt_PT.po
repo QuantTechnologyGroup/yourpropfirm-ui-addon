@@ -1,18 +1,7 @@
-# Copyright (C) 2026 YourPropFirm
-# This file is distributed under the GPL-2.0+.
+# Translation for YourPropFirm UI Addon - pt_PT
 msgid ""
 msgstr ""
-"Project-Id-Version: YourPropFirm UI Addon 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/yourpropfirm-ui-addon\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-18T04:45:43+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: yourpropfirm\n"
 
 #. Plugin Name of the plugin
 #: yourpropfirm-ui-addon.php
@@ -32,78 +21,78 @@ msgstr ""
 #. Author of the plugin
 #: yourpropfirm-ui-addon.php
 msgid "YourPropFirm"
-msgstr ""
+msgstr "YourPropFirm"
 
 #: includes/class-ypf-ui-addon-category-badge.php:32
-msgid "Optional. Shown as a badge on this category's checkout card, e.g. \"Best Value\" or \"Most Popular\". Leave empty for no badge."
+msgid "Optional. Shown as a badge on this category's checkout card, e.g. \\\"Best Value\\\" or \\\"Most Popular\\\". Leave empty for no badge."
 msgstr ""
 
 #: includes/class-ypf-ui-addon-category-badge.php:41
 #: includes/class-ypf-ui-addon-category-badge.php:58
 msgid "Checkout Badge"
-msgstr ""
+msgstr "Etiqueta de Checkout"
 
 #: includes/class-ypf-ui-addon-category-badge.php:42
 #: includes/class-ypf-ui-addon-category-badge.php:60
 msgid "e.g. Best Value"
-msgstr ""
+msgstr "ex.: Melhor Valor"
 
 #: includes/class-ypf-ui-addon-hooks.php:68
 #: templates/woocommerce/checkout/form-checkout.php:180
 #: templates/woocommerce/checkout/form-checkout.php:289
 msgid "Continue"
-msgstr ""
+msgstr "Continuar"
 
 #: includes/class-ypf-ui-addon-hooks.php:69
 #: templates/woocommerce/checkout/form-checkout.php:303
 msgid "Proceed to Payment"
-msgstr ""
+msgstr "Prosseguir para pagamento"
 
 #: templates/partials/checkout/trading-platform.php:13
 msgid "Select Trading Platform"
-msgstr ""
+msgstr "Selecionar plataforma de negociação"
 
 #: templates/partials/checkout/trading-platform.php:15
 msgid "MT4"
-msgstr ""
+msgstr "MT4"
 
 #: templates/partials/checkout/trading-platform.php:18
 msgid "MT5"
-msgstr ""
+msgstr "MT5"
 
 #: templates/partials/checkout/trading-platform.php:22
 msgid "cTrader"
-msgstr ""
+msgstr "cTrader"
 
 #: templates/partials/checkout/trading-platform.php:25
 msgid "Sirix"
-msgstr ""
+msgstr "Sirix"
 
 #: templates/partials/checkout/trading-platform.php:28
 msgid "DX Trade"
-msgstr ""
+msgstr "DX Trade"
 
 #: templates/partials/checkout/trading-platform.php:31
 msgid "MatchTrade"
-msgstr ""
+msgstr "MatchTrade"
 
 #: templates/partials/checkout/trading-platform.php:34
 msgid "TradeLocker"
-msgstr ""
+msgstr "TradeLocker"
 
 #: templates/partials/checkout/trading-platform.php:38
 msgid "Rithmic"
-msgstr ""
+msgstr "Rithmic"
 
 #: templates/partials/checkout/trading-platform.php:44
 #: templates/woocommerce/checkout/form-trading-platform.php:54
 #: templates/woocommerce/checkout/review-order.php:178
 msgid "Trading Platform"
-msgstr ""
+msgstr "Plataforma de negociação"
 
 #: templates/partials/checkout/trading-platform.php:50
 msgid "Trading Platforms"
-msgstr ""
+msgstr "Plataformas de negociação"
 
 #: templates/woocommerce/checkout/cart-errors.php:21
 msgid "There are some issues with the items in your cart. Please go back to the cart page and resolve these issues before checking out."
@@ -111,243 +100,243 @@ msgstr ""
 
 #: templates/woocommerce/checkout/cart-errors.php:27
 msgid "Return to cart"
-msgstr ""
+msgstr "Voltar ao carrinho"
 
 #: templates/woocommerce/checkout/form-available-addons.php:53
 msgid "Available Add-ons"
-msgstr ""
+msgstr "Complementos disponíveis"
 
 #: templates/woocommerce/checkout/form-available-addons.php:92
 #: templates/woocommerce/checkout/form-available-addons.php:116
 #, php-format
 msgid "Add %s to your total"
-msgstr ""
+msgstr "Adicionar %s ao seu total"
 
 #: templates/woocommerce/checkout/form-available-bundles.php:29
 msgid "Bundle Packages"
-msgstr ""
+msgstr "Pacotes Combinados"
 
 #: templates/woocommerce/checkout/form-billing.php:24
 msgid "Billing & Shipping details"
-msgstr ""
+msgstr "Detalhes de faturamento e envio"
 
 #: templates/woocommerce/checkout/form-billing.php:30
 msgid "Billing details"
-msgstr ""
+msgstr "Detalhes de faturamento"
 
 #: templates/woocommerce/checkout/form-billing.php:62
 #: templates/woocommerce/checkout/form-checkout.php:143
 msgid "Create an account?"
-msgstr ""
+msgstr "Criar uma conta?"
 
 #: templates/woocommerce/checkout/form-checkout.php:37
 msgid "You must be logged in to checkout."
-msgstr ""
+msgstr "Você deve estar logado para finalizar a compra."
 
 #: templates/woocommerce/checkout/form-checkout.php:47
 msgid "Checkout"
-msgstr ""
+msgstr "Finalizar compra"
 
 #: templates/woocommerce/checkout/form-checkout.php:54
 msgid "Checkout progress"
-msgstr ""
+msgstr "Progresso do checkout"
 
 #: templates/woocommerce/checkout/form-checkout.php:57
 #: templates/woocommerce/checkout/form-checkout.php:65
 #: templates/woocommerce/checkout/form-checkout.php:70
 msgid "You are here"
-msgstr ""
+msgstr "Está aqui"
 
 #: templates/woocommerce/checkout/form-checkout.php:58
 #: templates/woocommerce/checkout/form-checkout.php:71
 #: templates/woocommerce/checkout/thankyou.php:147
 msgid "Completed"
-msgstr ""
+msgstr "Concluído"
 
 #: templates/woocommerce/checkout/form-checkout.php:59
 #: templates/woocommerce/checkout/form-checkout.php:72
 #: templates/woocommerce/checkout/form-checkout.php:75
 msgid "Next step"
-msgstr ""
+msgstr "Próximo passo"
 
 #: templates/woocommerce/checkout/form-checkout.php:66
 msgid "Challenge"
-msgstr ""
+msgstr "Desafio"
 
 #: templates/woocommerce/checkout/form-checkout.php:76
 #: templates/woocommerce/checkout/form-checkout.php:120
 msgid "Information"
-msgstr ""
+msgstr "Informação"
 
 #: templates/woocommerce/checkout/form-checkout.php:85
 msgid "Choose Your Challenge"
-msgstr ""
+msgstr "Escolha o Seu Desafio"
 
 #: templates/woocommerce/checkout/form-checkout.php:86
 msgid "Select evaluation type and account size to get started"
-msgstr ""
+msgstr "Selecione o tipo de avaliação e o tamanho da conta para começar"
 
 #: templates/woocommerce/checkout/form-checkout.php:89
 msgid "Your Information"
-msgstr ""
+msgstr "Os Seus Dados"
 
 #: templates/woocommerce/checkout/form-checkout.php:90
 msgid "Fill in your billing details to proceed"
-msgstr ""
+msgstr "Preencha os seus dados de faturação para continuar"
 
 #: templates/woocommerce/checkout/form-checkout.php:164
 msgid "By placing your order, you agree to our"
-msgstr ""
+msgstr "Ao efetuar a sua encomenda, concorda com os nossos"
 
 #: templates/woocommerce/checkout/form-checkout.php:166
 #: templates/woocommerce/checkout/terms.php:40
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Política de privacidade"
 
 #: templates/woocommerce/checkout/form-checkout.php:167
 #: templates/woocommerce/checkout/terms.php:38
 msgid "and"
-msgstr ""
+msgstr "e"
 
 #: templates/woocommerce/checkout/form-checkout.php:169
 msgid "Terms of Use"
-msgstr ""
+msgstr "Termos de Utilização"
 
 #: templates/woocommerce/checkout/form-checkout.php:170
 msgid ", and consent to receive updates and marketing communications from FundedBit."
-msgstr ""
+msgstr ", e consente em receber atualizações e comunicações de marketing da FundedBit."
 
 #: templates/woocommerce/checkout/form-checkout.php:177
 msgid "Previous"
-msgstr ""
+msgstr "Anterior"
 
 #: templates/woocommerce/checkout/form-checkout.php:193
 msgid "Order Summary"
-msgstr ""
+msgstr "Resumo da Encomenda"
 
 #: templates/woocommerce/checkout/form-checkout.php:201
 msgid "Challenge Requirement"
-msgstr ""
+msgstr "Requisito do Desafio"
 
 #: templates/woocommerce/checkout/form-checkout.php:205
 msgid "Phase 1 Target"
-msgstr ""
+msgstr "Objetivo da Fase 1"
 
 #: templates/woocommerce/checkout/form-checkout.php:206
 msgid "Phase 2 Target"
-msgstr ""
+msgstr "Objetivo da Fase 2"
 
 #: templates/woocommerce/checkout/form-checkout.php:207
 msgid "Max. Loss"
-msgstr ""
+msgstr "Perda Máx."
 
 #: templates/woocommerce/checkout/form-checkout.php:208
 msgid "Max. Daily Loss"
-msgstr ""
+msgstr "Perda Diária Máx."
 
 #: templates/woocommerce/checkout/form-checkout.php:222
 msgid "Coupon code"
-msgstr ""
+msgstr "Código de cupão"
 
 #: templates/woocommerce/checkout/form-checkout.php:224
 msgid "Insert coupon code"
-msgstr ""
+msgstr "Inserir código do cupom"
 
 #: templates/woocommerce/checkout/form-checkout.php:225
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #: templates/woocommerce/checkout/form-checkout.php:231
 #: templates/woocommerce/checkout/form-pay.php:27
 msgid "Product"
-msgstr ""
+msgstr "Produto"
 
 #: templates/woocommerce/checkout/form-checkout.php:232
 msgid "Category"
-msgstr ""
+msgstr "Categoria"
 
 #: templates/woocommerce/checkout/form-checkout.php:233
 msgid "Account"
-msgstr ""
+msgstr "Conta"
 
 #: templates/woocommerce/checkout/form-checkout.php:234
 msgid "Platform"
-msgstr ""
+msgstr "Plataforma"
 
 #: templates/woocommerce/checkout/form-checkout.php:235
 #: templates/woocommerce/checkout/review-order.php:187
 msgid "Currency"
-msgstr ""
+msgstr "Moeda"
 
 #: templates/woocommerce/checkout/form-checkout.php:237
 #: templates/woocommerce/checkout/review-order.php:276
 #: templates/woocommerce/checkout/thankyou.php:255
 msgid "Base Price"
-msgstr ""
+msgstr "Preço base"
 
 #: templates/woocommerce/checkout/form-checkout.php:238
 #: templates/woocommerce/checkout/review-order.php:341
 msgid "Sub Total"
-msgstr ""
+msgstr "Subtotal"
 
 #: templates/woocommerce/checkout/form-checkout.php:239
 #: templates/woocommerce/checkout/review-order.php:395
 msgid "Discount"
-msgstr ""
+msgstr "Desconto"
 
 #: templates/woocommerce/checkout/form-checkout.php:241
 #: templates/woocommerce/checkout/review-order.php:487
 #: templates/woocommerce/checkout/thankyou.php:357
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #: templates/woocommerce/checkout/form-checkout.php:246
 msgid "We Accept"
-msgstr ""
+msgstr "Aceitamos"
 
 #: templates/woocommerce/checkout/form-checkout.php:285
 msgid "Back"
-msgstr ""
+msgstr "Voltar"
 
 #: templates/woocommerce/checkout/form-checkout.php:288
 msgid "Processing…"
-msgstr ""
+msgstr "A processar…"
 
 #: templates/woocommerce/checkout/form-checkout.php:308
 msgid "Secure checkout — data is protected"
-msgstr ""
+msgstr "Checkout seguro — dados protegidos"
 
 #: templates/woocommerce/checkout/form-checkout.php:322
 msgid "Secure Payments"
-msgstr ""
+msgstr "Pagamentos Seguros"
 
 #: templates/woocommerce/checkout/form-checkout.php:323
 msgid "SSL encrypted"
-msgstr ""
+msgstr "Encriptado com SSL"
 
 #: templates/woocommerce/checkout/form-checkout.php:329
 msgid "Instant Activation"
-msgstr ""
+msgstr "Ativação Imediata"
 
 #: templates/woocommerce/checkout/form-checkout.php:330
 msgid "Start trading immediately"
-msgstr ""
+msgstr "Comece a negociar imediatamente"
 
 #: templates/woocommerce/checkout/form-checkout.php:336
 msgid "Excellent Support"
-msgstr ""
+msgstr "Suporte Excelente"
 
 #: templates/woocommerce/checkout/form-checkout.php:337
 msgid "24/7 customer service"
-msgstr ""
+msgstr "Atendimento ao cliente 24/7"
 
 #: templates/woocommerce/checkout/form-login.php:26
 msgid "Returning customer?"
-msgstr ""
+msgstr "Cliente recorrente?"
 
 #: templates/woocommerce/checkout/form-login.php:26
 msgid "Click here to login"
-msgstr ""
+msgstr "Clique aqui para entrar"
 
 #: templates/woocommerce/checkout/form-login.php:32
 msgid "If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section."
@@ -355,11 +344,11 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-pay.php:28
 msgid "Qty"
-msgstr ""
+msgstr "Qtd"
 
 #: templates/woocommerce/checkout/form-pay.php:29
 msgid "Totals"
-msgstr ""
+msgstr "Totais"
 
 #: templates/woocommerce/checkout/form-pay.php:94
 msgid "Sorry, it seems that there are no available payment methods for your location. Please contact us if you require assistance or wish to make alternate arrangements."
@@ -367,24 +356,24 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-product-selection.php:98
 msgid "Product selection"
-msgstr ""
+msgstr "Seleção de produto"
 
 #: templates/woocommerce/checkout/form-product-selection.php:105
 #: templates/woocommerce/checkout/review-order.php:117
 msgid "Product Category"
-msgstr ""
+msgstr "Categoria de produto"
 
 #: templates/woocommerce/checkout/form-product-selection.php:143
 msgid "Subcategory"
-msgstr ""
+msgstr "Subcategoria"
 
 #: templates/woocommerce/checkout/form-product-selection.php:176
 msgid "Select Account Balance"
-msgstr ""
+msgstr "Selecione o Saldo da Conta"
 
 #: templates/woocommerce/checkout/form-product-selection.php:176
 msgid "Selected Product"
-msgstr ""
+msgstr "Produto selecionado"
 
 #: templates/woocommerce/checkout/form-product-selection.php:216
 #: templates/woocommerce/checkout/form-product-selection.php:233
@@ -393,11 +382,11 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-shipping.php:30
 msgid "Ship to a different address?"
-msgstr ""
+msgstr "Enviar para um endereço diferente?"
 
 #: templates/woocommerce/checkout/form-shipping.php:63
 msgid "Additional information"
-msgstr ""
+msgstr "Informações adicionais"
 
 #: templates/woocommerce/checkout/form-verify-email.php:30
 msgid "We were unable to verify the email address you provided. Please try again."
@@ -411,27 +400,27 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-verify-email.php:45
 msgid "Email address"
-msgstr ""
+msgstr "Endereço de email"
 
 #: templates/woocommerce/checkout/form-verify-email.php:54
 msgid "Verify"
-msgstr ""
+msgstr "Verificar"
 
 #: templates/woocommerce/checkout/order-receipt.php:25
 msgid "Order number:"
-msgstr ""
+msgstr "Número do pedido:"
 
 #: templates/woocommerce/checkout/order-receipt.php:29
 msgid "Date:"
-msgstr ""
+msgstr "Data:"
 
 #: templates/woocommerce/checkout/order-receipt.php:33
 msgid "Total:"
-msgstr ""
+msgstr "Total:"
 
 #: templates/woocommerce/checkout/order-receipt.php:38
 msgid "Payment method:"
-msgstr ""
+msgstr "Método de pagamento:"
 
 #: templates/woocommerce/checkout/order-received.php:31
 #: templates/woocommerce/checkout/thankyou.php:66
@@ -446,26 +435,26 @@ msgstr ""
 #: templates/woocommerce/checkout/order-received.php:36
 #: templates/woocommerce/checkout/thankyou.php:71
 #, php-format
-msgid "If you believe this was a mistake, please contact <a href=\"mailto:%s\">%s</a>"
+msgid "If you believe this was a mistake, please contact <a href=\\\"mailto:%s\\\">%s</a>"
 msgstr ""
 
 #: templates/woocommerce/checkout/order-received.php:44
 #: templates/woocommerce/checkout/thankyou.php:81
 msgid "Thank you!"
-msgstr ""
+msgstr "Obrigado!"
 
 #: templates/woocommerce/checkout/order-received.php:45
 #: templates/woocommerce/checkout/thankyou.php:82
 msgid "Your order has been received."
-msgstr ""
+msgstr "Seu pedido foi recebido."
 
 #: templates/woocommerce/checkout/payment.php:25
 msgid "Place order"
-msgstr ""
+msgstr "Fazer pedido"
 
 #: templates/woocommerce/checkout/payment.php:40
 msgid "Payment Method"
-msgstr ""
+msgstr "Método de pagamento"
 
 #: templates/woocommerce/checkout/payment.php:55
 msgid "Sorry, it seems that there are no available payment methods. Please contact us if you require assistance or wish to make alternate arrangements."
@@ -477,149 +466,145 @@ msgstr ""
 
 #: templates/woocommerce/checkout/repurchase-detail.php:18
 msgid "Purchase details"
-msgstr ""
+msgstr "Detalhes da compra"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:22
 #: templates/woocommerce/checkout/review-order.php:140
 msgid "Product Name"
-msgstr ""
+msgstr "Nome do produto"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:32
 #: templates/woocommerce/checkout/review-order.php:171
 msgid "Account Size"
-msgstr ""
+msgstr "Tamanho da conta"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:43
 msgid "Prize Pool"
-msgstr ""
+msgstr "Prémio Total"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:53
 msgid "Product Description"
-msgstr ""
+msgstr "Descrição do produto"
 
 #: templates/woocommerce/checkout/review-order.php:405
 msgid "Total Discount"
-msgstr ""
+msgstr "Desconto total"
 
 #: templates/woocommerce/checkout/terms.php:35
 msgid "I agree to the"
-msgstr ""
+msgstr "Eu aceito os"
 
 #: templates/woocommerce/checkout/terms.php:37
 msgid "Terms & Conditions"
-msgstr ""
+msgstr "Termos e condições"
 
 #: templates/woocommerce/checkout/thankyou.php:86
 msgid "What's next?"
-msgstr ""
+msgstr "O que vem a seguir?"
 
 #: templates/woocommerce/checkout/thankyou.php:89
 msgid "Head to your accounts page to see your new trading account."
-msgstr ""
+msgstr "Vá para a página das suas contas para ver sua nova conta de negociação."
 
 #: templates/woocommerce/checkout/thankyou.php:92
 msgid "Head to your dashboard to access your account and begin trading."
-msgstr ""
+msgstr "Dirija-se ao seu painel para aceder à sua conta e começar a negociar."
 
 #: templates/woocommerce/checkout/thankyou.php:99
 #, php-format
-msgid "A credentials for your trading platform will be available in the selected account dashboard. If you experience any issues, please contact <a style=\"text-decoration: underline;\" href=\"mailto:%s\">%s</a>."
+msgid "A credentials for your trading platform will be available in the selected account dashboard. If you experience any issues, please contact <a style=\\\"text-decoration: underline;\\\" href=\\\"mailto:%s\\\">%s</a>."
 msgstr ""
 
 #: templates/woocommerce/checkout/thankyou.php:109
 #, php-format
-msgid "A credentials for your trading platform will be available in your dashboard. If you experience any issues, please contact <a style=\"text-decoration: underline;\" href=\"mailto:%s\">%s</a>."
+msgid "A credentials for your trading platform will be available in your dashboard. If you experience any issues, please contact <a style=\\\"text-decoration: underline;\\\" href=\\\"mailto:%s\\\">%s</a>."
 msgstr ""
 
 #: templates/woocommerce/checkout/thankyou.php:119
 msgid "Continue to Dashboard"
-msgstr ""
+msgstr "Continuar para o Painel"
 
 #: templates/woocommerce/checkout/thankyou.php:123
 msgid "or visit"
-msgstr ""
+msgstr "ou visite"
 
 #: templates/woocommerce/checkout/thankyou.php:136
 msgid "Order summary"
-msgstr ""
+msgstr "Resumo do pedido"
 
 #: templates/woocommerce/checkout/thankyou.php:139
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #: templates/woocommerce/checkout/thankyou.php:143
 msgid "Pending"
-msgstr ""
+msgstr "Pendente"
 
 #: templates/woocommerce/checkout/thankyou.php:151
 msgid "Failed"
-msgstr ""
+msgstr "Falhado"
 
 #: templates/woocommerce/checkout/thankyou.php:160
 msgid "Order number"
-msgstr ""
+msgstr "Número do pedido"
 
 #: templates/woocommerce/checkout/thankyou.php:166
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: templates/woocommerce/checkout/thankyou.php:172
 msgid "Date"
-msgstr ""
+msgstr "Data:"
 
 #: templates/woocommerce/checkout/thankyou.php:184
 msgid "Order details"
-msgstr ""
+msgstr "Detalhes do pedido"
 
 #: templates/woocommerce/checkout/thankyou.php:290
 msgid "Subtotal"
-msgstr ""
+msgstr "Subtotal"
 
 #: templates/woocommerce/checkout/thankyou.php:317
 msgid "Payment method"
-msgstr ""
+msgstr "Método de pagamento"
 
 #: templates/woocommerce/checkout/thankyou.php:337
 msgid "Coupon"
-msgstr ""
+msgstr "Cupão"
 
 #: templates/woocommerce/checkout/thankyou.php:375
 msgid "Billing address"
-msgstr ""
-
-
-#: includes/class-ypf-ui-addon-category-badge.php:32
-msgid "Optional. Shown as a badge on this category's checkout card, e.g. \"Best Value\" or \"Most Popular\". Leave empty for no badge."
-msgstr ""
+msgstr "Endereço de faturamento"
 
 #: includes/class-ypf-ui-addon-hooks.php:73
 msgid "Applying…"
-msgstr ""
+msgstr "A aplicar…"
 
 #: includes/class-ypf-ui-addon-hooks.php:75
 msgid "Coupon applied."
-msgstr ""
+msgstr "Cupão aplicado."
 
 #: includes/class-ypf-ui-addon-hooks.php:76
 msgid "Coupon applied successfully!"
-msgstr ""
+msgstr "Cupão aplicado com sucesso!"
 
 #: includes/class-ypf-ui-addon-hooks.php:77
 msgid "Invalid coupon code."
-msgstr ""
+msgstr "Código de cupão inválido."
 
 #: includes/class-ypf-ui-addon-hooks.php:78
 msgid "Error applying coupon. Please try again."
-msgstr ""
+msgstr "Erro ao aplicar o cupão. Por favor tente novamente."
 
 #: includes/class-ypf-ui-addon-hooks.php:79
 msgid "Error applying coupon: "
-msgstr ""
+msgstr "Erro ao aplicar o cupão: "
 
 #: includes/class-ypf-ui-addon-hooks.php:80
 msgid "Paste is not allowed in Email Confirmation field for security."
-msgstr ""
+msgstr "Por razões de segurança, não é permitido colar no campo de Confirmação de Email."
 
 #: includes/class-ypf-ui-addon-hooks.php:81
 msgid "Email does not match"
-msgstr ""
+msgstr "O email não corresponde"
+

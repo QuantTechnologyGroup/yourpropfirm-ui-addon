@@ -32,12 +32,12 @@ if ( apply_filters( 'woocommerce_checkout_show_terms', true ) && function_exists
 				<?php checked( apply_filters( 'woocommerce_terms_is_checked_default', isset( $_POST['terms'] ) ), true ); // WPCS: input var ok, CSRF ok. ?> type="checkbox" name="terms" value="1" />
 			<label for="terms" class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox terms-label">
 				<span class="woocommerce-terms-and-conditions-checkbox-text">
-					<?php esc_html_e( 'I agree to the', 'yourpropfirm' ); ?>
+					<?php esc_html_e( 'I agree to the', 'yourpropfirm-ui-addon' ); ?>
 					<a href="<?php echo esc_url( $terms_link ); ?>" class="terms-link"
-						target="_blank"><?php esc_html_e( 'Terms & Conditions', 'yourpropfirm' ); ?></a>
-					<?php esc_html_e( 'and', 'yourpropfirm' ); ?>
+						target="_blank"><?php esc_html_e( 'Terms & Conditions', 'yourpropfirm-ui-addon' ); ?></a>
+					<?php esc_html_e( 'and', 'yourpropfirm-ui-addon' ); ?>
 					<a href="<?php echo esc_url( $privacy_policy_link ); ?>" class="terms-link"
-						target="_blank"><?php esc_html_e( 'Privacy Policy', 'yourpropfirm' ); ?></a>.
+						target="_blank"><?php esc_html_e( 'Privacy Policy', 'yourpropfirm-ui-addon' ); ?></a>.
 				</span>
 			</label>
 		</div>

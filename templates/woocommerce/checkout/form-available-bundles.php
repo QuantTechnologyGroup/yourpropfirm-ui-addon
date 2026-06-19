@@ -26,7 +26,7 @@ $addon_map        = yourpropfirm_get_addons_data();
 
 <div class="woocommerce-bundle-packages">
 	<h4 class="section-subheading">
-		<?php esc_html_e( 'Bundle Packages', 'yourpropfirm' ); ?>
+		<?php esc_html_e( 'Bundle Packages', 'yourpropfirm-ui-addon' ); ?>
 	</h4>
 	<div class="bundle-packages">
 		<?php foreach ( $bundles as $bundle ) :
