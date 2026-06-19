@@ -60,6 +60,20 @@ class YPF_UI_Addon_Hooks {
 		// category-model selection: the eval sub-categories' description + badge, and
 		// every product's ACCOUNT currency/size (the store only knows the WC/store
 		// currency). checkout-wizard.js re-applies these after each re-render.
+		// Translated category level labels (e.g. "Select Trading Platform" /
+		// "Select Evaluation Type"). The main plugin re-renders the sub-category
+		// heading from its RAW store label on a platform switch, so the wizard JS
+		// re-applies these to keep the heading translated.
+		$ypf_level_labels = [];
+		$ypf_raw_labels   = function_exists( 'carbon_get_theme_option' ) ? carbon_get_theme_option( 'yourpropfirm_checkout_overwrite_product_category_label' ) : null;
+		if ( is_array( $ypf_raw_labels ) ) {
+			foreach ( $ypf_raw_labels as $ypf_i => $ypf_entry ) {
+				if ( ! empty( $ypf_entry['category'] ) ) {
+					$ypf_level_labels[ (string) $ypf_i ] = __( $ypf_entry['category'], 'yourpropfirm-ui-addon' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+				}
+			}
+		}
+
 		wp_localize_script(
 			'yourpropfirm-ui-addon-wizard',
 			'ypfCheckoutWizard',
@@ -69,6 +83,7 @@ class YPF_UI_Addon_Hooks {
 				'payLabel'          => __( 'Proceed to Payment', 'yourpropfirm-ui-addon' ),
 				'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
 				'maps'              => self::build_selection_maps(),
+				'levelLabels'       => $ypf_level_labels,
 				'applyLabel'        => __( 'Apply', 'yourpropfirm-ui-addon' ),
 				'applyingLabel'     => __( 'Applying…', 'yourpropfirm-ui-addon' ),
 				'enterCouponMsg'    => __( 'Please enter a coupon code.', 'yourpropfirm-ui-addon' ),

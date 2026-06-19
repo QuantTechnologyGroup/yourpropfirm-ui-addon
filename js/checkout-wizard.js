@@ -271,9 +271,23 @@
     });
   }
 
+  // The plugin re-renders the sub-category heading from its RAW store level label
+  // (English) on a platform switch, overwriting the server-translated heading.
+  // Re-apply the translated label (localized from PHP) keyed by the section level.
+  function retranslateHeadings() {
+    var labels = cfg.levelLabels;
+    if (!labels) return;
+    document.querySelectorAll(SEL + ".subcategory-section").forEach(function (sec) {
+      var level = sec.getAttribute("data-level");
+      var h = sec.querySelector(".section-subheading");
+      if (h && labels[level]) h.textContent = labels[level];
+    });
+  }
+
   function reapplySelectionMeta() {
     reinjectEvalMeta();
     reformatAccountPills();
+    retranslateHeadings();
   }
 
   // Trading Platform = the checked level-0 category (Bybit / Platform 5).

@@ -102,7 +102,12 @@ if ( is_array( $overwrite_labels_raw ) ) {
 		<!-- Product Category Section -->
 		<div class="product-category-section" data-level="0">
 			<h5 class="section-subheading">
-				<?php echo esc_html( ! empty( $category_level_labels[0] ) ? $category_level_labels[0] : __( 'Product Category', 'yourpropfirm-ui-addon' ) ); ?>
+				<?php
+				// Level labels are admin free-text; pass them through the catalog so known
+				// design labels (e.g. "Select Trading Platform") translate, custom ones show as-is.
+				$ypf_lvl0_label = ! empty( $category_level_labels[0] ) ? $category_level_labels[0] : __( 'Product Category', 'yourpropfirm-ui-addon' );
+				echo esc_html( __( $ypf_lvl0_label, 'yourpropfirm-ui-addon' ) ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+				?>
 			</h5>
 			<div class="category-options">
 				<?php
@@ -140,7 +145,10 @@ if ( is_array( $overwrite_labels_raw ) ) {
 					data-level="<?php echo esc_attr( $level_data['level'] ); ?>"
 					data-parent-id="<?php echo esc_attr( $level_data['parent_id'] ); ?>">
 					<h5 class="section-subheading">
-						<?php echo esc_html( ! empty( $category_level_labels[ $level_data['level'] ] ) ? $category_level_labels[ $level_data['level'] ] : __( 'Subcategory', 'yourpropfirm-ui-addon' ) ); ?>
+						<?php
+						$ypf_sub_label = ! empty( $category_level_labels[ $level_data['level'] ] ) ? $category_level_labels[ $level_data['level'] ] : __( 'Subcategory', 'yourpropfirm-ui-addon' );
+						echo esc_html( __( $ypf_sub_label, 'yourpropfirm-ui-addon' ) ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+						?>
 					</h5>
 					<div class="category-options">
 						<?php foreach ( $level_data['categories'] as $cat_id => $cat_name ) :
