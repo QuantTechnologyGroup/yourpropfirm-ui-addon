@@ -15,7 +15,7 @@ $short_description = $product->get_short_description();
 ?>
 <div class="woocommerce-repurchase-details product-details">
 	<h3 class="section-heading">
-		<?php esc_html_e( 'Purchase details', 'yourpropfirm' ); ?>
+		<?php esc_html_e( 'Purchase details', 'yourpropfirm-ui-addon' ); ?>
 	</h3>
 	<div class="repurchase-grid">
 		<div class="repurchase-card">

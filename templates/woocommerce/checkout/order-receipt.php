@@ -22,20 +22,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="yourpropfirm-checkout-order-details">
 	<ul class="order_details">
 		<li class="order">
-			<?php esc_html_e( 'Order number:', 'yourpropfirm' ); ?>
+			<?php esc_html_e( 'Order number:', 'yourpropfirm-ui-addon' ); ?>
 			<strong><?php echo esc_html( $order->get_order_number() ); ?></strong>
 		</li>
 		<li class="date">
-			<?php esc_html_e( 'Date:', 'yourpropfirm' ); ?>
+			<?php esc_html_e( 'Date:', 'yourpropfirm-ui-addon' ); ?>
 			<strong><?php echo esc_html( wc_format_datetime( $order->get_date_created() ) ); ?></strong>
 		</li>
 		<li class="total">
-			<?php esc_html_e( 'Total:', 'yourpropfirm' ); ?>
+			<?php esc_html_e( 'Total:', 'yourpropfirm-ui-addon' ); ?>
 			<strong><?php echo wp_kses_post( $order->get_formatted_order_total() ); ?></strong>
 		</li>
 		<?php if ( $order->get_payment_method_title() ) : ?>
 			<li class="method">
-				<?php esc_html_e( 'Payment method:', 'yourpropfirm' ); ?>
+				<?php esc_html_e( 'Payment method:', 'yourpropfirm-ui-addon' ); ?>
 				<strong><?php echo wp_kses_post( $order->get_payment_method_title() ); ?></strong>
 			</li>
 		<?php endif; ?>

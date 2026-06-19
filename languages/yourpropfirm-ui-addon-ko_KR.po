@@ -1,18 +1,7 @@
-# Copyright (C) 2026 YourPropFirm
-# This file is distributed under the GPL-2.0+.
+# Translation for YourPropFirm UI Addon - ko_KR
 msgid ""
 msgstr ""
-"Project-Id-Version: YourPropFirm UI Addon 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/yourpropfirm-ui-addon\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-18T04:45:43+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: yourpropfirm\n"
 
 #. Plugin Name of the plugin
 #: yourpropfirm-ui-addon.php
@@ -32,355 +21,355 @@ msgstr ""
 #. Author of the plugin
 #: yourpropfirm-ui-addon.php
 msgid "YourPropFirm"
-msgstr ""
+msgstr "YourPropFirm"
 
 #: includes/class-ypf-ui-addon-category-badge.php:32
-msgid "Optional. Shown as a badge on this category's checkout card, e.g. \"Best Value\" or \"Most Popular\". Leave empty for no badge."
+msgid "Optional. Shown as a badge on this category's checkout card, e.g. \\\"Best Value\\\" or \\\"Most Popular\\\". Leave empty for no badge."
 msgstr ""
 
 #: includes/class-ypf-ui-addon-category-badge.php:41
 #: includes/class-ypf-ui-addon-category-badge.php:58
 msgid "Checkout Badge"
-msgstr ""
+msgstr "결제 배지"
 
 #: includes/class-ypf-ui-addon-category-badge.php:42
 #: includes/class-ypf-ui-addon-category-badge.php:60
 msgid "e.g. Best Value"
-msgstr ""
+msgstr "예: 베스트 가성비"
 
 #: includes/class-ypf-ui-addon-hooks.php:68
 #: templates/woocommerce/checkout/form-checkout.php:180
 #: templates/woocommerce/checkout/form-checkout.php:289
 msgid "Continue"
-msgstr ""
+msgstr "계속"
 
 #: includes/class-ypf-ui-addon-hooks.php:69
 #: templates/woocommerce/checkout/form-checkout.php:303
 msgid "Proceed to Payment"
-msgstr ""
+msgstr "결제 진행"
 
 #: templates/partials/checkout/trading-platform.php:13
 msgid "Select Trading Platform"
-msgstr ""
+msgstr "트레이딩 플랫폼 선택"
 
 #: templates/partials/checkout/trading-platform.php:15
 msgid "MT4"
-msgstr ""
+msgstr "MT4"
 
 #: templates/partials/checkout/trading-platform.php:18
 msgid "MT5"
-msgstr ""
+msgstr "MT5"
 
 #: templates/partials/checkout/trading-platform.php:22
 msgid "cTrader"
-msgstr ""
+msgstr "cTrader"
 
 #: templates/partials/checkout/trading-platform.php:25
 msgid "Sirix"
-msgstr ""
+msgstr "Sirix"
 
 #: templates/partials/checkout/trading-platform.php:28
 msgid "DX Trade"
-msgstr ""
+msgstr "DX Trade"
 
 #: templates/partials/checkout/trading-platform.php:31
 msgid "MatchTrade"
-msgstr ""
+msgstr "MatchTrade"
 
 #: templates/partials/checkout/trading-platform.php:34
 msgid "TradeLocker"
-msgstr ""
+msgstr "TradeLocker"
 
 #: templates/partials/checkout/trading-platform.php:38
 msgid "Rithmic"
-msgstr ""
+msgstr "Rithmic"
 
 #: templates/partials/checkout/trading-platform.php:44
 #: templates/woocommerce/checkout/form-trading-platform.php:54
 #: templates/woocommerce/checkout/review-order.php:178
 msgid "Trading Platform"
-msgstr ""
+msgstr "트레이딩 플랫폼"
 
 #: templates/partials/checkout/trading-platform.php:50
 msgid "Trading Platforms"
-msgstr ""
+msgstr "트레이딩 플랫폼"
 
 #: templates/woocommerce/checkout/cart-errors.php:21
 msgid "There are some issues with the items in your cart. Please go back to the cart page and resolve these issues before checking out."
-msgstr ""
+msgstr "장바구니의 상품에 문제가 있습니다. 장바구니 페이지로 돌아가 문제를 해결한 후 결제하세요."
 
 #: templates/woocommerce/checkout/cart-errors.php:27
 msgid "Return to cart"
-msgstr ""
+msgstr "장바구니로 돌아가기"
 
 #: templates/woocommerce/checkout/form-available-addons.php:53
 msgid "Available Add-ons"
-msgstr ""
+msgstr "사용 가능한 애드온"
 
 #: templates/woocommerce/checkout/form-available-addons.php:92
 #: templates/woocommerce/checkout/form-available-addons.php:116
 #, php-format
 msgid "Add %s to your total"
-msgstr ""
+msgstr "합계에 %s 추가"
 
 #: templates/woocommerce/checkout/form-available-bundles.php:29
 msgid "Bundle Packages"
-msgstr ""
+msgstr "번들 패키지"
 
 #: templates/woocommerce/checkout/form-billing.php:24
 msgid "Billing & Shipping details"
-msgstr ""
+msgstr "청구 및 배송 정보"
 
 #: templates/woocommerce/checkout/form-billing.php:30
 msgid "Billing details"
-msgstr ""
+msgstr "청구 정보"
 
 #: templates/woocommerce/checkout/form-billing.php:62
 #: templates/woocommerce/checkout/form-checkout.php:143
 msgid "Create an account?"
-msgstr ""
+msgstr "계정을 만드시겠습니까?"
 
 #: templates/woocommerce/checkout/form-checkout.php:37
 msgid "You must be logged in to checkout."
-msgstr ""
+msgstr "결제하려면 로그인해야 합니다."
 
 #: templates/woocommerce/checkout/form-checkout.php:47
 msgid "Checkout"
-msgstr ""
+msgstr "결제"
 
 #: templates/woocommerce/checkout/form-checkout.php:54
 msgid "Checkout progress"
-msgstr ""
+msgstr "결제 진행 상황"
 
 #: templates/woocommerce/checkout/form-checkout.php:57
 #: templates/woocommerce/checkout/form-checkout.php:65
 #: templates/woocommerce/checkout/form-checkout.php:70
 msgid "You are here"
-msgstr ""
+msgstr "현재 단계"
 
 #: templates/woocommerce/checkout/form-checkout.php:58
 #: templates/woocommerce/checkout/form-checkout.php:71
 #: templates/woocommerce/checkout/thankyou.php:147
 msgid "Completed"
-msgstr ""
+msgstr "완료"
 
 #: templates/woocommerce/checkout/form-checkout.php:59
 #: templates/woocommerce/checkout/form-checkout.php:72
 #: templates/woocommerce/checkout/form-checkout.php:75
 msgid "Next step"
-msgstr ""
+msgstr "다음 단계"
 
 #: templates/woocommerce/checkout/form-checkout.php:66
 msgid "Challenge"
-msgstr ""
+msgstr "챌린지"
 
 #: templates/woocommerce/checkout/form-checkout.php:76
 #: templates/woocommerce/checkout/form-checkout.php:120
 msgid "Information"
-msgstr ""
+msgstr "정보"
 
 #: templates/woocommerce/checkout/form-checkout.php:85
 msgid "Choose Your Challenge"
-msgstr ""
+msgstr "챌린지를 선택하세요"
 
 #: templates/woocommerce/checkout/form-checkout.php:86
 msgid "Select evaluation type and account size to get started"
-msgstr ""
+msgstr "평가 유형과 계정 크기를 선택하여 시작하세요"
 
 #: templates/woocommerce/checkout/form-checkout.php:89
 msgid "Your Information"
-msgstr ""
+msgstr "회원 정보"
 
 #: templates/woocommerce/checkout/form-checkout.php:90
 msgid "Fill in your billing details to proceed"
-msgstr ""
+msgstr "결제를 진행하려면 청구 정보를 입력하세요"
 
 #: templates/woocommerce/checkout/form-checkout.php:164
 msgid "By placing your order, you agree to our"
-msgstr ""
+msgstr "주문하시면 다음에 동의하시는 것으로 간주됩니다:"
 
 #: templates/woocommerce/checkout/form-checkout.php:166
 #: templates/woocommerce/checkout/terms.php:40
 msgid "Privacy Policy"
-msgstr ""
+msgstr "개인정보 처리방침"
 
 #: templates/woocommerce/checkout/form-checkout.php:167
 #: templates/woocommerce/checkout/terms.php:38
 msgid "and"
-msgstr ""
+msgstr "및"
 
 #: templates/woocommerce/checkout/form-checkout.php:169
 msgid "Terms of Use"
-msgstr ""
+msgstr "이용약관"
 
 #: templates/woocommerce/checkout/form-checkout.php:170
 msgid ", and consent to receive updates and marketing communications from FundedBit."
-msgstr ""
+msgstr ", 그리고 FundedBit의 업데이트 및 마케팅 정보 수신에 동의합니다."
 
 #: templates/woocommerce/checkout/form-checkout.php:177
 msgid "Previous"
-msgstr ""
+msgstr "이전"
 
 #: templates/woocommerce/checkout/form-checkout.php:193
 msgid "Order Summary"
-msgstr ""
+msgstr "주문 요약"
 
 #: templates/woocommerce/checkout/form-checkout.php:201
 msgid "Challenge Requirement"
-msgstr ""
+msgstr "챌린지 조건"
 
 #: templates/woocommerce/checkout/form-checkout.php:205
 msgid "Phase 1 Target"
-msgstr ""
+msgstr "1단계 목표 수익"
 
 #: templates/woocommerce/checkout/form-checkout.php:206
 msgid "Phase 2 Target"
-msgstr ""
+msgstr "2단계 목표 수익"
 
 #: templates/woocommerce/checkout/form-checkout.php:207
 msgid "Max. Loss"
-msgstr ""
+msgstr "최대 손실"
 
 #: templates/woocommerce/checkout/form-checkout.php:208
 msgid "Max. Daily Loss"
-msgstr ""
+msgstr "일일 최대 손실"
 
 #: templates/woocommerce/checkout/form-checkout.php:222
 msgid "Coupon code"
-msgstr ""
+msgstr "쿠폰 코드"
 
 #: templates/woocommerce/checkout/form-checkout.php:224
 msgid "Insert coupon code"
-msgstr ""
+msgstr "쿠폰 코드 입력"
 
 #: templates/woocommerce/checkout/form-checkout.php:225
 msgid "Apply"
-msgstr ""
+msgstr "적용"
 
 #: templates/woocommerce/checkout/form-checkout.php:231
 #: templates/woocommerce/checkout/form-pay.php:27
 msgid "Product"
-msgstr ""
+msgstr "제품"
 
 #: templates/woocommerce/checkout/form-checkout.php:232
 msgid "Category"
-msgstr ""
+msgstr "카테고리"
 
 #: templates/woocommerce/checkout/form-checkout.php:233
 msgid "Account"
-msgstr ""
+msgstr "계정"
 
 #: templates/woocommerce/checkout/form-checkout.php:234
 msgid "Platform"
-msgstr ""
+msgstr "플랫폼"
 
 #: templates/woocommerce/checkout/form-checkout.php:235
 #: templates/woocommerce/checkout/review-order.php:187
 msgid "Currency"
-msgstr ""
+msgstr "통화"
 
 #: templates/woocommerce/checkout/form-checkout.php:237
 #: templates/woocommerce/checkout/review-order.php:276
 #: templates/woocommerce/checkout/thankyou.php:255
 msgid "Base Price"
-msgstr ""
+msgstr "기본 가격"
 
 #: templates/woocommerce/checkout/form-checkout.php:238
 #: templates/woocommerce/checkout/review-order.php:341
 msgid "Sub Total"
-msgstr ""
+msgstr "소계"
 
 #: templates/woocommerce/checkout/form-checkout.php:239
 #: templates/woocommerce/checkout/review-order.php:395
 msgid "Discount"
-msgstr ""
+msgstr "할인"
 
 #: templates/woocommerce/checkout/form-checkout.php:241
 #: templates/woocommerce/checkout/review-order.php:487
 #: templates/woocommerce/checkout/thankyou.php:357
 msgid "Total"
-msgstr ""
+msgstr "합계"
 
 #: templates/woocommerce/checkout/form-checkout.php:246
 msgid "We Accept"
-msgstr ""
+msgstr "결제 수단"
 
 #: templates/woocommerce/checkout/form-checkout.php:285
 msgid "Back"
-msgstr ""
+msgstr "뒤로"
 
 #: templates/woocommerce/checkout/form-checkout.php:288
 msgid "Processing…"
-msgstr ""
+msgstr "처리 중…"
 
 #: templates/woocommerce/checkout/form-checkout.php:308
 msgid "Secure checkout — data is protected"
-msgstr ""
+msgstr "안전한 결제 — 데이터가 보호됩니다"
 
 #: templates/woocommerce/checkout/form-checkout.php:322
 msgid "Secure Payments"
-msgstr ""
+msgstr "안전한 결제"
 
 #: templates/woocommerce/checkout/form-checkout.php:323
 msgid "SSL encrypted"
-msgstr ""
+msgstr "SSL 암호화"
 
 #: templates/woocommerce/checkout/form-checkout.php:329
 msgid "Instant Activation"
-msgstr ""
+msgstr "즉시 활성화"
 
 #: templates/woocommerce/checkout/form-checkout.php:330
 msgid "Start trading immediately"
-msgstr ""
+msgstr "즉시 트레이딩 시작"
 
 #: templates/woocommerce/checkout/form-checkout.php:336
 msgid "Excellent Support"
-msgstr ""
+msgstr "우수한 고객 지원"
 
 #: templates/woocommerce/checkout/form-checkout.php:337
 msgid "24/7 customer service"
-msgstr ""
+msgstr "24시간 고객 서비스"
 
 #: templates/woocommerce/checkout/form-login.php:26
 msgid "Returning customer?"
-msgstr ""
+msgstr "기존 고객이신가요?"
 
 #: templates/woocommerce/checkout/form-login.php:26
 msgid "Click here to login"
-msgstr ""
+msgstr "여기를 클릭하여 로그인"
 
 #: templates/woocommerce/checkout/form-login.php:32
 msgid "If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section."
-msgstr ""
+msgstr "이전에 구매하신 적이 있으시면 아래에 정보를 입력하세요. 신규 고객이시면 청구 정보 섹션으로 진행하세요."
 
 #: templates/woocommerce/checkout/form-pay.php:28
 msgid "Qty"
-msgstr ""
+msgstr "수량"
 
 #: templates/woocommerce/checkout/form-pay.php:29
 msgid "Totals"
-msgstr ""
+msgstr "합계"
 
 #: templates/woocommerce/checkout/form-pay.php:94
 msgid "Sorry, it seems that there are no available payment methods for your location. Please contact us if you require assistance or wish to make alternate arrangements."
-msgstr ""
+msgstr "죄송합니다. 귀하의 위치에서 사용 가능한 결제 수단이 없습니다. 도움이 필요하시거나 다른 방법을 원하시면 저희에게 연락하세요."
 
 #: templates/woocommerce/checkout/form-product-selection.php:98
 msgid "Product selection"
-msgstr ""
+msgstr "제품 선택"
 
 #: templates/woocommerce/checkout/form-product-selection.php:105
 #: templates/woocommerce/checkout/review-order.php:117
 msgid "Product Category"
-msgstr ""
+msgstr "제품 카테고리"
 
 #: templates/woocommerce/checkout/form-product-selection.php:143
 msgid "Subcategory"
-msgstr ""
+msgstr "하위 카테고리"
 
 #: templates/woocommerce/checkout/form-product-selection.php:176
 msgid "Select Account Balance"
-msgstr ""
+msgstr "계정 잔액 선택"
 
 #: templates/woocommerce/checkout/form-product-selection.php:176
 msgid "Selected Product"
@@ -393,105 +382,105 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-shipping.php:30
 msgid "Ship to a different address?"
-msgstr ""
+msgstr "다른 주소로 배송하시겠습니까?"
 
 #: templates/woocommerce/checkout/form-shipping.php:63
 msgid "Additional information"
-msgstr ""
+msgstr "추가 정보"
 
 #: templates/woocommerce/checkout/form-verify-email.php:30
 msgid "We were unable to verify the email address you provided. Please try again."
-msgstr ""
+msgstr "입력하신 이메일 주소를 확인할 수 없습니다. 다시 시도하세요."
 
 #. translators: 1: opening login link 2: closing login link
 #: templates/woocommerce/checkout/form-verify-email.php:37
 #, php-format
 msgid "To view this page, you must either %1$slogin%2$s or verify the email address associated with the order."
-msgstr ""
+msgstr "이 페이지를 보려면 %1$s로그인%2$s하거나 주문과 연결된 이메일 주소를 확인해야 합니다."
 
 #: templates/woocommerce/checkout/form-verify-email.php:45
 msgid "Email address"
-msgstr ""
+msgstr "이메일 주소"
 
 #: templates/woocommerce/checkout/form-verify-email.php:54
 msgid "Verify"
-msgstr ""
+msgstr "확인"
 
 #: templates/woocommerce/checkout/order-receipt.php:25
 msgid "Order number:"
-msgstr ""
+msgstr "주문 번호:"
 
 #: templates/woocommerce/checkout/order-receipt.php:29
 msgid "Date:"
-msgstr ""
+msgstr "날짜:"
 
 #: templates/woocommerce/checkout/order-receipt.php:33
 msgid "Total:"
-msgstr ""
+msgstr "합계:"
 
 #: templates/woocommerce/checkout/order-receipt.php:38
 msgid "Payment method:"
-msgstr ""
+msgstr "결제 수단:"
 
 #: templates/woocommerce/checkout/order-received.php:31
 #: templates/woocommerce/checkout/thankyou.php:66
 msgid "Order failed"
-msgstr ""
+msgstr "주문 실패"
 
 #: templates/woocommerce/checkout/order-received.php:32
 #: templates/woocommerce/checkout/thankyou.php:67
 msgid "We weren't able to complete your order."
-msgstr ""
+msgstr "주문을 완료할 수 없었습니다."
 
 #: templates/woocommerce/checkout/order-received.php:36
 #: templates/woocommerce/checkout/thankyou.php:71
 #, php-format
-msgid "If you believe this was a mistake, please contact <a href=\"mailto:%s\">%s</a>"
+msgid "If you believe this was a mistake, please contact <a href=\\\"mailto:%s\\\">%s</a>"
 msgstr ""
 
 #: templates/woocommerce/checkout/order-received.php:44
 #: templates/woocommerce/checkout/thankyou.php:81
 msgid "Thank you!"
-msgstr ""
+msgstr "감사합니다!"
 
 #: templates/woocommerce/checkout/order-received.php:45
 #: templates/woocommerce/checkout/thankyou.php:82
 msgid "Your order has been received."
-msgstr ""
+msgstr "주문이 접수되었습니다."
 
 #: templates/woocommerce/checkout/payment.php:25
 msgid "Place order"
-msgstr ""
+msgstr "주문하기"
 
 #: templates/woocommerce/checkout/payment.php:40
 msgid "Payment Method"
-msgstr ""
+msgstr "결제 수단"
 
 #: templates/woocommerce/checkout/payment.php:55
 msgid "Sorry, it seems that there are no available payment methods. Please contact us if you require assistance or wish to make alternate arrangements."
-msgstr ""
+msgstr "죄송합니다. 사용 가능한 결제 수단이 없습니다. 도움이 필요하시거나 다른 방법을 원하시면 저희에게 연락하세요."
 
 #: templates/woocommerce/checkout/payment.php:55
 msgid "Please fill in your details above to see available payment methods."
-msgstr ""
+msgstr "사용 가능한 결제 수단을 보려면 위의 정보를 입력하세요."
 
 #: templates/woocommerce/checkout/repurchase-detail.php:18
 msgid "Purchase details"
-msgstr ""
+msgstr "구매 정보"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:22
 #: templates/woocommerce/checkout/review-order.php:140
 msgid "Product Name"
-msgstr ""
+msgstr "제품명"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:32
 #: templates/woocommerce/checkout/review-order.php:171
 msgid "Account Size"
-msgstr ""
+msgstr "계정 크기"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:43
 msgid "Prize Pool"
-msgstr ""
+msgstr "상금 풀"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:53
 msgid "Product Description"
@@ -503,123 +492,119 @@ msgstr ""
 
 #: templates/woocommerce/checkout/terms.php:35
 msgid "I agree to the"
-msgstr ""
+msgstr "다음에 동의합니다:"
 
 #: templates/woocommerce/checkout/terms.php:37
 msgid "Terms & Conditions"
-msgstr ""
+msgstr "이용약관"
 
 #: templates/woocommerce/checkout/thankyou.php:86
 msgid "What's next?"
-msgstr ""
+msgstr "다음 단계는?"
 
 #: templates/woocommerce/checkout/thankyou.php:89
 msgid "Head to your accounts page to see your new trading account."
-msgstr ""
+msgstr "새 트레이딩 계정을 확인하려면 계정 페이지로 이동하세요."
 
 #: templates/woocommerce/checkout/thankyou.php:92
 msgid "Head to your dashboard to access your account and begin trading."
-msgstr ""
+msgstr "대시보드로 이동하여 계정에 접속하고 트레이딩을 시작하세요."
 
 #: templates/woocommerce/checkout/thankyou.php:99
 #, php-format
-msgid "A credentials for your trading platform will be available in the selected account dashboard. If you experience any issues, please contact <a style=\"text-decoration: underline;\" href=\"mailto:%s\">%s</a>."
+msgid "A credentials for your trading platform will be available in the selected account dashboard. If you experience any issues, please contact <a style=\\\"text-decoration: underline;\\\" href=\\\"mailto:%s\\\">%s</a>."
 msgstr ""
 
 #: templates/woocommerce/checkout/thankyou.php:109
 #, php-format
-msgid "A credentials for your trading platform will be available in your dashboard. If you experience any issues, please contact <a style=\"text-decoration: underline;\" href=\"mailto:%s\">%s</a>."
+msgid "A credentials for your trading platform will be available in your dashboard. If you experience any issues, please contact <a style=\\\"text-decoration: underline;\\\" href=\\\"mailto:%s\\\">%s</a>."
 msgstr ""
 
 #: templates/woocommerce/checkout/thankyou.php:119
 msgid "Continue to Dashboard"
-msgstr ""
+msgstr "대시보드로 계속"
 
 #: templates/woocommerce/checkout/thankyou.php:123
 msgid "or visit"
-msgstr ""
+msgstr "또는 방문하세요"
 
 #: templates/woocommerce/checkout/thankyou.php:136
 msgid "Order summary"
-msgstr ""
+msgstr "주문 요약"
 
 #: templates/woocommerce/checkout/thankyou.php:139
 msgid "Status"
-msgstr ""
+msgstr "상태"
 
 #: templates/woocommerce/checkout/thankyou.php:143
 msgid "Pending"
-msgstr ""
+msgstr "대기 중"
 
 #: templates/woocommerce/checkout/thankyou.php:151
 msgid "Failed"
-msgstr ""
+msgstr "실패"
 
 #: templates/woocommerce/checkout/thankyou.php:160
 msgid "Order number"
-msgstr ""
+msgstr "주문 번호"
 
 #: templates/woocommerce/checkout/thankyou.php:166
 msgid "Email"
-msgstr ""
+msgstr "이메일"
 
 #: templates/woocommerce/checkout/thankyou.php:172
 msgid "Date"
-msgstr ""
+msgstr "날짜"
 
 #: templates/woocommerce/checkout/thankyou.php:184
 msgid "Order details"
-msgstr ""
+msgstr "주문 상세"
 
 #: templates/woocommerce/checkout/thankyou.php:290
 msgid "Subtotal"
-msgstr ""
+msgstr "소계"
 
 #: templates/woocommerce/checkout/thankyou.php:317
 msgid "Payment method"
-msgstr ""
+msgstr "결제 수단"
 
 #: templates/woocommerce/checkout/thankyou.php:337
 msgid "Coupon"
-msgstr ""
+msgstr "쿠폰"
 
 #: templates/woocommerce/checkout/thankyou.php:375
 msgid "Billing address"
-msgstr ""
-
-
-#: includes/class-ypf-ui-addon-category-badge.php:32
-msgid "Optional. Shown as a badge on this category's checkout card, e.g. \"Best Value\" or \"Most Popular\". Leave empty for no badge."
-msgstr ""
+msgstr "청구 주소"
 
 #: includes/class-ypf-ui-addon-hooks.php:73
 msgid "Applying…"
-msgstr ""
+msgstr "적용 중…"
 
 #: includes/class-ypf-ui-addon-hooks.php:75
 msgid "Coupon applied."
-msgstr ""
+msgstr "쿠폰이 적용되었습니다."
 
 #: includes/class-ypf-ui-addon-hooks.php:76
 msgid "Coupon applied successfully!"
-msgstr ""
+msgstr "쿠폰이 성공적으로 적용되었습니다!"
 
 #: includes/class-ypf-ui-addon-hooks.php:77
 msgid "Invalid coupon code."
-msgstr ""
+msgstr "유효하지 않은 쿠폰 코드입니다."
 
 #: includes/class-ypf-ui-addon-hooks.php:78
 msgid "Error applying coupon. Please try again."
-msgstr ""
+msgstr "쿠폰 적용 중 오류가 발생했습니다. 다시 시도하세요."
 
 #: includes/class-ypf-ui-addon-hooks.php:79
 msgid "Error applying coupon: "
-msgstr ""
+msgstr "쿠폰 적용 오류: "
 
 #: includes/class-ypf-ui-addon-hooks.php:80
 msgid "Paste is not allowed in Email Confirmation field for security."
-msgstr ""
+msgstr "보안상의 이유로 이메일 확인 필드에 붙여넣기가 허용되지 않습니다."
 
 #: includes/class-ypf-ui-addon-hooks.php:81
 msgid "Email does not match"
-msgstr ""
+msgstr "이메일이 일치하지 않습니다"
+

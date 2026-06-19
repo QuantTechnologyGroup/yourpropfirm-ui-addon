@@ -1,18 +1,7 @@
-# Copyright (C) 2026 YourPropFirm
-# This file is distributed under the GPL-2.0+.
+# Translation for YourPropFirm UI Addon - ja
 msgid ""
 msgstr ""
-"Project-Id-Version: YourPropFirm UI Addon 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/yourpropfirm-ui-addon\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-18T04:45:43+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: yourpropfirm\n"
 
 #. Plugin Name of the plugin
 #: yourpropfirm-ui-addon.php
@@ -32,78 +21,78 @@ msgstr ""
 #. Author of the plugin
 #: yourpropfirm-ui-addon.php
 msgid "YourPropFirm"
-msgstr ""
+msgstr "YourPropFirm"
 
 #: includes/class-ypf-ui-addon-category-badge.php:32
-msgid "Optional. Shown as a badge on this category's checkout card, e.g. \"Best Value\" or \"Most Popular\". Leave empty for no badge."
+msgid "Optional. Shown as a badge on this category's checkout card, e.g. \\\"Best Value\\\" or \\\"Most Popular\\\". Leave empty for no badge."
 msgstr ""
 
 #: includes/class-ypf-ui-addon-category-badge.php:41
 #: includes/class-ypf-ui-addon-category-badge.php:58
 msgid "Checkout Badge"
-msgstr ""
+msgstr "チェックアウトバッジ"
 
 #: includes/class-ypf-ui-addon-category-badge.php:42
 #: includes/class-ypf-ui-addon-category-badge.php:60
 msgid "e.g. Best Value"
-msgstr ""
+msgstr "例：ベストバリュー"
 
 #: includes/class-ypf-ui-addon-hooks.php:68
 #: templates/woocommerce/checkout/form-checkout.php:180
 #: templates/woocommerce/checkout/form-checkout.php:289
 msgid "Continue"
-msgstr ""
+msgstr "続ける"
 
 #: includes/class-ypf-ui-addon-hooks.php:69
 #: templates/woocommerce/checkout/form-checkout.php:303
 msgid "Proceed to Payment"
-msgstr ""
+msgstr "支払いに進む"
 
 #: templates/partials/checkout/trading-platform.php:13
 msgid "Select Trading Platform"
-msgstr ""
+msgstr "取引プラットフォームを選択"
 
 #: templates/partials/checkout/trading-platform.php:15
 msgid "MT4"
-msgstr ""
+msgstr "MT4"
 
 #: templates/partials/checkout/trading-platform.php:18
 msgid "MT5"
-msgstr ""
+msgstr "MT5"
 
 #: templates/partials/checkout/trading-platform.php:22
 msgid "cTrader"
-msgstr ""
+msgstr "cTrader"
 
 #: templates/partials/checkout/trading-platform.php:25
 msgid "Sirix"
-msgstr ""
+msgstr "Sirix"
 
 #: templates/partials/checkout/trading-platform.php:28
 msgid "DX Trade"
-msgstr ""
+msgstr "DX Trade"
 
 #: templates/partials/checkout/trading-platform.php:31
 msgid "MatchTrade"
-msgstr ""
+msgstr "MatchTrade"
 
 #: templates/partials/checkout/trading-platform.php:34
 msgid "TradeLocker"
-msgstr ""
+msgstr "TradeLocker"
 
 #: templates/partials/checkout/trading-platform.php:38
 msgid "Rithmic"
-msgstr ""
+msgstr "Rithmic"
 
 #: templates/partials/checkout/trading-platform.php:44
 #: templates/woocommerce/checkout/form-trading-platform.php:54
 #: templates/woocommerce/checkout/review-order.php:178
 msgid "Trading Platform"
-msgstr ""
+msgstr "取引プラットフォーム"
 
 #: templates/partials/checkout/trading-platform.php:50
 msgid "Trading Platforms"
-msgstr ""
+msgstr "取引プラットフォーム"
 
 #: templates/woocommerce/checkout/cart-errors.php:21
 msgid "There are some issues with the items in your cart. Please go back to the cart page and resolve these issues before checking out."
@@ -111,243 +100,243 @@ msgstr ""
 
 #: templates/woocommerce/checkout/cart-errors.php:27
 msgid "Return to cart"
-msgstr ""
+msgstr "カートに戻る"
 
 #: templates/woocommerce/checkout/form-available-addons.php:53
 msgid "Available Add-ons"
-msgstr ""
+msgstr "利用可能なアドオン"
 
 #: templates/woocommerce/checkout/form-available-addons.php:92
 #: templates/woocommerce/checkout/form-available-addons.php:116
 #, php-format
 msgid "Add %s to your total"
-msgstr ""
+msgstr "合計に %s を追加"
 
 #: templates/woocommerce/checkout/form-available-bundles.php:29
 msgid "Bundle Packages"
-msgstr ""
+msgstr "バンドルパッケージ"
 
 #: templates/woocommerce/checkout/form-billing.php:24
 msgid "Billing & Shipping details"
-msgstr ""
+msgstr "請求先・配送先詳細"
 
 #: templates/woocommerce/checkout/form-billing.php:30
 msgid "Billing details"
-msgstr ""
+msgstr "請求先詳細"
 
 #: templates/woocommerce/checkout/form-billing.php:62
 #: templates/woocommerce/checkout/form-checkout.php:143
 msgid "Create an account?"
-msgstr ""
+msgstr "アカウントを作成しますか？"
 
 #: templates/woocommerce/checkout/form-checkout.php:37
 msgid "You must be logged in to checkout."
-msgstr ""
+msgstr "チェックアウトにはログインが必要です。"
 
 #: templates/woocommerce/checkout/form-checkout.php:47
 msgid "Checkout"
-msgstr ""
+msgstr "チェックアウト"
 
 #: templates/woocommerce/checkout/form-checkout.php:54
 msgid "Checkout progress"
-msgstr ""
+msgstr "チェックアウトの進捗"
 
 #: templates/woocommerce/checkout/form-checkout.php:57
 #: templates/woocommerce/checkout/form-checkout.php:65
 #: templates/woocommerce/checkout/form-checkout.php:70
 msgid "You are here"
-msgstr ""
+msgstr "現在地"
 
 #: templates/woocommerce/checkout/form-checkout.php:58
 #: templates/woocommerce/checkout/form-checkout.php:71
 #: templates/woocommerce/checkout/thankyou.php:147
 msgid "Completed"
-msgstr ""
+msgstr "完了"
 
 #: templates/woocommerce/checkout/form-checkout.php:59
 #: templates/woocommerce/checkout/form-checkout.php:72
 #: templates/woocommerce/checkout/form-checkout.php:75
 msgid "Next step"
-msgstr ""
+msgstr "次のステップ"
 
 #: templates/woocommerce/checkout/form-checkout.php:66
 msgid "Challenge"
-msgstr ""
+msgstr "チャレンジ"
 
 #: templates/woocommerce/checkout/form-checkout.php:76
 #: templates/woocommerce/checkout/form-checkout.php:120
 msgid "Information"
-msgstr ""
+msgstr "情報"
 
 #: templates/woocommerce/checkout/form-checkout.php:85
 msgid "Choose Your Challenge"
-msgstr ""
+msgstr "チャレンジを選択してください"
 
 #: templates/woocommerce/checkout/form-checkout.php:86
 msgid "Select evaluation type and account size to get started"
-msgstr ""
+msgstr "評価タイプとアカウントサイズを選択して開始してください"
 
 #: templates/woocommerce/checkout/form-checkout.php:89
 msgid "Your Information"
-msgstr ""
+msgstr "お客様の情報"
 
 #: templates/woocommerce/checkout/form-checkout.php:90
 msgid "Fill in your billing details to proceed"
-msgstr ""
+msgstr "続けるには請求先の詳細を入力してください"
 
 #: templates/woocommerce/checkout/form-checkout.php:164
 msgid "By placing your order, you agree to our"
-msgstr ""
+msgstr "ご注文いただくことで、以下に同意したものとみなされます："
 
 #: templates/woocommerce/checkout/form-checkout.php:166
 #: templates/woocommerce/checkout/terms.php:40
 msgid "Privacy Policy"
-msgstr ""
+msgstr "プライバシーポリシー"
 
 #: templates/woocommerce/checkout/form-checkout.php:167
 #: templates/woocommerce/checkout/terms.php:38
 msgid "and"
-msgstr ""
+msgstr "および"
 
 #: templates/woocommerce/checkout/form-checkout.php:169
 msgid "Terms of Use"
-msgstr ""
+msgstr "利用規約"
 
 #: templates/woocommerce/checkout/form-checkout.php:170
 msgid ", and consent to receive updates and marketing communications from FundedBit."
-msgstr ""
+msgstr "、およびFundedBitからの更新情報やマーケティングコミュニケーションの受信に同意します。"
 
 #: templates/woocommerce/checkout/form-checkout.php:177
 msgid "Previous"
-msgstr ""
+msgstr "前へ"
 
 #: templates/woocommerce/checkout/form-checkout.php:193
 msgid "Order Summary"
-msgstr ""
+msgstr "注文概要"
 
 #: templates/woocommerce/checkout/form-checkout.php:201
 msgid "Challenge Requirement"
-msgstr ""
+msgstr "チャレンジ要件"
 
 #: templates/woocommerce/checkout/form-checkout.php:205
 msgid "Phase 1 Target"
-msgstr ""
+msgstr "フェーズ1目標"
 
 #: templates/woocommerce/checkout/form-checkout.php:206
 msgid "Phase 2 Target"
-msgstr ""
+msgstr "フェーズ2目標"
 
 #: templates/woocommerce/checkout/form-checkout.php:207
 msgid "Max. Loss"
-msgstr ""
+msgstr "最大損失"
 
 #: templates/woocommerce/checkout/form-checkout.php:208
 msgid "Max. Daily Loss"
-msgstr ""
+msgstr "最大日次損失"
 
 #: templates/woocommerce/checkout/form-checkout.php:222
 msgid "Coupon code"
-msgstr ""
+msgstr "クーポンコード"
 
 #: templates/woocommerce/checkout/form-checkout.php:224
 msgid "Insert coupon code"
-msgstr ""
+msgstr "クーポンコードを入力"
 
 #: templates/woocommerce/checkout/form-checkout.php:225
 msgid "Apply"
-msgstr ""
+msgstr "適用"
 
 #: templates/woocommerce/checkout/form-checkout.php:231
 #: templates/woocommerce/checkout/form-pay.php:27
 msgid "Product"
-msgstr ""
+msgstr "商品"
 
 #: templates/woocommerce/checkout/form-checkout.php:232
 msgid "Category"
-msgstr ""
+msgstr "カテゴリー"
 
 #: templates/woocommerce/checkout/form-checkout.php:233
 msgid "Account"
-msgstr ""
+msgstr "アカウント"
 
 #: templates/woocommerce/checkout/form-checkout.php:234
 msgid "Platform"
-msgstr ""
+msgstr "プラットフォーム"
 
 #: templates/woocommerce/checkout/form-checkout.php:235
 #: templates/woocommerce/checkout/review-order.php:187
 msgid "Currency"
-msgstr ""
+msgstr "通貨"
 
 #: templates/woocommerce/checkout/form-checkout.php:237
 #: templates/woocommerce/checkout/review-order.php:276
 #: templates/woocommerce/checkout/thankyou.php:255
 msgid "Base Price"
-msgstr ""
+msgstr "基本価格"
 
 #: templates/woocommerce/checkout/form-checkout.php:238
 #: templates/woocommerce/checkout/review-order.php:341
 msgid "Sub Total"
-msgstr ""
+msgstr "小計"
 
 #: templates/woocommerce/checkout/form-checkout.php:239
 #: templates/woocommerce/checkout/review-order.php:395
 msgid "Discount"
-msgstr ""
+msgstr "割引"
 
 #: templates/woocommerce/checkout/form-checkout.php:241
 #: templates/woocommerce/checkout/review-order.php:487
 #: templates/woocommerce/checkout/thankyou.php:357
 msgid "Total"
-msgstr ""
+msgstr "合計"
 
 #: templates/woocommerce/checkout/form-checkout.php:246
 msgid "We Accept"
-msgstr ""
+msgstr "対応支払い方法"
 
 #: templates/woocommerce/checkout/form-checkout.php:285
 msgid "Back"
-msgstr ""
+msgstr "戻る"
 
 #: templates/woocommerce/checkout/form-checkout.php:288
 msgid "Processing…"
-msgstr ""
+msgstr "処理中…"
 
 #: templates/woocommerce/checkout/form-checkout.php:308
 msgid "Secure checkout — data is protected"
-msgstr ""
+msgstr "安全なチェックアウト — データは保護されています"
 
 #: templates/woocommerce/checkout/form-checkout.php:322
 msgid "Secure Payments"
-msgstr ""
+msgstr "安全な支払い"
 
 #: templates/woocommerce/checkout/form-checkout.php:323
 msgid "SSL encrypted"
-msgstr ""
+msgstr "SSL暗号化"
 
 #: templates/woocommerce/checkout/form-checkout.php:329
 msgid "Instant Activation"
-msgstr ""
+msgstr "即時有効化"
 
 #: templates/woocommerce/checkout/form-checkout.php:330
 msgid "Start trading immediately"
-msgstr ""
+msgstr "すぐに取引を開始できます"
 
 #: templates/woocommerce/checkout/form-checkout.php:336
 msgid "Excellent Support"
-msgstr ""
+msgstr "充実したサポート"
 
 #: templates/woocommerce/checkout/form-checkout.php:337
 msgid "24/7 customer service"
-msgstr ""
+msgstr "24時間365日カスタマーサービス"
 
 #: templates/woocommerce/checkout/form-login.php:26
 msgid "Returning customer?"
-msgstr ""
+msgstr "既存のお客様ですか？"
 
 #: templates/woocommerce/checkout/form-login.php:26
 msgid "Click here to login"
-msgstr ""
+msgstr "ログインはこちら"
 
 #: templates/woocommerce/checkout/form-login.php:32
 msgid "If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section."
@@ -355,11 +344,11 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-pay.php:28
 msgid "Qty"
-msgstr ""
+msgstr "数量"
 
 #: templates/woocommerce/checkout/form-pay.php:29
 msgid "Totals"
-msgstr ""
+msgstr "合計"
 
 #: templates/woocommerce/checkout/form-pay.php:94
 msgid "Sorry, it seems that there are no available payment methods for your location. Please contact us if you require assistance or wish to make alternate arrangements."
@@ -367,37 +356,37 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-product-selection.php:98
 msgid "Product selection"
-msgstr ""
+msgstr "商品選択"
 
 #: templates/woocommerce/checkout/form-product-selection.php:105
 #: templates/woocommerce/checkout/review-order.php:117
 msgid "Product Category"
-msgstr ""
+msgstr "商品カテゴリー"
 
 #: templates/woocommerce/checkout/form-product-selection.php:143
 msgid "Subcategory"
-msgstr ""
+msgstr "サブカテゴリー"
 
 #: templates/woocommerce/checkout/form-product-selection.php:176
 msgid "Select Account Balance"
-msgstr ""
+msgstr "アカウント残高を選択"
 
 #: templates/woocommerce/checkout/form-product-selection.php:176
 msgid "Selected Product"
-msgstr ""
+msgstr "選択された商品"
 
 #: templates/woocommerce/checkout/form-product-selection.php:216
 #: templates/woocommerce/checkout/form-product-selection.php:233
 msgid "Most Popular"
-msgstr ""
+msgstr "最も人気"
 
 #: templates/woocommerce/checkout/form-shipping.php:30
 msgid "Ship to a different address?"
-msgstr ""
+msgstr "別の住所に発送しますか？"
 
 #: templates/woocommerce/checkout/form-shipping.php:63
 msgid "Additional information"
-msgstr ""
+msgstr "追加情報"
 
 #: templates/woocommerce/checkout/form-verify-email.php:30
 msgid "We were unable to verify the email address you provided. Please try again."
@@ -411,27 +400,27 @@ msgstr ""
 
 #: templates/woocommerce/checkout/form-verify-email.php:45
 msgid "Email address"
-msgstr ""
+msgstr "メールアドレス"
 
 #: templates/woocommerce/checkout/form-verify-email.php:54
 msgid "Verify"
-msgstr ""
+msgstr "確認"
 
 #: templates/woocommerce/checkout/order-receipt.php:25
 msgid "Order number:"
-msgstr ""
+msgstr "注文番号："
 
 #: templates/woocommerce/checkout/order-receipt.php:29
 msgid "Date:"
-msgstr ""
+msgstr "日付："
 
 #: templates/woocommerce/checkout/order-receipt.php:33
 msgid "Total:"
-msgstr ""
+msgstr "合計："
 
 #: templates/woocommerce/checkout/order-receipt.php:38
 msgid "Payment method:"
-msgstr ""
+msgstr "支払い方法："
 
 #: templates/woocommerce/checkout/order-received.php:31
 #: templates/woocommerce/checkout/thankyou.php:66
@@ -446,26 +435,26 @@ msgstr ""
 #: templates/woocommerce/checkout/order-received.php:36
 #: templates/woocommerce/checkout/thankyou.php:71
 #, php-format
-msgid "If you believe this was a mistake, please contact <a href=\"mailto:%s\">%s</a>"
+msgid "If you believe this was a mistake, please contact <a href=\\\"mailto:%s\\\">%s</a>"
 msgstr ""
 
 #: templates/woocommerce/checkout/order-received.php:44
 #: templates/woocommerce/checkout/thankyou.php:81
 msgid "Thank you!"
-msgstr ""
+msgstr "ありがとうございます！"
 
 #: templates/woocommerce/checkout/order-received.php:45
 #: templates/woocommerce/checkout/thankyou.php:82
 msgid "Your order has been received."
-msgstr ""
+msgstr "ご注文を受け付けました。"
 
 #: templates/woocommerce/checkout/payment.php:25
 msgid "Place order"
-msgstr ""
+msgstr "注文する"
 
 #: templates/woocommerce/checkout/payment.php:40
 msgid "Payment Method"
-msgstr ""
+msgstr "支払い方法"
 
 #: templates/woocommerce/checkout/payment.php:55
 msgid "Sorry, it seems that there are no available payment methods. Please contact us if you require assistance or wish to make alternate arrangements."
@@ -473,153 +462,149 @@ msgstr ""
 
 #: templates/woocommerce/checkout/payment.php:55
 msgid "Please fill in your details above to see available payment methods."
-msgstr ""
+msgstr "利用可能な支払い方法を確認するには、上記の詳細を入力してください。"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:18
 msgid "Purchase details"
-msgstr ""
+msgstr "購入詳細"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:22
 #: templates/woocommerce/checkout/review-order.php:140
 msgid "Product Name"
-msgstr ""
+msgstr "商品名"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:32
 #: templates/woocommerce/checkout/review-order.php:171
 msgid "Account Size"
-msgstr ""
+msgstr "アカウントサイズ"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:43
 msgid "Prize Pool"
-msgstr ""
+msgstr "賞金プール"
 
 #: templates/woocommerce/checkout/repurchase-detail.php:53
 msgid "Product Description"
-msgstr ""
+msgstr "商品説明"
 
 #: templates/woocommerce/checkout/review-order.php:405
 msgid "Total Discount"
-msgstr ""
+msgstr "合計割引"
 
 #: templates/woocommerce/checkout/terms.php:35
 msgid "I agree to the"
-msgstr ""
+msgstr "同意します"
 
 #: templates/woocommerce/checkout/terms.php:37
 msgid "Terms & Conditions"
-msgstr ""
+msgstr "利用規約"
 
 #: templates/woocommerce/checkout/thankyou.php:86
 msgid "What's next?"
-msgstr ""
+msgstr "次に何をしますか？"
 
 #: templates/woocommerce/checkout/thankyou.php:89
 msgid "Head to your accounts page to see your new trading account."
-msgstr ""
+msgstr "新しい取引口座を見るために、アカウントページへ移動してください。"
 
 #: templates/woocommerce/checkout/thankyou.php:92
 msgid "Head to your dashboard to access your account and begin trading."
-msgstr ""
+msgstr "ダッシュボードにアクセスしてアカウントにアクセスし、取引を開始してください。"
 
 #: templates/woocommerce/checkout/thankyou.php:99
 #, php-format
-msgid "A credentials for your trading platform will be available in the selected account dashboard. If you experience any issues, please contact <a style=\"text-decoration: underline;\" href=\"mailto:%s\">%s</a>."
+msgid "A credentials for your trading platform will be available in the selected account dashboard. If you experience any issues, please contact <a style=\\\"text-decoration: underline;\\\" href=\\\"mailto:%s\\\">%s</a>."
 msgstr ""
 
 #: templates/woocommerce/checkout/thankyou.php:109
 #, php-format
-msgid "A credentials for your trading platform will be available in your dashboard. If you experience any issues, please contact <a style=\"text-decoration: underline;\" href=\"mailto:%s\">%s</a>."
+msgid "A credentials for your trading platform will be available in your dashboard. If you experience any issues, please contact <a style=\\\"text-decoration: underline;\\\" href=\\\"mailto:%s\\\">%s</a>."
 msgstr ""
 
 #: templates/woocommerce/checkout/thankyou.php:119
 msgid "Continue to Dashboard"
-msgstr ""
+msgstr "ダッシュボードに進む"
 
 #: templates/woocommerce/checkout/thankyou.php:123
 msgid "or visit"
-msgstr ""
+msgstr "または訪問"
 
 #: templates/woocommerce/checkout/thankyou.php:136
 msgid "Order summary"
-msgstr ""
+msgstr "注文概要"
 
 #: templates/woocommerce/checkout/thankyou.php:139
 msgid "Status"
-msgstr ""
+msgstr "ステータス"
 
 #: templates/woocommerce/checkout/thankyou.php:143
 msgid "Pending"
-msgstr ""
+msgstr "保留中"
 
 #: templates/woocommerce/checkout/thankyou.php:151
 msgid "Failed"
-msgstr ""
+msgstr "失敗"
 
 #: templates/woocommerce/checkout/thankyou.php:160
 msgid "Order number"
-msgstr ""
+msgstr "注文番号"
 
 #: templates/woocommerce/checkout/thankyou.php:166
 msgid "Email"
-msgstr ""
+msgstr "メール"
 
 #: templates/woocommerce/checkout/thankyou.php:172
 msgid "Date"
-msgstr ""
+msgstr "日付："
 
 #: templates/woocommerce/checkout/thankyou.php:184
 msgid "Order details"
-msgstr ""
+msgstr "注文詳細"
 
 #: templates/woocommerce/checkout/thankyou.php:290
 msgid "Subtotal"
-msgstr ""
+msgstr "小計"
 
 #: templates/woocommerce/checkout/thankyou.php:317
 msgid "Payment method"
-msgstr ""
+msgstr "支払い方法"
 
 #: templates/woocommerce/checkout/thankyou.php:337
 msgid "Coupon"
-msgstr ""
+msgstr "クーポン"
 
 #: templates/woocommerce/checkout/thankyou.php:375
 msgid "Billing address"
-msgstr ""
-
-
-#: includes/class-ypf-ui-addon-category-badge.php:32
-msgid "Optional. Shown as a badge on this category's checkout card, e.g. \"Best Value\" or \"Most Popular\". Leave empty for no badge."
-msgstr ""
+msgstr "請求先住所"
 
 #: includes/class-ypf-ui-addon-hooks.php:73
 msgid "Applying…"
-msgstr ""
+msgstr "適用中…"
 
 #: includes/class-ypf-ui-addon-hooks.php:75
 msgid "Coupon applied."
-msgstr ""
+msgstr "クーポンが適用されました。"
 
 #: includes/class-ypf-ui-addon-hooks.php:76
 msgid "Coupon applied successfully!"
-msgstr ""
+msgstr "クーポンが正常に適用されました！"
 
 #: includes/class-ypf-ui-addon-hooks.php:77
 msgid "Invalid coupon code."
-msgstr ""
+msgstr "無効なクーポンコードです。"
 
 #: includes/class-ypf-ui-addon-hooks.php:78
 msgid "Error applying coupon. Please try again."
-msgstr ""
+msgstr "クーポンの適用中にエラーが発生しました。もう一度お試しください。"
 
 #: includes/class-ypf-ui-addon-hooks.php:79
 msgid "Error applying coupon: "
-msgstr ""
+msgstr "クーポン適用エラー："
 
 #: includes/class-ypf-ui-addon-hooks.php:80
 msgid "Paste is not allowed in Email Confirmation field for security."
-msgstr ""
+msgstr "セキュリティのため、メール確認フィールドへの貼り付けは許可されていません。"
 
 #: includes/class-ypf-ui-addon-hooks.php:81
 msgid "Email does not match"
-msgstr ""
+msgstr "メールアドレスが一致しません"
+

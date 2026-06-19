@@ -51,7 +51,7 @@ if ( is_array( $platforms ) && count( $platforms ) === 1 ) {
 	?>
 	<div class="woocommerce-trading-platform product-details">
 		<h4 class="section-subheading">
-			<?php esc_html_e( 'Trading Platform', 'yourpropfirm' ); ?>
+			<?php esc_html_e( 'Trading Platform', 'yourpropfirm-ui-addon' ); ?>
 		</h4>
 		<div class="trading-platform-options">
 			<?php

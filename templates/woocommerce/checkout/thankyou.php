@@ -63,12 +63,12 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 		<?php if ( $order->has_status( 'failed' ) ) : ?>
 
 			<div class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-failed">
-				<h1 class="thank-you-title"><?php esc_html_e( 'Order failed', 'yourpropfirm' ); ?></h1>
-				<p><?php esc_html_e( "We weren't able to complete your order.", 'yourpropfirm' ); ?></p>
+				<h1 class="thank-you-title"><?php esc_html_e( 'Order failed', 'yourpropfirm-ui-addon' ); ?></h1>
+				<p><?php esc_html_e( "We weren't able to complete your order.", 'yourpropfirm-ui-addon' ); ?></p>
 				<p class="information">
 					<?php
 					printf(
-						__( 'If you believe this was a mistake, please contact <a href="mailto:%s">%s</a>', 'yourpropfirm' ),
+						__( 'If you believe this was a mistake, please contact <a href="mailto:%s">%s</a>', 'yourpropfirm-ui-addon' ),
 						$support_email,
 						$support_email
 					); ?>
@@ -78,25 +78,25 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 		<?php else : ?>
 
 			<div class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received">
-				<h1 class="thank-you-title"><?php esc_html_e( 'Thank you!', 'yourpropfirm' ); ?></h1>
-				<p><?php esc_html_e( 'Your order has been received.', 'yourpropfirm' ); ?></p>
+				<h1 class="thank-you-title"><?php esc_html_e( 'Thank you!', 'yourpropfirm-ui-addon' ); ?></h1>
+				<p><?php esc_html_e( 'Your order has been received.', 'yourpropfirm-ui-addon' ); ?></p>
 			</div>
 
 			<div class="yourpropfirm-dashboard">
-				<h2 class="tw-text-center paragraph tw-font-medium"><?php esc_html_e( "What's next?", 'yourpropfirm' ); ?></h2>
+				<h2 class="tw-text-center paragraph tw-font-medium"><?php esc_html_e( "What's next?", 'yourpropfirm-ui-addon' ); ?></h2>
 				<p class="tw-text-center caption-1 tw-font-medium !tw-mt-2">
 					<span class="hide-on-iframe">
-						<?php esc_html_e( 'Head to your accounts page to see your new trading account.', 'yourpropfirm' ); ?>
+						<?php esc_html_e( 'Head to your accounts page to see your new trading account.', 'yourpropfirm-ui-addon' ); ?>
 					</span>
 					<span class="show-on-iframe">
-						<?php esc_html_e( 'Head to your dashboard to access your account and begin trading.', 'yourpropfirm' ); ?>
+						<?php esc_html_e( 'Head to your dashboard to access your account and begin trading.', 'yourpropfirm-ui-addon' ); ?>
 					</span>
 					<br />
 					<span class="yourpropfirm-dashboard-info hide-on-iframe">
 						<?php
 
 						printf(
-							__( 'A credentials for your trading platform will be available in the selected account dashboard. If you experience any issues, please contact <a style="text-decoration: underline;" href="mailto:%s">%s</a>.', 'yourpropfirm' ),
+							__( 'A credentials for your trading platform will be available in the selected account dashboard. If you experience any issues, please contact <a style="text-decoration: underline;" href="mailto:%s">%s</a>.', 'yourpropfirm-ui-addon' ),
 							$support_email,
 							$support_email
 						);
@@ -106,7 +106,7 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 					<span class="yourpropfirm-dashboard-info show-on-iframe">
 						<?php
 						printf(
-							__( 'A credentials for your trading platform will be available in your dashboard. If you experience any issues, please contact <a style="text-decoration: underline;" href="mailto:%s">%s</a>.', 'yourpropfirm' ),
+							__( 'A credentials for your trading platform will be available in your dashboard. If you experience any issues, please contact <a style="text-decoration: underline;" href="mailto:%s">%s</a>.', 'yourpropfirm-ui-addon' ),
 							$support_email,
 							$support_email
 						);
@@ -116,11 +116,11 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 				<div class="yourpropfirm-dashboard-button">
 					<!-- Hide in iframe mode -->
 					<a href="<?php echo esc_url( $dashboard_url ); ?>" class="button" data-sub-section="Dashboard">
-						<?php esc_html_e( 'Continue to Dashboard', 'yourpropfirm' ); ?>
+						<?php esc_html_e( 'Continue to Dashboard', 'yourpropfirm-ui-addon' ); ?>
 					</a>
 					<!-- Hide in iframe mode -->
 					<p class="yourpropfirm-dashboard-or">
-						<?php esc_html_e( 'or visit', 'yourpropfirm' ); ?>
+						<?php esc_html_e( 'or visit', 'yourpropfirm-ui-addon' ); ?>
 						<a href="<?php echo esc_url( $dashboard_url ); ?>" data-sub-section="Dashboard">
 							<?php echo esc_url( $echo_dashboard_url ); ?>
 						</a>
@@ -133,22 +133,22 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 
 			<!-- Order Overview -->
 			<div class="thankyou-order-overview thankyou-order-card">
-				<h2 class="thankyou-order-card-header"><?php esc_html_e( 'Order summary', 'yourpropfirm' ); ?></h2>
+				<h2 class="thankyou-order-card-header"><?php esc_html_e( 'Order summary', 'yourpropfirm-ui-addon' ); ?></h2>
 				<div class="thankyou-order-overview-holder">
 					<div class="thankyou-order-overview-item">
-						<span class="thankyou-order-overview-label"><?php esc_html_e( 'Status', 'yourpropfirm' ); ?></span>
+						<span class="thankyou-order-overview-label"><?php esc_html_e( 'Status', 'yourpropfirm-ui-addon' ); ?></span>
 						<span class="thankyou-order-overview-value">
 							<?php if ( $order->has_status( [ 'on-hold', 'pending' ] ) ) : ?>
 								<span class="thankyou-status-badge pending">
-									<?php esc_html_e( 'Pending', 'yourpropfirm' ); ?>
+									<?php esc_html_e( 'Pending', 'yourpropfirm-ui-addon' ); ?>
 								</span>
 							<?php elseif ( $order->has_status( [ 'processing', 'completed' ] ) ) : ?>
 								<span class="thankyou-status-badge completed">
-									<?php esc_html_e( 'Completed', 'yourpropfirm' ); ?>
+									<?php esc_html_e( 'Completed', 'yourpropfirm-ui-addon' ); ?>
 								</span>
 							<?php elseif ( $order->has_status( 'failed' ) ) : ?>
 								<span class="thankyou-status-badge failed">
-									<?php esc_html_e( 'Failed', 'yourpropfirm' ); ?>
+									<?php esc_html_e( 'Failed', 'yourpropfirm-ui-addon' ); ?>
 								</span>
 							<?php endif; ?>
 
@@ -157,19 +157,19 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 
 					<div class="thankyou-order-overview-item">
 						<span
-							class="thankyou-order-overview-label"><?php esc_html_e( 'Order number', 'yourpropfirm' ); ?></span>
+							class="thankyou-order-overview-label"><?php esc_html_e( 'Order number', 'yourpropfirm-ui-addon' ); ?></span>
 						<span
 							class="thankyou-order-overview-value"><?php echo esc_html( $order->get_order_number() ); ?></span>
 					</div>
 
 					<div class="thankyou-order-overview-item">
-						<span class="thankyou-order-overview-label"><?php esc_html_e( 'Email', 'yourpropfirm' ); ?></span>
+						<span class="thankyou-order-overview-label"><?php esc_html_e( 'Email', 'yourpropfirm-ui-addon' ); ?></span>
 						<span
 							class="thankyou-order-overview-value"><?php echo esc_html( $order->get_billing_email() ); ?></span>
 					</div>
 
 					<div class="thankyou-order-overview-item">
-						<span class="thankyou-order-overview-label"><?php esc_html_e( 'Date', 'yourpropfirm' ); ?></span>
+						<span class="thankyou-order-overview-label"><?php esc_html_e( 'Date', 'yourpropfirm-ui-addon' ); ?></span>
 						<span
 							class="thankyou-order-overview-value"><?php echo esc_html( wc_format_datetime( $order->get_date_created(), 'd F Y' ) ); ?></span>
 					</div>
@@ -181,7 +181,7 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 					<!-- Order Summary Card -->
 					<div class="thankyou-order-summary thankyou-order-card">
 						<h2 class="thankyou-order-card-header">
-							<?php esc_html_e( 'Order details', 'yourpropfirm' ); ?>
+							<?php esc_html_e( 'Order details', 'yourpropfirm-ui-addon' ); ?>
 						</h2>
 
 						<?php foreach ( $order->get_items() as $item_id => $item ) : ?>
@@ -252,7 +252,7 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 							<?php if ( ! empty( $base_price ) ) : ?>
 								<div class="thankyou-order-details-row" style="padding-left: 20px; font-size: 0.9em; color: #666;">
 									<span class="thankyou-order-details-label">
-										<?php esc_html_e( 'Base Price', 'yourpropfirm' ); ?>
+										<?php esc_html_e( 'Base Price', 'yourpropfirm-ui-addon' ); ?>
 										<?php if ( ! empty( $trading_platform ) ) : ?>
 											<span style="font-size: 0.85em;">(<?php echo esc_html( $trading_platform ); ?>)</span>
 										<?php endif; ?>
@@ -287,7 +287,7 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 						<?php endforeach; ?>
 
 						<div class="thankyou-order-details-row">
-							<span class="thankyou-order-details-label"><?php esc_html_e( 'Subtotal', 'yourpropfirm' ); ?></span>
+							<span class="thankyou-order-details-label"><?php esc_html_e( 'Subtotal', 'yourpropfirm-ui-addon' ); ?></span>
 							<span
 								class="thankyou-order-details-value"><?php echo wp_kses_post( $order->get_subtotal_to_display() ); ?></span>
 						</div>
@@ -314,7 +314,7 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 						<?php if ( $order->get_payment_method_title() ) : ?>
 							<div class="thankyou-order-details-row">
 								<span
-									class="thankyou-order-details-label"><?php esc_html_e( 'Payment method', 'yourpropfirm' ); ?></span>
+									class="thankyou-order-details-label"><?php esc_html_e( 'Payment method', 'yourpropfirm-ui-addon' ); ?></span>
 								<span
 									class="thankyou-order-details-value"><?php echo wp_kses_post( $order->get_payment_method_title() ); ?></span>
 							</div>
@@ -334,7 +334,7 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 							foreach ( $coupons as $coupon ) : ?>
 								<div class="thankyou-order-details-row">
 									<span class="thankyou-order-details-label">
-										<?php esc_html_e( 'Coupon', 'yourpropfirm' ); ?>
+										<?php esc_html_e( 'Coupon', 'yourpropfirm-ui-addon' ); ?>
 										<span class="coupon-code">(<?php echo esc_html( $coupon->get_code() ); ?>)</span>
 									</span>
 									<span class="thankyou-order-details-value">
@@ -354,7 +354,7 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 						<div class="thankyou-order-details-row">
 							<span class="thankyou-order-details-label">
 								<?php
-								esc_html_e( 'Total', 'yourpropfirm' );
+								esc_html_e( 'Total', 'yourpropfirm-ui-addon' );
 								// Get first product from order items
 								foreach ( $order->get_items() as $item ) {
 									$product = $item->get_product();
@@ -372,7 +372,7 @@ $support_email = carbon_get_theme_option( 'yourpropfirm_email_support' );
 				<!-- Billing Address Card -->
 				<div class="thankyou-billing-address thankyou-order-card">
 					<h2 class="thankyou-order-card-header">
-						<?php esc_html_e( 'Billing address', 'yourpropfirm' ); ?>
+						<?php esc_html_e( 'Billing address', 'yourpropfirm-ui-addon' ); ?>
 					</h2>
 
 					<?php if ( $order->get_formatted_billing_address() ) : ?>

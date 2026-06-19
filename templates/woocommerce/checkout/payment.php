@@ -22,7 +22,7 @@ if ( ! wp_doing_ajax() ) {
 }
 
 // Define order button text based on selected payment gateway
-$order_button_text = apply_filters( 'woocommerce_order_button_text', __( 'Place order', 'yourpropfirm' ) );
+$order_button_text = apply_filters( 'woocommerce_order_button_text', __( 'Place order', 'yourpropfirm-ui-addon' ) );
 
 // Get available payment gateways if not already set
 if ( ! isset( $available_gateways ) ) {
@@ -37,7 +37,7 @@ $display_payment_gateways = apply_filters( 'ypf/display-payment-gateways', true 
 	<?php if ( WC()->cart->needs_payment() && $display_payment_gateways ) : ?>
 		<div class="yourpropfirm-payment-method-section">
 			<h4 class="form-label">
-				<?php _e( 'Payment Method', 'yourpropfirm' ); ?>
+				<?php _e( 'Payment Method', 'yourpropfirm-ui-addon' ); ?>
 			</h4>
 
 			<?php if ( ! empty( $available_gateways ) ) : ?>
@@ -52,7 +52,7 @@ $display_payment_gateways = apply_filters( 'ypf/display-payment-gateways', true 
 
 			<?php else : ?>
 				<div class="no-payment-methods-notice">
-					<?php wc_print_notice( apply_filters( 'woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html__( 'Sorry, it seems that there are no available payment methods. Please contact us if you require assistance or wish to make alternate arrangements.', 'yourpropfirm' ) : esc_html__( 'Please fill in your details above to see available payment methods.', 'yourpropfirm' ) ), 'notice' ); ?>
+					<?php wc_print_notice( apply_filters( 'woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html__( 'Sorry, it seems that there are no available payment methods. Please contact us if you require assistance or wish to make alternate arrangements.', 'yourpropfirm-ui-addon' ) : esc_html__( 'Please fill in your details above to see available payment methods.', 'yourpropfirm-ui-addon' ) ), 'notice' ); ?>
 				</div>
 			<?php endif; ?>
 
