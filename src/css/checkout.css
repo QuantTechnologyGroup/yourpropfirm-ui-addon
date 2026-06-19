@@ -2242,6 +2242,16 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   margin-bottom: 0 !important;
   align-items: center;
 }
+/* Real dashboard logo renders as bare <img> children carrying tw-mx-auto
+ * (margin: 0 auto). In this flex header those auto margins CENTER the logo and
+ * override the container's flex-start — which is why a tenant WITH a logo
+ * (staging) showed it centered while the FUNDEDBIT fallback (local, wrapped in
+ * .ypf-brand-logo) stayed left. Reset the img margins so the logo is always
+ * left-aligned. */
+.woocommerce-checkout .checkout-logo img {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
 .ypf-brand-logo {
   @apply tw-inline-flex tw-items-center;
 }
