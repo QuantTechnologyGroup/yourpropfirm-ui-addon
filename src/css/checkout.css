@@ -1489,8 +1489,10 @@
     background: var(--yourpropfirm-primary-light) !important;
   }
   .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option .category-option-name {
-    @apply tw-text-base tw-font-bold;
-    color: inherit;
+    /* Same token as the eval cards: near-black in light, white in dark — so the
+       active pill text stays readable in light mode (inherit -> primary-text was
+       gray #666 in light). */
+    @apply tw-text-base tw-font-bold tw-text-gray-900 dark:tw-text-white;
   }
   /* Platform pills are name-only by design — suppress any badge/description a
      parent category might carry so the pill stays clean. */
