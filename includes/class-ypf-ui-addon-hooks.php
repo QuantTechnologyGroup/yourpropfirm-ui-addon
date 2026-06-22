@@ -103,13 +103,41 @@ class YPF_UI_Addon_Hooks {
 	}
 
 	/**
+	 * Normalize an account currency code to its DISPLAY code.
+	 *
+	 * Business decision (CEO): the program API reports Bybit accounts in USDT,
+	 * but they are presented to the customer as plain USD ("$50,000"), matching
+	 * the USD platforms (e.g. Platform 5) and the WC product titles (already
+	 * "$50,000 - 1-Step"). USDT (and the other USD-pegged stablecoins) are
+	 * therefore mapped to USD for DISPLAY only — the underlying
+	 * `_yourpropfirm_account_currency` meta and the program API are untouched.
+	 *
+	 * The stablecoin set is filterable via `ypf_ui_addon_usd_stablecoins`.
+	 *
+	 * @param string $currency Raw account currency code (e.g. USD, USDT, USDC).
+	 * @return string Display currency code (USD for USD-pegged stablecoins).
+	 */
+	public static function display_currency_code( string $currency ): string {
+		$code = strtoupper( trim( $currency ) );
+
+		/** Filter the set of currency codes shown to the customer as USD. */
+		$usd_stablecoins = apply_filters(
+			'ypf_ui_addon_usd_stablecoins',
+			[ 'USDT', 'USDC', 'BUSD', 'DAI', 'TUSD', 'USDP', 'FDUSD' ]
+		);
+
+		return in_array( $code, (array) $usd_stablecoins, true ) ? 'USD' : $code;
+	}
+
+	/**
 	 * Format an account BALANCE in the product's account currency.
 	 *
-	 * The platform model needs the balance shown in the account currency
-	 * (Bybit -> USDT, Platform 5 -> USD), not the WC/store currency the main
-	 * plugin uses. Known fiat currencies render with their symbol ($5,000);
-	 * crypto / unknown codes render as a suffix (5,000 USDT) so they are never
-	 * mislabelled with a "$" (USDT is absent from the plugin's symbol map).
+	 * The platform model needs the balance shown in the account currency, not
+	 * the WC/store currency the main plugin uses. The currency is first
+	 * normalized through display_currency_code() (so USD-pegged stablecoins like
+	 * USDT render as "$50,000" per the CEO decision). Known fiat currencies then
+	 * render with their symbol ($5,000); any remaining unknown code renders as a
+	 * suffix (5,000 XYZ) so it is never mislabelled with a "$".
 	 *
 	 * Single source of truth for BOTH the initial server render
 	 * (form-product-selection.php) and the JS re-render (checkout-wizard.js), so
@@ -124,7 +152,7 @@ class YPF_UI_Addon_Hooks {
 			return '';
 		}
 		$size = floatval( $size );
-		$code = strtoupper( trim( (string) $currency ) );
+		$code = self::display_currency_code( (string) $currency );
 
 		$known = [
 			'USD' => '$',
@@ -235,7 +263,10 @@ class YPF_UI_Addon_Hooks {
 			$cur  = get_post_meta( $product_id, '_yourpropfirm_account_currency', true );
 			$out['products'][ (string) $product_id ] = [
 				'accountSize'     => (string) $size,
-				'accountCurrency' => (string) $cur,
+				// Display code (USDT -> USD) so the summary Currency row and the
+				// pill data-attr the JS reads both show USD. account_label()
+				// normalizes internally, so the label already matches.
+				'accountCurrency' => self::display_currency_code( (string) $cur ),
 				'accountLabel'    => self::account_label( $size, (string) $cur ),
 			];
 		}

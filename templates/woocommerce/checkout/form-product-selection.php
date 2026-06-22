@@ -214,7 +214,7 @@ if ( is_array( $overwrite_labels_raw ) ) {
 							<input type="radio" name="selected_product" value="<?php echo esc_attr( $product_id ); ?>"
 								class="product-radio" <?php checked( $is_selected, true ); ?>
 								data-account-label="<?php echo esc_attr( $label_text ); ?>"
-									data-account-currency="<?php echo esc_attr( get_post_meta( $product_id, '_yourpropfirm_account_currency', true ) ); ?>"
+									data-account-currency="<?php echo esc_attr( YPF_UI_Addon_Hooks::display_currency_code( (string) get_post_meta( $product_id, '_yourpropfirm_account_currency', true ) ) ); ?>"
 								data-price="<?php echo esc_attr( $product_data['price'] ); ?>"
 								data-currency="<?php echo esc_attr( $product_data['currency'] ?? '' ); ?>"
 								data-most-popular="<?php echo $product_data['most_popular'] ? 'true' : 'false'; ?>" />
