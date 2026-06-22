@@ -1466,13 +1466,18 @@
     @apply tw-flex tw-flex-wrap tw-gap-3;
   }
   .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option {
-    @apply tw-relative tw-flex-1 tw-m-0 tw-cursor-pointer tw-block;
+    @apply tw-relative tw-flex-1 tw-m-0 tw-cursor-pointer;
     min-width: 9rem;
-    /* Safety net: on some environments site-custom JS (e.g. a WPCode snippet)
-       sets an inline display:none on the non-selected platform, collapsing it to
-       0 width. The platform selector must always show EVERY platform, so force
-       them visible — !important beats the inline style. */
-    display: block !important;
+    /* IMPORTANT: do NOT force `display` here (no tw-block, no !important). The
+       main site ships a country/category-restriction feature (inline script
+       id="ypf-ccr-script", AJAX action ypf_ccr_check) that, for restricted
+       countries (MY/ID/PK/KH → Platform 5, cat 124), sets inline
+       `display:none` AND `radio.disabled = true` on the blocked platform. An
+       earlier !important override forced the blocked card visible while its
+       radio stayed disabled — so it looked selectable but silently did nothing.
+       Letting the snippet's inline style win lets the restriction hide blocked
+       platforms cleanly. As a flex child (.category-options is tw-flex) the
+       label is still blockified for layout when shown. */
   }
   .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option input[type="radio"] {
     @apply tw-sr-only;
