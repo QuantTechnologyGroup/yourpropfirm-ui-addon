@@ -120,15 +120,29 @@ if ( is_array( $overwrite_labels_raw ) ) {
 					$cat_term  = get_term( $category_id, 'product_cat' );
 					$cat_desc  = ( $cat_term && ! is_wp_error( $cat_term ) ) ? $cat_term->description : '';
 					$cat_badge = get_term_meta( $category_id, '_ypf_term_badge', true );
+					// FUNDEDBIT: a bundled platform logo (Bybit wordmark replaces the
+					// text; Platform 5 icon sits next to the kept label). Name-keyed so
+					// it works whatever the term IDs are.
+					$ypf_logo = YPF_UI_Addon_Hooks::platform_logo_config( (string) $category_name );
 					?>
 					<label class="category-option">
 						<input type="radio" name="product_category_0" value="<?php echo esc_attr( $category_id ); ?>" <?php checked( $is_selected, true ); ?> class="category-radio"
 							data-has-children="<?php echo $has_children ? 'true' : 'false'; ?>" />
-						<div class="category-option-content">
+						<div class="category-option-content<?php echo $ypf_logo ? ' has-platform-logo' : ''; ?>">
 							<?php if ( $cat_badge ) : ?>
 								<span class="category-option-badge"><?php echo esc_html( $cat_badge ); ?></span>
 							<?php endif; ?>
-							<span class="category-option-name"><?php echo esc_html( $category_name ); ?></span>
+							<?php if ( $ypf_logo ) : ?>
+								<span class="category-option-logo-wrap<?php echo $ypf_logo['light_url'] ? ' has-light-logo' : ''; ?>">
+									<img class="category-option-logo category-option-logo--dark <?php echo $ypf_logo['wordmark'] ? 'is-wordmark' : 'is-icon'; ?>"
+										src="<?php echo esc_url( $ypf_logo['dark_url'] ); ?>" alt="<?php echo esc_attr( $category_name ); ?>" loading="lazy" />
+									<?php if ( $ypf_logo['light_url'] ) : ?>
+										<img class="category-option-logo category-option-logo--light <?php echo $ypf_logo['wordmark'] ? 'is-wordmark' : 'is-icon'; ?>"
+											src="<?php echo esc_url( $ypf_logo['light_url'] ); ?>" alt="<?php echo esc_attr( $category_name ); ?>" loading="lazy" />
+									<?php endif; ?>
+								</span>
+							<?php endif; ?>
+							<span class="category-option-name<?php echo ( $ypf_logo && $ypf_logo['hide_name'] ) ? ' tw-sr-only' : ''; ?>"><?php echo esc_html( $category_name ); ?></span>
 							<?php if ( $cat_desc ) : ?>
 								<span class="category-option-desc"><?php echo esc_html( $cat_desc ); ?></span>
 							<?php endif; ?>

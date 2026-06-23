@@ -173,6 +173,71 @@ class YPF_UI_Addon_Hooks {
 	}
 
 	/**
+	 * Resolve the bundled logo for a level-0 Trading Platform category.
+	 *
+	 * Name-keyed (sanitize_title) so it works across environments where the term
+	 * IDs differ (local Bybit=31, staging ByBit=126). Returns null when the
+	 * platform has no bundled logo. Otherwise:
+	 *   wordmark   bool        the logo IS the platform name (Bybit) and replaces
+	 *                          the text; false => an icon shown ALONGSIDE the text
+	 *                          (Platform 5).
+	 *   hide_name  bool        hide the text name (true for wordmarks).
+	 *   dark_url   string      logo for dark theme (the default / base).
+	 *   light_url  string|null a designer-provided light-theme variant; null =>
+	 *                          light theme reuses dark_url (CSS keeps it visible).
+	 *
+	 * Filterable via `ypf_ui_addon_platform_logos`.
+	 *
+	 * @param string $name Platform category name.
+	 * @return array{wordmark:bool,hide_name:bool,dark_url:string,light_url:?string}|null
+	 */
+	public static function platform_logo_config( string $name ): ?array {
+		$slug    = sanitize_title( $name );
+		$img_url = YOURPROPFIRM_UI_ADDON_URL . 'assets/images/';
+		$img_dir = YOURPROPFIRM_UI_ADDON_DIR . 'assets/images/';
+
+		$map = apply_filters(
+			'ypf_ui_addon_platform_logos',
+			[
+				// Bybit wordmark, per-theme (both keep the amber "i"): white
+				// letters on dark, dark letters on light.
+				'bybit'      => [
+					'wordmark'  => true,
+					'hide_name' => true,
+					'dark'      => 'Bybit_dark.png',
+					'light'     => 'Bybit_light.png',
+				],
+				// Platform 5: a full-colour icon that reads on both themes, shown
+				// next to the kept "Platform 5" label.
+				'platform-5' => [
+					'wordmark'  => false,
+					'hide_name' => false,
+					'dark'      => 'platform_5.png',
+					'light'     => 'platform_5.png',
+				],
+			]
+		);
+
+		if ( empty( $map[ $slug ] ) ) {
+			return null;
+		}
+		$cfg  = $map[ $slug ];
+		$dark = $cfg['dark'] ?? '';
+		if ( '' === $dark || ! file_exists( $img_dir . $dark ) ) {
+			return null;
+		}
+		$light     = $cfg['light'] ?? '';
+		$has_light = ( '' !== $light && file_exists( $img_dir . $light ) );
+
+		return [
+			'wordmark'  => ! empty( $cfg['wordmark'] ),
+			'hide_name' => ! empty( $cfg['hide_name'] ),
+			'dark_url'  => $img_url . $dark,
+			'light_url' => $has_light ? ( $img_url . $light ) : null,
+		];
+	}
+
+	/**
 	 * Build the category + product meta maps the wizard JS re-applies after the
 	 * main plugin re-renders the category-model selection.
 	 *

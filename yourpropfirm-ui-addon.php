@@ -3,7 +3,7 @@
  * Plugin Name:       YourPropFirm UI Addon
  * Plugin URI:        https://github.com/ibnukasyfulhaq/checkout-frontend
  * Description:       Frontend UI customization layer for YourPropFirm Plugin. Overrides checkout CSS and templates without being affected by main plugin updates.
- * Version:           1.1.2
+ * Version:           1.1.3
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            YourPropFirm
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'YOURPROPFIRM_UI_ADDON_VERSION', '1.1.2' );
+define( 'YOURPROPFIRM_UI_ADDON_VERSION', '1.1.3' );
 define( 'YOURPROPFIRM_UI_ADDON_DIR', plugin_dir_path( __FILE__ ) );
 define( 'YOURPROPFIRM_UI_ADDON_URL', plugin_dir_url( __FILE__ ) );
 
