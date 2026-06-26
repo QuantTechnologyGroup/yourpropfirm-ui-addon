@@ -2,214 +2,33 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: yourpropfirm-ui-addon (strings missing from main-plugin catalog)\n"
+"Project-Id-Version: yourpropfirm-ui-addon (strings missing from catalog — for Ibnu)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
 #: includes/class-ypf-ui-addon-category-badge.php:32
 msgid "Optional. Shown as a badge on this category's checkout card, e.g. \"Best Value\" or \"Most Popular\". Leave empty for no badge."
 msgstr ""
 
-#: includes/class-ypf-ui-addon-category-badge.php:41
-#: includes/class-ypf-ui-addon-category-badge.php:58
-msgid "Checkout Badge"
+#: includes/class-ypf-ui-addon-hooks.php:89
+msgid "Please enter a coupon code."
 msgstr ""
 
-#: includes/class-ypf-ui-addon-category-badge.php:42
-#: includes/class-ypf-ui-addon-category-badge.php:60
-msgid "e.g. Best Value"
+#: templates/woocommerce/checkout/order-received.php:36
+#: templates/woocommerce/checkout/thankyou.php:71
+#, php-format
+msgid "If you believe this was a mistake, please contact <a href=\"mailto:%s\">%s</a>"
 msgstr ""
 
-#: includes/class-ypf-ui-addon-hooks.php:68
-#: templates/woocommerce/checkout/form-checkout.php:180
-#: templates/woocommerce/checkout/form-checkout.php:289
-msgid "Continue"
+#: templates/woocommerce/checkout/thankyou.php:99
+#, php-format
+msgid "A credentials for your trading platform will be available in the selected account dashboard. If you experience any issues, please contact <a style=\"text-decoration: underline;\" href=\"mailto:%s\">%s</a>."
 msgstr ""
 
-#: includes/class-ypf-ui-addon-hooks.php:73
-msgid "Applying…"
+#: templates/woocommerce/checkout/thankyou.php:109
+#, php-format
+msgid "A credentials for your trading platform will be available in your dashboard. If you experience any issues, please contact <a style=\"text-decoration: underline;\" href=\"mailto:%s\">%s</a>."
 msgstr ""
 
-#: includes/class-ypf-ui-addon-hooks.php:75
-msgid "Coupon applied."
-msgstr ""
-
-#: includes/class-ypf-ui-addon-hooks.php:76
-msgid "Coupon applied successfully!"
-msgstr ""
-
-#: includes/class-ypf-ui-addon-hooks.php:77
-msgid "Invalid coupon code."
-msgstr ""
-
-#: includes/class-ypf-ui-addon-hooks.php:78
-msgid "Error applying coupon. Please try again."
-msgstr ""
-
-#: includes/class-ypf-ui-addon-hooks.php:79
-msgid "Error applying coupon: "
-msgstr ""
-
-#: includes/class-ypf-ui-addon-hooks.php:80
-msgid "Paste is not allowed in Email Confirmation field for security."
-msgstr ""
-
-#: includes/class-ypf-ui-addon-hooks.php:81
-msgid "Email does not match"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-available-bundles.php:29
-msgid "Bundle Packages"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:54
-msgid "Checkout progress"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:57
-#: templates/woocommerce/checkout/form-checkout.php:65
-#: templates/woocommerce/checkout/form-checkout.php:70
-msgid "You are here"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:59
-#: templates/woocommerce/checkout/form-checkout.php:72
-#: templates/woocommerce/checkout/form-checkout.php:75
-msgid "Next step"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:66
-msgid "Challenge"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:76
-#: templates/woocommerce/checkout/form-checkout.php:120
-msgid "Information"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:85
-msgid "Choose Your Challenge"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:86
-msgid "Select evaluation type and account size to get started"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:89
-msgid "Your Information"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:90
-msgid "Fill in your billing details to proceed"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:164
-msgid "By placing your order, you agree to our"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:169
-msgid "Terms of Use"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:170
-msgid ", and consent to receive updates and marketing communications from FundedBit."
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:177
-msgid "Previous"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:193
-msgid "Order Summary"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:201
-msgid "Challenge Requirement"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:205
-msgid "Phase 1 Target"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:206
-msgid "Phase 2 Target"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:207
-msgid "Max. Loss"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:208
-msgid "Max. Daily Loss"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:222
-msgid "Coupon code"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:232
-msgid "Category"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:233
-msgid "Account"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:234
-msgid "Platform"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:246
-msgid "We Accept"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:285
-msgid "Back"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:288
-msgid "Processing…"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:308
-msgid "Secure checkout — data is protected"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:322
-msgid "Secure Payments"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:323
-msgid "SSL encrypted"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:329
-msgid "Instant Activation"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:330
-msgid "Start trading immediately"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:336
-msgid "Excellent Support"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-checkout.php:337
-msgid "24/7 customer service"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-product-selection.php:143
-msgid "Subcategory"
-msgstr ""
-
-#: templates/woocommerce/checkout/form-product-selection.php:176
-msgid "Select Account Balance"
-msgstr ""
-
-#: templates/woocommerce/checkout/repurchase-detail.php:43
-msgid "Prize Pool"
-msgstr ""
-
-#: templates/woocommerce/checkout/thankyou.php:337
-msgid "Coupon"
+#: templates/woocommerce/checkout/form-product-selection.php:143 (admin level label, dynamic)
+msgid "Select Evaluation Type"
 msgstr ""

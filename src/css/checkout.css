@@ -1400,18 +1400,27 @@
      Scoped to .subcategory-section so the level-0 Platform selector keeps its own
      boxed-pill look (below). Description = term description, badge =
      _ypf_term_badge term meta — both re-applied by checkout-wizard.js. ---- */
+  /* FLEX, not grid. As a CSS grid these cards inflated their row to ~97px
+     regardless of grid-auto-rows / align-content (a grid track-sizing quirk with
+     the h-full content + the 1fr auto-rows that leaks from .radio-options), and
+     the inflated height tracked the checkout COLUMN height — so the cards
+     differed between environments (local 93/97px vs staging 78px). Flex sizes
+     each card to its CONTENT (~81px, the design height) and stays equal-height
+     (align-items:stretch) and consistent everywhere. Mirrors the level-0
+     platform pills, which already use flex. */
   .woocommerce-product-selection .product-selection-content .subcategory-section .category-options {
-    @apply tw-grid tw-grid-cols-1 sm:tw-grid-cols-3 tw-gap-3;
+    @apply tw-flex tw-flex-wrap tw-gap-3;
   }
   .woocommerce-product-selection .product-selection-content .subcategory-section .category-option {
-    @apply tw-cursor-pointer tw-block;
-    flex: initial;
+    /* basis-full => stack on mobile; sm:flex-1 => three equal columns on desktop. */
+    @apply tw-cursor-pointer tw-basis-full sm:tw-flex-1;
   }
   .woocommerce-product-selection .product-selection-content .subcategory-section .category-option input[type="radio"] {
     @apply tw-sr-only;
   }
   .woocommerce-product-selection .product-selection-content .subcategory-section .category-option .category-option-content {
-    @apply tw-relative tw-flex tw-flex-col tw-items-start tw-gap-1 tw-h-full tw-border tw-border-solid tw-border-gray-600 dark:tw-border-gray-600 tw-rounded-xl tw-bg-transparent tw-px-4 tw-py-4 tw-pr-10 tw-transition-all tw-duration-200;
+    /* py-5 (was py-4): eval pills a touch taller. */
+    @apply tw-relative tw-flex tw-flex-col tw-items-start tw-gap-2 tw-h-full tw-border tw-border-solid tw-border-gray-600 dark:tw-border-gray-600 tw-rounded-lg tw-bg-transparent tw-px-4 tw-py-5 tw-pr-10 tw-transition-all tw-duration-200;
   }
   /* Hover: green border only — beat the plugin's solid-green hover fill. */
   .woocommerce-product-selection .product-selection-content .subcategory-section .category-option .category-option-content:hover {
@@ -1450,7 +1459,7 @@
      platform pills + a right-aligned radio dot (the design the user pointed at).
      Replaces the old trading_options selector, hidden below. ---- */
   .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] {
-    @apply tw-rounded-2xl tw-p-5;
+    @apply tw-rounded-2xl tw-px-5 tw-py-8;
     border: 1px solid var(--yourpropfirm-border);
     /* Subtle panel (a faint lift over the page bg) — matches the design, where
        the Step-1 cards barely separate from the dark page. */
@@ -1466,14 +1475,27 @@
     @apply tw-flex tw-flex-wrap tw-gap-3;
   }
   .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option {
-    @apply tw-relative tw-flex-1 tw-m-0 tw-cursor-pointer tw-block;
+    @apply tw-relative tw-flex-1 tw-m-0 tw-cursor-pointer;
     min-width: 9rem;
+    /* IMPORTANT: do NOT force `display` here (no tw-block, no !important). The
+       main site ships a country/category-restriction feature (inline script
+       id="ypf-ccr-script", AJAX action ypf_ccr_check) that, for restricted
+       countries (MY/ID/PK/KH → Platform 5, cat 124), sets inline
+       `display:none` AND `radio.disabled = true` on the blocked platform. An
+       earlier !important override forced the blocked card visible while its
+       radio stayed disabled — so it looked selectable but silently did nothing.
+       Letting the snippet's inline style win lets the restriction hide blocked
+       platforms cleanly. As a flex child (.category-options is tw-flex) the
+       label is still blockified for layout when shown. */
   }
   .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option input[type="radio"] {
     @apply tw-sr-only;
   }
   .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option .category-option-content {
-    @apply tw-relative tw-flex tw-flex-col tw-items-center tw-justify-center tw-rounded-xl tw-py-4 tw-px-4 tw-pr-9 tw-cursor-pointer tw-text-base tw-font-bold tw-transition-all tw-duration-200;
+    @apply tw-relative tw-flex tw-flex-col tw-items-center tw-justify-center tw-rounded-xl tw-py-2 tw-px-4 tw-pr-9 tw-cursor-pointer tw-text-base tw-font-bold tw-transition-all tw-duration-200;
+    /* 56px == the Account Balance pill height (grid-auto-rows above) so the two
+       selectors line up. Content is centred, so the logo/name sits mid-pill. */
+    min-height: 56px;
     border: 1.5px solid var(--yourpropfirm-border);
     /* Transparent like the eval/account options so the pill sits on the subtle
        panel; the green tint only appears when selected. */
@@ -1489,8 +1511,10 @@
     background: var(--yourpropfirm-primary-light) !important;
   }
   .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option .category-option-name {
-    @apply tw-text-base tw-font-bold;
-    color: inherit;
+    /* Same token as the eval cards: near-black in light, white in dark — so the
+       active pill text stays readable in light mode (inherit -> primary-text was
+       gray #666 in light). */
+    @apply tw-text-base tw-font-bold tw-text-gray-900 dark:tw-text-white;
   }
   /* Platform pills are name-only by design — suppress any badge/description a
      parent category might carry so the pill stays clean. */
@@ -1511,10 +1535,58 @@
     background: radial-gradient(var(--yourpropfirm-primary) 0 38%, transparent 42%);
   }
 
+  /* ---- Trading Platform logos. Bybit = a wordmark that REPLACES the name;
+     Platform 5 = an icon NEXT TO the kept label. Logos are bundled + name-keyed
+     (YPF_UI_Addon_Hooks::platform_logo_config) and live in the server-rendered
+     level-0 markup (never re-painted by the plugin JS). Raw `display` (not
+     @apply) so the light/dark swap below wins by specificity. ---- */
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option .category-option-content.has-platform-logo {
+    flex-direction: row;
+    gap: 0.5rem;
+    /* Logo aligned LEFT (vertical-centre only) — items-center keeps it mid-pill,
+       justify-start removes the horizontal centring. !important beats the base
+       content's @apply tw-justify-center. */
+    justify-content: flex-start !important;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option-logo-wrap {
+    display: inline-flex;
+    align-items: center;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option-logo {
+    display: block;
+    width: auto;
+    object-fit: contain;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option-logo.is-wordmark {
+    height: 22px;
+    max-width: 8rem;
+  }
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option-logo.is-icon {
+    height: 20px;
+    width: 20px;
+  }
+  /* Dark theme is the default: the bundled (white) logo shows, the light variant
+     stays hidden. */
+  .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option-logo--light {
+    display: none;
+  }
+  /* LIGHT theme: swap to the light-theme variant (e.g. Bybit_light.png — dark
+     letters, amber "i"). Both variants keep their own colours, so no filter. */
+  html:not(.dark) .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option-logo-wrap.has-light-logo .category-option-logo--dark {
+    display: none;
+  }
+  html:not(.dark) .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] .category-option-logo-wrap.has-light-logo .category-option-logo--light {
+    display: block;
+  }
+
   /* Reorder: data hierarchy is Platform -> Eval -> Account, but the design shows
      Eval (top) -> Account (middle) -> Platform (bottom). */
   .woocommerce-product-selection .product-selection-content {
     @apply tw-flex tw-flex-col;
+    /* Modest gap between the three selection sections — the taller cards (more
+       py) now do most of the filling, so the Platform still lands near the
+       summary's Continue button without big airy gaps. */
+    row-gap: 2rem;
   }
   .woocommerce-product-selection .product-selection-content > .product-category-section[data-level="0"] { order: 3; }
   .woocommerce-product-selection .product-selection-content > .subcategory-sections-container { order: 1; }
@@ -1525,7 +1597,9 @@
      fill (--yourpropfirm-input) so the boxes don't read as bold gray blocks. */
   .woocommerce-product-selection .product-selection-content .subcategory-section,
   .woocommerce-product-selection .product-selection-content > .selected-product-section {
-    @apply tw-rounded-2xl tw-p-5;
+    /* Taller cards (more vertical padding) so the Eval / Account groups have more
+       presence and the left column fills its height with tighter inter-card gaps. */
+    @apply tw-rounded-2xl tw-px-5 tw-py-8;
     border: 1px solid var(--yourpropfirm-border);
     background: var(--yourpropfirm-input);
   }
@@ -1556,6 +1630,11 @@
 
   .woocommerce-product-selection .product-radio-options {
     @apply tw-grid tw-grid-cols-2 md:tw-grid-cols-3 tw-gap-3;
+    /* Fixed row height (overrides the grid-auto-rows:minmax(0,1fr) that leaks
+       from .radio-options). Without this the pills stretch to the checkout
+       COLUMN height — so they varied by environment. 56px == the platform pill
+       height (--ypf-pill-h) so Account Balance and Trading Platform match. */
+    grid-auto-rows: 56px;
   }
 
   .woocommerce-product-selection .product-option {
@@ -1567,7 +1646,11 @@
   }
 
   .woocommerce-product-selection .product-option .product-option-content {
-    @apply tw-relative tw-flex tw-flex-col tw-justify-between tw-h-full tw-border tw-border-solid tw-rounded-lg tw-border-gray-600 dark:tw-border-gray-600 tw-bg-transparent tw-p-4 tw-transition-all tw-duration-200 tw-p-2 tw-gap-y-1;
+    /* justify-center (was justify-between): the pill shows only the amount in the
+       platform model, so centre it VERTICALLY in the 56px pill instead of pinning
+       it to the top. No items-center — keep the amount's original horizontal
+       (left) alignment. */
+    @apply tw-relative tw-flex tw-flex-col tw-justify-center tw-h-full tw-border tw-border-solid tw-rounded-lg tw-border-gray-600 dark:tw-border-gray-600 tw-bg-transparent tw-p-4 tw-transition-all tw-duration-200 tw-p-2 tw-gap-y-1;
   }
 
   .woocommerce-product-selection .product-option .product-option-content:hover {
@@ -2240,6 +2323,16 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
   margin-bottom: 0 !important;
   align-items: center;
 }
+/* Real dashboard logo renders as bare <img> children carrying tw-mx-auto
+ * (margin: 0 auto). In this flex header those auto margins CENTER the logo and
+ * override the container's flex-start — which is why a tenant WITH a logo
+ * (staging) showed it centered while the FUNDEDBIT fallback (local, wrapped in
+ * .ypf-brand-logo) stayed left. Reset the img margins so the logo is always
+ * left-aligned. */
+.woocommerce-checkout .checkout-logo img {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+}
 .ypf-brand-logo {
   @apply tw-inline-flex tw-items-center;
 }
@@ -2338,10 +2431,11 @@ body.woocommerce-checkout .ypf-checkout-wizard select option {
 }
 
 /* ---- Columns ----
- * Natural heights (no forced stretch) so the order-summary card doesn't expand
- * with empty space down toward the footer divider. The grid's default stretch
- * keeps the columns aligned; cards size to their content. Order summary is not
- * sticky here so it sits in normal flow. */
+ * Both columns stay in normal flow (no sticky). The LEFT column distributes its
+ * selection sections to fill the column height so the last selection lands near
+ * the summary's Continue button — the user doesn't have to scroll to find the
+ * CTA after choosing. The RIGHT (summary) is the taller column and defines the
+ * grid height. */
 .ypf-checkout-wizard .checkout-form-right > .order-summary {
   position: static;
 }

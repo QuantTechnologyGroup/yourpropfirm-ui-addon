@@ -195,19 +195,9 @@ $ypf_privacy_policy_link = function_exists( 'carbon_get_theme_option' ) ? esc_ur
 
 					<!-- Static, JS-driven order summary (updated by js/checkout-wizard.js) -->
 					<div id="ypf-order-summary" class="ypf-order-summary">
-						<!-- Challenge Requirement — step 1 only (JS hides it on step 2) -->
-						<div class="ypf-challenge-req-card" id="ypf-challenge-req">
-							<button type="button" class="ypf-summary-toggle" data-ypf-toggle aria-expanded="true">
-								<span><?php esc_html_e( 'Challenge Requirement', 'yourpropfirm-ui-addon' ); ?></span>
-								<svg class="ypf-summary-chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 8L7 2L13 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-							</button>
-							<div class="ypf-summary-details" data-ypf-details>
-								<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Phase 1 Target', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value ypf-value--green">8%</span></div>
-								<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Phase 2 Target', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value ypf-value--green">5%</span></div>
-								<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Max. Loss', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value ypf-value--red">8%</span></div>
-								<div class="ypf-summary-row"><span class="ypf-summary-label"><?php esc_html_e( 'Max. Daily Loss', 'yourpropfirm-ui-addon' ); ?></span><span class="ypf-summary-value ypf-value--red">4%</span></div>
-							</div>
-						</div>
+						<!-- Challenge Requirement box removed: its Phase/Loss values were hardcoded
+						     placeholders, not real per-program data. Re-add here (and wire real
+						     targets) when that data is available. -->
 
 						<!-- Payment method + Coupon — full-form step only (JS shows it after email) -->
 						<div class="ypf-payment-coupon ypf-field-hidden" id="ypf-payment-coupon">

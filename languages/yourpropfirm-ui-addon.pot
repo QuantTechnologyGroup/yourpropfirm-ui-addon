@@ -623,3 +623,6 @@ msgstr ""
 #: includes/class-ypf-ui-addon-hooks.php:81
 msgid "Email does not match"
 msgstr ""
+#: templates/woocommerce/checkout/form-product-selection.php:143
+msgid "Select Evaluation Type"
+msgstr ""
